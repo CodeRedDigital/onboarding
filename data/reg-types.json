@@ -1,0 +1,14 @@
+[
+  {
+      "id": "b536bca7-9a93-4c4c-8b9d-1f5813dff82e",
+      "name": "Id Only"
+  },
+  {
+      "id": "938c93d6-bc57-4ed5-90e5-0a7fcd936743",
+      "name": "Standard AML"
+  },
+  {
+      "id": "67d88b35-9852-492f-b3ea-dfe8e22bf30f",
+      "name": "Enhanced AML"
+  }
+]

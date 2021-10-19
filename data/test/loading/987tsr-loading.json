@@ -1,0 +1,33 @@
+{
+  "id": "987tsr",
+  "associatedUsers": [
+    {
+      "id": "yf2hw7wehu",
+      "primary": false,
+      "updated": 1630057276474
+    },
+    {
+      "id": "yf2hw7kskd",
+      "primary": true,
+      "updated": 1630057276474
+    }
+  ],
+  "associatedFirmId": "123abc",
+  "associatedSolicitorId": "123abc-00002",
+  "AML": {
+    "Provider": "Thirdfort",
+    "thirdfort": {},
+    "credas": {}
+  },
+  "type": "purchase",
+  "associatedAddresses": [
+    {
+      "address1": "56 Bristol Street",
+      "address2": "",
+      "town": "Bath",
+      "county": "Greater London",
+      "postCode": "BA8 1AA",
+      "type": "purchase"
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "id": "987xyz",
+  "associatedUsers": [
+    {
+      "id": "yf2hw7kskd",
+      "primary": true,
+      "updated": 1630057276474
+    },
+    {
+      "id": "yf2hw7wehu",
+      "primary": false,
+      "updated": 1630057276474
+    }
+  ],
+  "associatedFirmId": "123abc",
+  "associatedSolicitorId": "123abc-00002",
+  "AML": {
+    "Provider": "CREDAS",
+    "thirdfort": {},
+    "credas": {}
+  },
+  "type": "sale & purchase",
+  "associatedAddresses": [
+    {
+      "address1": "456 London Road",
+      "address2": "",
+      "town": "London",
+      "county": "Greater London",
+      "postCode": "E8 1AA",
+      "type": "purchase"
+    },
+    {
+      "address1": "123 London Road",
+      "address2": "",
+      "town": "London",
+      "county": "Greater London",
+      "postCode": "E8 1AA",
+      "type": "sale"
+    }
+  ]
+}
