@@ -1,3 +1,8 @@
+import { useEffect } from 'react'
+
+// components
+
+import Header from './Header'
 import Footer from './Footer'
 
 function Page(props) {
@@ -6,9 +11,12 @@ function Page(props) {
     window.scrollTo(0,0)
   }, [props.title])
   return (
-    <main>
-      {props.children}
-    </main>
+    <>
+      <main>
+        {props.children}
+      </main>
+      <Footer />
+    </>
   )
 }
 
