@@ -11,12 +11,13 @@ function Page(props) {
     window.scrollTo(0,0)
   }, [props.title])
   return (
-    <>
+    <div className="loading">
+      <Header />
       <main>
         {props.children}
       </main>
       <Footer />
-    </>
+    </div>
   )
 }
 

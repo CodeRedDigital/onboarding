@@ -12,7 +12,11 @@ import DispatchContext from '../states/DispatchContext'
 
 function OnboardingApp({ Component, pageProps }) {
   const initialState = {
-    "name": "Simon"
+    "name": "Simon",
+    app: {
+      loading: true,
+      firmData: false
+    }
   }
   function ourReducer(draft, action) {
     switch (action.type) {

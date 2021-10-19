@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { useContext } from 'react'
 
 // components
-import Page from '../components/Main'
+import LoadingScreen from '../components/LoadingScreen'
 
 // states
 import StateContext from '../states/StateContext'
@@ -17,9 +17,6 @@ export default function Home() {
     appDispatch({type: "one", value: "Dave"})
   }
   return (
-    <Page title="Home">
-      <p>{appState.name} was here</p>
-      <p><a href="#" onClick={handleClick}>Change Name</a></p>
-    </Page>
+    <LoadingScreen />
   )
 }
