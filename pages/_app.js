@@ -168,6 +168,7 @@ function OnboardingApp({ Component, pageProps }) {
         user: params.get("user")
       });
     }
+    getUrlData()
   },[
     state.app.urlDataFetched,
     state.app.localDataFetched,
@@ -183,6 +184,9 @@ function OnboardingApp({ Component, pageProps }) {
     if (state.app.firmUpdated) {
       localStorage.setItem("firm", JSON.stringify(state.firm))
       dispatch({type: "firmFinished"})
+      if (document.querySelector(".loading")) {
+        document.querySelector(".loading").classList.add("loaded");
+      }
     }
     if (state.app.quoteUpdated) {
       localStorage.setItem("quote", JSON.stringify(state.quote))

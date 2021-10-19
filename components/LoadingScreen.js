@@ -19,7 +19,7 @@ function LoadingScreen(props) {
   return (
     <div className="loading">
       <main>
-        {appState.app.firmData ? <SolicitorLogo /> : <LoadingSpinner />}
+        {appState.app.loading ? <LoadingSpinner /> : <SolicitorLogo />}
       </main>
       <footer>
         <p>Powered by PALI.</p>
