@@ -241,6 +241,17 @@ function OnboardingApp({ Component, pageProps }) {
         }
       }
     }
+    // does user appear in current quote
+    function isUserInQuote(idOfUser) {
+      const userInQuote = state.quote.associatedUsers.find(
+        ({ id }) => id === idOfUser
+      ); // see if the idOfUser param exists in the quote
+      if (userInQuote) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   },[
     state.app.urlDataFetched,
     state.app.localDataFetched,
