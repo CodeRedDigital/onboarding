@@ -222,8 +222,8 @@ function OnboardingApp({ Component, pageProps }) {
         return;
       // flag to redirect to login if the user is unknown
       case "unknownUser":
-        draft.appData.unknownUser = true
-        draft.appData.isLoading = false
+        draft.app.unknownUser = true
+        draft.app.isLoading = false
       // flags for updating localStorage
       case "appFinished":
         draft.app.appUpdated = false
@@ -477,7 +477,7 @@ function OnboardingApp({ Component, pageProps }) {
       }
     }
     // logic of when to run functions
-    if (state.app.isLoading) {
+    if (state.app.loading) {
       // run these tasks if the app is loading
       if (!state.app.urlDataFetched) {
         // run this if there is on urlData stored
@@ -506,7 +506,7 @@ function OnboardingApp({ Component, pageProps }) {
         checkFirm();
       }
       // this is just for testing if toke is true set state to loggedIn
-      if (state.loggedInUser.token) {
+      if (state.user.token) {
         // login
         dispatch({ type: "login" });
       }
