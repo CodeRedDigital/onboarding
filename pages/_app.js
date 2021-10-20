@@ -196,7 +196,25 @@ function OnboardingApp({ Component, pageProps }) {
         return;
       // save the firm data to state
       case "firmDownloaded":
-
+        draft.firm.id = action.firm.id;
+        draft.firm.Name = action.firm.Name;
+        draft.firm.url = action.firm.url;
+        draft.firm.Colours.primary = action.firm.Colours.primary;
+        draft.firm.Colours.primaryOpposite = action.firm.Colours.primaryOpposite;
+        draft.firm.Colours.secondary = action.firm.Colours.secondary;
+        draft.firm.Colours.secondaryOpposite = action.firm.Colours.secondaryOpposite;
+        draft.firm.Colours.tertiary = action.firm.Colours.tertiary;
+        draft.firm.Colours.tertiaryOpposite = action.firm.Colours.tertiaryOpposite;
+        draft.firm.logos.whiteSvg = action.firm.logos.whiteSvg;
+        draft.firm.logos.whitePng = action.firm.logos.whitePng;
+        draft.firm.logos.colourSvg = action.firm.logos.colourSvg;
+        draft.firm.logos.colourPng = action.firm.logos.colourPng;
+        draft.firm.solicitors = action.firm.solicitors;
+        draft.firm.thirdfort = action.firm.thirdfort;
+        draft.firm.modalContent = action.firm.modalContent;
+        draft.app.firmData = true;
+        draft.app.firmUpdated = true;
+        return;
       // data count to track how much data has been collected
       case "incrementDataCount":
         ++draft.app.dataCount;
@@ -295,6 +313,30 @@ function OnboardingApp({ Component, pageProps }) {
             type: "flashMessage",
             value:
               "There was an issue getting the user, either it does not exist or there was a bad connection. Contact the solicitor who sent you this link if the problem continues"
+          });
+          dispatch({ type: "incrementDataCount" });
+        }
+      }
+    }
+    // get firm if available
+    async function getFirm(firmId) {
+      try {
+        const fetchFirm = await AxiosPali.get(
+          `/data/test/loading/${firmId}-loading.json`
+        );
+        if (fetchFirm.data) {
+          dispatch({
+            type: "firmDownloaded",
+            firm: fetchFirm.data
+          });
+          dispatch({ type: "incrementDataCount" });
+        }
+      } catch (error) {
+        if (error.response.status == "404") {
+          dispatch({
+            type: "flashMessage",
+            value:
+              "There was an issue getting the solicitor, either it does not exist or there was a bad connection. Contact the solicitor who sent you this link if the problem continues"
           });
           dispatch({ type: "incrementDataCount" });
         }
