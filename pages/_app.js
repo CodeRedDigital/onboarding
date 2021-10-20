@@ -476,6 +476,41 @@ function OnboardingApp({ Component, pageProps }) {
         getFirm(firmId);
       }
     }
+    // logic of when to run functions
+    if (state.app.isLoading) {
+      // run these tasks if the app is loading
+      if (!state.app.urlDataFetched) {
+        // run this if there is on urlData stored
+        getUrlData();
+      }
+      if (!state.app.localDataFetched) {
+        // run this if there is no localData
+        getLocalData();
+      }
+      if (
+        state.app.urlDataFetched &&
+        state.app.localDataFetched &&
+        !state.app.quoteData
+      ) {
+        console.log(
+          `url: ${state.app.urlDataFetched}, local: ${state.app.localDataFetched}`
+        );
+        checkQuote();
+      }
+      if (state.app.quoteData) {
+        console.log("Hurray time to load the user");
+        checkUser();
+      }
+      if (state.app.userData) {
+        console.log("Hurray time to load the firm");
+        checkFirm();
+      }
+      // this is just for testing if toke is true set state to loggedIn
+      if (state.loggedInUser.token) {
+        // login
+        dispatch({ type: "login" });
+      }
+    }
   },[
     state.app.urlDataFetched,
     state.app.localDataFetched,
