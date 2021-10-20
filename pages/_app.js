@@ -126,6 +126,13 @@ function OnboardingApp({ Component, pageProps }) {
   }
   function ourReducer(draft, action) {
     switch (action.type) {
+      // login and out cases
+      case "login":
+        draft.app.loggedIn = true;
+        return;
+      case "logout":
+        draft.app.loggedIn = false;
+        return;
       // push the value into the FlashMessage state
       case "flashMessage":
         draft.flashMessages.push(action.value);
