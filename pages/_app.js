@@ -459,6 +459,23 @@ function OnboardingApp({ Component, pageProps }) {
         });
       }
     }
+    function checkFirm() {
+      let firmId = state.quote.associatedFirmId;
+      let localFirm = state.app.localData.firm;
+      let localFirmId = null;
+      if (localFirm) {
+        localFirmId = localFirm.id;
+      }
+      if (firmId === localFirmId) {
+        dispatch({
+          type: "firmDownloaded",
+          firm: localFirm
+        });
+        dispatch({ type: "incrementDataCount" });
+      } else {
+        getFirm(firmId);
+      }
+    }
   },[
     state.app.urlDataFetched,
     state.app.localDataFetched,
