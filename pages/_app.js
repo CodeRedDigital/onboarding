@@ -13,6 +13,9 @@ import FlashMessages from '../components/FlashMessages'
 import StateContext from '../states/StateContext'
 import DispatchContext from '../states/DispatchContext'
 
+// modules
+import { AxiosPali } from '../src/AxiosRequests'
+
 function OnboardingApp({ Component, pageProps }) {
   const initialState = {
     flashMessages: [],
@@ -285,6 +288,8 @@ function OnboardingApp({ Component, pageProps }) {
           dispatch({ type: "incrementDataCount" });
         }
       } catch (error) {
+        console.log("error")
+        console.log(error.response.status)
         if (error.response.status == "404") {
           dispatch({
             type: "flashMessage",
