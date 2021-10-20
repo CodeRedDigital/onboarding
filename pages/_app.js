@@ -342,6 +342,54 @@ function OnboardingApp({ Component, pageProps }) {
         }
       }
     }
+    // check to see which things need updating
+    // check to see if the quote is available
+    function checkQuote() {
+      let localQuote = state.app.localData.quote;
+      let urlQuote = state.app.urlData.quote;
+      if (localQuote) {
+        if (urlQuote) {
+          if (localQuote.id !== urlQuote) {
+            // go fetch quote based upon urlQuote
+            console.log("A1. Quotes both there but don't match fetch from DB");
+            getQuote(urlQuote);
+          } else {
+            console.log(
+              "A2. urlQuote but matches Local Quote using local quote"
+            );
+            dispatch({
+              type: "quoteDownloaded",
+              quote: localQuote
+            });
+            dispatch({ type: "incrementDataCount" });
+          }
+        } else {
+          console.log("A3. No URL quote but Local Quote using local quote");
+          dispatch({
+            type: "quoteDownloaded",
+            quote: localQuote
+          });
+          dispatch({ type: "incrementDataCount" });
+        }
+      } else if (urlQuote) {
+        console.log("A4. No local quote but url Quote fetching quote from db");
+        getQuote(urlQuote);
+      } else if (state.app.urlData.user || state.app.localData.user) {
+        // find quotes associated with the user
+        console.log(
+          "A5. there is no quote but there is a user we shall display an array of quotes associated with the user"
+        );
+      } else {
+        dispatch({
+          type: "flashMessage",
+          value:
+            "There is an issue with the link you were sent please contact the solicitor to rectify this. The Quote and User are missing."
+        });
+        dispatch({
+          type: "unknownUser"
+        });
+      }
+    }
   },[
     state.app.urlDataFetched,
     state.app.localDataFetched,
