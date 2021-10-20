@@ -19,9 +19,9 @@ function OnboardingApp({ Component, pageProps }) {
     app: {
       loggedIn: false,
       loading: true,
-      urlDataFetched: true,
+      urlDataFetched: false,
       urlData: {},
-      localDataFetched: true,
+      localDataFetched: false,
       localData: {},
       firmData: false,
       quoteData: false,
