@@ -169,6 +169,30 @@ function OnboardingApp({ Component, pageProps }) {
         draft.quote.type = action.quote.type;
         draft.quote.addresses = action.quote.associatedAddresses;
         draft.app.quoteData = true;
+        draft.app.quoteUpdated = true
+        return;
+      // save the user data to state
+      case "userDownloaded":
+        if (action.user) {
+          draft.user.validated = action.user.validated;
+          draft.user.title = action.user.title;
+          draft.user.otherTitle = action.user.otherTitle;
+          draft.user.firstName = action.user.firstName;
+          draft.user.surname = action.user.surname;
+          draft.user.id = action.user.id;
+          draft.user.email = action.user.email;
+          draft.user.token = action.user.token;
+          draft.user.telephone = action.user.telephone;
+          draft.user.telephoneNoDialCode = action.user.telephoneNoDialCode;
+          draft.user.dialCode = action.user.dialCode;
+          if (action.user.agreed) {
+            draft.user.agreed.gdpr = action.user.agreed.gdpr;
+            draft.user.agreed.tAndC = action.user.agreed.tAndC;
+            draft.user.agreed.all = action.user.agreed.all;
+          }
+          draft.app.userData = true;
+          draft.app.userUpdated = true
+        }
         return;
       // save the firm data to state
       case "firmDownloaded":
@@ -250,6 +274,30 @@ function OnboardingApp({ Component, pageProps }) {
         return true;
       } else {
         return false;
+      }
+    }
+    // get the user if available
+    async function getUser(userId) {
+      try {
+        const fetchUser = await AxiosPali.get(
+          `/data/test/loading/${userId}-loading.json`
+        );
+        if (fetchUser.data) {
+          dispatch({
+            type: "userDownloaded",
+            user: fetchUser.data
+          });
+          dispatch({ type: "incrementDataCount" });
+        }
+      } catch (error) {
+        if (error.response.status == "404") {
+          dispatch({
+            type: "flashMessage",
+            value:
+              "There was an issue getting the user, either it does not exist or there was a bad connection. Contact the solicitor who sent you this link if the problem continues"
+          });
+          dispatch({ type: "incrementDataCount" });
+        }
       }
     }
   },[
