@@ -32,6 +32,7 @@ function OnboardingApp({ Component, pageProps }) {
       quoteUpdated: false,
       userUpdated: false,
       usersUpdated: false,
+      unknownUser: false,
       indexOfAssociatedSolicitor: null,
       indexOfLoggedInUser: null,
       indexOfPrimaryUser: null,
@@ -219,6 +220,10 @@ function OnboardingApp({ Component, pageProps }) {
       case "incrementDataCount":
         ++draft.app.dataCount;
         return;
+      // flag to redirect to login if the user is unknown
+      case "unknownUser":
+        draft.appData.unknownUser = true
+        draft.appData.isLoading = false
       // flags for updating localStorage
       case "appFinished":
         draft.app.appUpdated = false
@@ -384,6 +389,70 @@ function OnboardingApp({ Component, pageProps }) {
           type: "flashMessage",
           value:
             "There is an issue with the link you were sent please contact the solicitor to rectify this. The Quote and User are missing."
+        });
+        dispatch({
+          type: "unknownUser"
+        });
+      }
+    }
+    // check that the user is available and associated with the quote
+    function checkUser() {
+      let localUser = state.app.localData.user;
+      let urlUser = state.app.urlData.user;
+      let trueUser = null;
+      if (urlUser) {
+        trueUser = urlUser;
+      } else if (localUser) {
+        trueUser = localUser.id;
+      } // checks to see if urlUser exists and if not sets to localUser
+      if (isUserInQuote(trueUser)) {
+        // checks to see if the trueUser is in the quote
+        console.log("the user is in the quote, proceed");
+        if (localUser) {
+          // is user in localStorage
+          if (urlUser) {
+            // is the user in both url & localStorage
+            if (localUser.id !== urlUser) {
+              console.log(
+                "B1 User in localStorage and url but don't match fetch from DB"
+              );
+              getUser(urlUser);
+            } else {
+              console.log(
+                "B2 User in localStorage and url and they match using localStorage user"
+              );
+              dispatch({
+                type: "userDownloaded",
+                user: localUser
+              });
+              dispatch({ type: "incrementDataCount" });
+            }
+          } else {
+            // user is only in localStorage
+            console.log("B3 User only in localStorage using localStorage user");
+            dispatch({
+              type: "userDownloaded",
+              user: localUser
+            });
+            dispatch({ type: "incrementDataCount" });
+          }
+        } else if (urlUser) {
+          // user not in localStorage but is in url
+          console.log("B4 User only in url fetch from DB");
+          getUser(urlUser);
+        } else {
+          // there is no user in either localStorage or url
+          dispatch({
+            type: "flashMessage",
+            value:
+              "There is no user associated with the link, please contact the solicitor for the correct link"
+          });
+        }
+      } else {
+        dispatch({
+          type: "flashMessage",
+          value:
+            "The user and the quote do not match or the user is not there, please contact the solicitor for the correct link."
         });
         dispatch({
           type: "unknownUser"
