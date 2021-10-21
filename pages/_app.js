@@ -235,7 +235,7 @@ function OnboardingApp({ Component, pageProps }) {
       // flag to redirect to login if the user is unknown
       case "unknownUser":
         draft.app.unknownUser = true
-        draft.app.loading = false
+        // draft.app.loading = false
         draft.app.appUpdated = true
       // flags for updating localStorage
       case "appFinished":
@@ -478,6 +478,7 @@ function OnboardingApp({ Component, pageProps }) {
       let firmId = state.quote.associatedFirmId;
       let localFirm = state.app.localData.firm;
       let localFirmId = null;
+      console.log("Getting firm")
       if (localFirm) {
         localFirmId = localFirm.id;
       }
@@ -488,6 +489,7 @@ function OnboardingApp({ Component, pageProps }) {
         });
         dispatch({ type: "incrementDataCount" });
       } else {
+        console.log("using the firmId from quote")
         getFirm(firmId);
       }
     }
@@ -518,6 +520,10 @@ function OnboardingApp({ Component, pageProps }) {
       }
       if (state.app.userData) {
         console.log("Hurray time to load the firm");
+        checkFirm();
+      }
+      if (state.app.unknownUser && state.app.quoteData && !state.app.userData) {
+        console.log("No User but there is a quote and we can use the firmId associated with the quote");
         checkFirm();
       }
       // this is just for testing if toke is true set state to loggedIn
@@ -565,13 +571,13 @@ function OnboardingApp({ Component, pageProps }) {
     state.app.usersUpdated
   ])
   // start useEffect to handle the redirection
-  useEffect(() => {
-    if (state.app.unknownUser) {
-      console.log("user is unknown redirecting to /login")
-    }
-  },[
-    state.app.unknownUser
-  ])
+  // useEffect(() => {
+  //   if (state.app.unknownUser) {
+  //     console.log("user is unknown redirecting to /login")
+  //   }
+  // },[
+  //   state.app.unknownUser
+  // ])
   // end useEffect to handle the redirection
   return (
     <StateContext.Provider value={state}>
