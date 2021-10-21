@@ -56,7 +56,7 @@ function OnboardingApp({ Component, pageProps }) {
       id: "",
       name: "",
       url: "",
-      Colours: {
+      colours: {
         primary: "",
         primaryOpposite: "",
         secondary: "",
@@ -181,6 +181,7 @@ function OnboardingApp({ Component, pageProps }) {
         draft.quote.addresses = action.quote.associatedAddresses;
         draft.app.quoteData = "success";
         draft.app.quoteUpdated = true
+        draft.app.appUpdated = true
         return;
       // save the user data to state
       case "userDownloaded":
@@ -203,19 +204,20 @@ function OnboardingApp({ Component, pageProps }) {
           }
           draft.app.userData = "success";
           draft.app.userUpdated = true
+          draft.app.appUpdated = true
         }
         return;
       // save the firm data to state
       case "firmDownloaded":
         draft.firm.id = action.firm.id;
-        draft.firm.Name = action.firm.Name;
+        draft.firm.name = action.firm.name;
         draft.firm.url = action.firm.url;
-        draft.firm.Colours.primary = action.firm.Colours.primary;
-        draft.firm.Colours.primaryOpposite = action.firm.Colours.primaryOpposite;
-        draft.firm.Colours.secondary = action.firm.Colours.secondary;
-        draft.firm.Colours.secondaryOpposite = action.firm.Colours.secondaryOpposite;
-        draft.firm.Colours.tertiary = action.firm.Colours.tertiary;
-        draft.firm.Colours.tertiaryOpposite = action.firm.Colours.tertiaryOpposite;
+        draft.firm.colours.primary = action.firm.colours.primary;
+        draft.firm.colours.primaryOpposite = action.firm.colours.primaryOpposite;
+        draft.firm.colours.secondary = action.firm.colours.secondary;
+        draft.firm.colours.secondaryOpposite = action.firm.colours.secondaryOpposite;
+        draft.firm.colours.tertiary = action.firm.colours.tertiary;
+        draft.firm.colours.tertiaryOpposite = action.firm.colours.tertiaryOpposite;
         draft.firm.logos.whiteSvg = action.firm.logos.whiteSvg;
         draft.firm.logos.whitePng = action.firm.logos.whitePng;
         draft.firm.logos.colourSvg = action.firm.logos.colourSvg;
@@ -225,40 +227,41 @@ function OnboardingApp({ Component, pageProps }) {
         draft.firm.modalContent = action.firm.modalContent;
         draft.app.firmData = "success";
         draft.app.firmUpdated = true;
+        draft.app.appUpdated = true
         return;
       // data fetch starting
       case "firmStarted":
         draft.app.firmData = "pending";
-        draft.app.firmUpdated = true
+        draft.app.appUpdated = true
         return
       case "quoteStarted":
         draft.app.quoteData = "pending";
-        draft.app.quoteUpdated = true
+        draft.app.appUpdated = true
         return
       case "userStarted":
         draft.app.userData = "pending";
-        draft.app.userUpdated = true
+        draft.app.appUpdated = true
         return
       case "usersStarted":
         draft.app.usersData = "pending";
-        draft.app.usersUpdated = true
+        draft.app.appUpdated = true
         return
       // data fetch failures
       case "firmFailed":
         draft.app.firmData = "fail";
-        draft.app.firmUpdated = true
+        draft.app.appUpdated = true
         return
       case "quoteFailed":
         draft.app.quoteData = "fail";
-        draft.app.quoteUpdated = true
+        draft.app.appUpdated = true
         return
       case "userFailed":
         draft.app.userData = "fail";
-        draft.app.userUpdated = true
+        draft.app.appUpdated = true
         return
       case "usersFailed":
         draft.app.usersData = "fail";
-        draft.app.usersUpdated = true
+        draft.app.appUpdated = true
         return
       // flag to redirect to login if the user is unknown
       case "unknownUser":
@@ -423,6 +426,7 @@ function OnboardingApp({ Component, pageProps }) {
         console.log(
           "A5. there is no quote but there is a user we shall display an array of quotes associated with the user"
         );
+        dispatch({ type: "quoteFailed" })
       } else {
         dispatch({
           type: "flashMessage",
@@ -444,9 +448,9 @@ function OnboardingApp({ Component, pageProps }) {
       } else if (localUser) {
         trueUser = localUser.id;
       } // checks to see if urlUser exists and if not sets to localUser
-      if (isUserInQuote(trueUser)) {
-        // checks to see if the trueUser is in the quote
-        console.log("the user is in the quote, proceed");
+      if (isUserInQuote(trueUser) || state.app.quoteData === "fail") {
+        // checks to see if the trueUser is in the quote or if the quote failed
+        console.log("the user is in the quote, or quote failed proceed");
         if (localUser) {
           // is user in localStorage
           if (urlUser) {
@@ -487,6 +491,7 @@ function OnboardingApp({ Component, pageProps }) {
           });
         }
       } else {
+        console.log("We are here")
         dispatch({ type: "userFailed" });
         dispatch({
           type: "flashMessage",
@@ -509,9 +514,12 @@ function OnboardingApp({ Component, pageProps }) {
           type: "firmDownloaded",
           firm: localFirm
         });
-      } else {
+      } else if (firmId) {
         console.log("using the firmId from quote")
         getFirm(firmId);
+      } else{
+        console.log("no firm Id failing")
+        dispatch({ type: "firmFailed" });
       }
     }
     // logic of when to run functions
@@ -532,13 +540,12 @@ function OnboardingApp({ Component, pageProps }) {
       ) {
         checkQuote();
       }
-      if (state.app.quoteData === "success") {
+      if (["success", "fail"].includes(state.app.quoteData)) {
         console.log("Hurray time to load the user");
         checkUser();
       }
       if (["success", "fail"].includes(state.app.userData)) {
         console.log("Hurray time to load the firm");
-        console.log(state.app.userData);
         checkFirm();
       }
       // if (state.app.unknownUser && state.app.quoteData && !state.app.userData) {
@@ -566,6 +573,7 @@ function OnboardingApp({ Component, pageProps }) {
     if (state.app.firmUpdated) {
       localStorage.setItem("firm", JSON.stringify(state.firm))
       dispatch({type: "firmFinished"})
+      console.log(state.app)
       if (document.querySelector(".loading")) {
         document.querySelector(".loading").classList.add("loaded");
       }
