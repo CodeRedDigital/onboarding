@@ -26,11 +26,10 @@ function OnboardingApp({ Component, pageProps }) {
       urlData: {},
       localDataFetched: false,
       localData: {},
-      firmData: false,
-      quoteData: false,
-      userData: false,
-      usersData: false,
-      dataCount: 0,
+      firmData: null,
+      quoteData: null,
+      userData: null,
+      usersData: null,
       appUpdated: false,
       firmUpdated: false,
       quoteUpdated: false,
@@ -180,7 +179,7 @@ function OnboardingApp({ Component, pageProps }) {
         draft.quote.associatedSolicitorId = action.quote.associatedSolicitorId;
         draft.quote.type = action.quote.type;
         draft.quote.addresses = action.quote.associatedAddresses;
-        draft.app.quoteData = true;
+        draft.app.quoteData = "success";
         draft.app.quoteUpdated = true
         return;
       // save the user data to state
@@ -202,7 +201,7 @@ function OnboardingApp({ Component, pageProps }) {
             draft.user.agreed.tAndC = action.user.agreed.tAndC;
             draft.user.agreed.all = action.user.agreed.all;
           }
-          draft.app.userData = true;
+          draft.app.userData = "success";
           draft.app.userUpdated = true
         }
         return;
@@ -224,14 +223,43 @@ function OnboardingApp({ Component, pageProps }) {
         draft.firm.solicitors = action.firm.solicitors;
         draft.firm.thirdfort = action.firm.thirdfort;
         draft.firm.modalContent = action.firm.modalContent;
-        draft.app.firmData = true;
+        draft.app.firmData = "success";
         draft.app.firmUpdated = true;
         return;
-      // data count to track how much data has been collected
-      case "incrementDataCount":
-        draft.app.dataCount++;
-        draft.app.appUpdated = true;
-        return;
+      // data fetch starting
+      case "firmStarted":
+        draft.app.firmData = "pending";
+        draft.app.firmUpdated = true
+        return
+      case "quoteStarted":
+        draft.app.quoteData = "pending";
+        draft.app.quoteUpdated = true
+        return
+      case "userStarted":
+        draft.app.userData = "pending";
+        draft.app.userUpdated = true
+        return
+      case "usersStarted":
+        draft.app.usersData = "pending";
+        draft.app.usersUpdated = true
+        return
+      // data fetch failures
+      case "firmFailed":
+        draft.app.firmData = "fail";
+        draft.app.firmUpdated = true
+        return
+      case "quoteFailed":
+        draft.app.quoteData = "fail";
+        draft.app.quoteUpdated = true
+        return
+      case "userFailed":
+        draft.app.userData = "fail";
+        draft.app.userUpdated = true
+        return
+      case "usersFailed":
+        draft.app.usersData = "fail";
+        draft.app.usersUpdated = true
+        return
       // flag to redirect to login if the user is unknown
       case "unknownUser":
         draft.app.unknownUser = true
@@ -288,7 +316,6 @@ function OnboardingApp({ Component, pageProps }) {
             type: "quoteDownloaded",
             quote: fetchQuote.data
           });
-          dispatch({ type: "incrementDataCount" });
         }
       } catch (error) {
         console.log("error")
@@ -299,7 +326,7 @@ function OnboardingApp({ Component, pageProps }) {
             value:
               "There was an issue getting the quote, either it does not exist or there was a bad connection. Contact the solicitor who sent you this link if the problem continues"
           });
-          dispatch({ type: "incrementDataCount" });
+          dispatch({type: "quoteFailed"});
         }
       }
     }
@@ -325,8 +352,7 @@ function OnboardingApp({ Component, pageProps }) {
             type: "userDownloaded",
             user: fetchUser.data
           });
-          dispatch({ type: "incrementDataCount" });
-        }
+        } 
       } catch (error) {
         if (error.response.status == "404") {
           dispatch({
@@ -334,7 +360,7 @@ function OnboardingApp({ Component, pageProps }) {
             value:
               "There was an issue getting the user, either it does not exist or there was a bad connection. Contact the solicitor who sent you this link if the problem continues"
           });
-          dispatch({ type: "incrementDataCount" });
+          dispatch({ type: "userFailed" });
         }
       }
     }
@@ -349,7 +375,6 @@ function OnboardingApp({ Component, pageProps }) {
             type: "firmDownloaded",
             firm: fetchFirm.data
           });
-          dispatch({ type: "incrementDataCount" });
         }
       } catch (error) {
         if (error.response.status == "404") {
@@ -358,13 +383,14 @@ function OnboardingApp({ Component, pageProps }) {
             value:
               "There was an issue getting the solicitor, either it does not exist or there was a bad connection. Contact the solicitor who sent you this link if the problem continues"
           });
-          dispatch({ type: "incrementDataCount" });
+          dispatch({ type: "firmFailed" });
         }
       }
     }
     // check to see which things need updating
     // check to see if the quote is available
     function checkQuote() {
+      dispatch({type: "quoteStarted"})
       let localQuote = state.app.localData.quote;
       let urlQuote = state.app.urlData.quote;
       if (localQuote) {
@@ -381,7 +407,6 @@ function OnboardingApp({ Component, pageProps }) {
               type: "quoteDownloaded",
               quote: localQuote
             });
-            dispatch({ type: "incrementDataCount" });
           }
         } else {
           console.log("A3. No URL quote but Local Quote using local quote");
@@ -389,7 +414,6 @@ function OnboardingApp({ Component, pageProps }) {
             type: "quoteDownloaded",
             quote: localQuote
           });
-          dispatch({ type: "incrementDataCount" });
         }
       } else if (urlQuote) {
         console.log("A4. No local quote but url Quote fetching quote from db");
@@ -405,9 +429,9 @@ function OnboardingApp({ Component, pageProps }) {
           value:
             "There is an issue with the link you were sent please contact the solicitor to rectify this. The Quote and User are missing."
         });
-        dispatch({
-          type: "unknownUser"
-        });
+        dispatch({type: "quoteFailed"});
+        dispatch({type: "userFailed"});
+        dispatch({type: "unknownUser"});
       }
     }
     // check that the user is available and associated with the quote
@@ -440,7 +464,6 @@ function OnboardingApp({ Component, pageProps }) {
                 type: "userDownloaded",
                 user: localUser
               });
-              dispatch({ type: "incrementDataCount" });
             }
           } else {
             // user is only in localStorage
@@ -449,7 +472,6 @@ function OnboardingApp({ Component, pageProps }) {
               type: "userDownloaded",
               user: localUser
             });
-            dispatch({ type: "incrementDataCount" });
           }
         } else if (urlUser) {
           // user not in localStorage but is in url
@@ -457,6 +479,7 @@ function OnboardingApp({ Component, pageProps }) {
           getUser(urlUser);
         } else {
           // there is no user in either localStorage or url
+          dispatch({ type: "userFailed" });
           dispatch({
             type: "flashMessage",
             value:
@@ -464,14 +487,13 @@ function OnboardingApp({ Component, pageProps }) {
           });
         }
       } else {
+        dispatch({ type: "userFailed" });
         dispatch({
           type: "flashMessage",
           value:
             "The user and the quote do not match or the user is not there, please contact the solicitor for the correct link."
         });
-        dispatch({
-          type: "unknownUser"
-        });
+        dispatch({ type: "unknownUser" });
       }
     }
     function checkFirm() {
@@ -487,7 +509,6 @@ function OnboardingApp({ Component, pageProps }) {
           type: "firmDownloaded",
           firm: localFirm
         });
-        dispatch({ type: "incrementDataCount" });
       } else {
         console.log("using the firmId from quote")
         getFirm(firmId);
@@ -507,25 +528,23 @@ function OnboardingApp({ Component, pageProps }) {
       if (
         state.app.urlDataFetched &&
         state.app.localDataFetched &&
-        !state.app.quoteData
+        state.app.quoteData === null
       ) {
-        console.log(
-          `url: ${state.app.urlDataFetched}, local: ${state.app.localDataFetched}`
-        );
         checkQuote();
       }
-      if (state.app.quoteData) {
+      if (state.app.quoteData === "success") {
         console.log("Hurray time to load the user");
         checkUser();
       }
-      if (state.app.userData) {
+      if (["success", "fail"].includes(state.app.userData)) {
         console.log("Hurray time to load the firm");
+        console.log(state.app.userData);
         checkFirm();
       }
-      if (state.app.unknownUser && state.app.quoteData && !state.app.userData) {
-        console.log("No User but there is a quote and we can use the firmId associated with the quote");
-        checkFirm();
-      }
+      // if (state.app.unknownUser && state.app.quoteData && !state.app.userData) {
+      //   console.log("No User but there is a quote and we can use the firmId associated with the quote");
+      //   checkFirm();
+      // }
       // this is just for testing if toke is true set state to loggedIn
       if (state.user.token) {
         // login
