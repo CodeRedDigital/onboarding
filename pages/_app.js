@@ -30,6 +30,7 @@ function OnboardingApp({ Component, pageProps }) {
       quoteData: false,
       userData: false,
       usersData: false,
+      dataCount: 0,
       appUpdated: false,
       firmUpdated: false,
       quoteUpdated: false,
@@ -228,7 +229,8 @@ function OnboardingApp({ Component, pageProps }) {
         return;
       // data count to track how much data has been collected
       case "incrementDataCount":
-        ++draft.app.dataCount;
+        draft.app.dataCount++;
+        draft.app.appUpdated = true;
         return;
       // flag to redirect to login if the user is unknown
       case "unknownUser":
