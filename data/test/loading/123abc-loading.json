@@ -3,10 +3,10 @@
   "Name": "ABC 123 Solicitors",
   "url": "https://www.abc-123-solicitors.com",
   "Colours": {
-    "Primary": "ff0000",
-    "PrimaryOpposite": "000000",
-    "Secondary": "00ff00",
-    "SecondaryOpposite": "ffffff"
+    "primary": "ff0000",
+    "primaryOpposite": "000000",
+    "secondary": "00ff00",
+    "secondaryOpposite": "ffffff"
   },
   "logos": {
     "whiteSvg": "abc-123-logo-white.svg",
