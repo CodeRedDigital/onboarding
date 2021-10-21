@@ -236,6 +236,7 @@ function OnboardingApp({ Component, pageProps }) {
       case "unknownUser":
         draft.app.unknownUser = true
         draft.app.isLoading = false
+        draft.app.appUpdated = true
       // flags for updating localStorage
       case "appFinished":
         draft.app.appUpdated = false
@@ -563,6 +564,15 @@ function OnboardingApp({ Component, pageProps }) {
     state.app.userUpdated,
     state.app.usersUpdated
   ])
+  // start useEffect to handle the redirection
+  useEffect(() => {
+    if (state.app.unknownUser) {
+      console.log("user is unknown redirecting to /login")
+    }
+  },[
+    state.app.unknownUser
+  ])
+  // end useEffect to handle the redirection
   return (
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
