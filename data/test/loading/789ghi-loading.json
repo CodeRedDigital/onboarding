@@ -1,8 +1,8 @@
 {
   "id": "789ghi",
-  "Name": "GHI 789 Solicitors",
+  "name": "GHI 789 Solicitors",
   "url": "https://www.ghi-789-solicitors.com",
-  "Colours": {
+  "colours": {
     "primary": "0000ff",
     "primaryOpposite": "000000",
     "secondary": "f0f0f0",

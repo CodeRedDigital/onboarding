@@ -1,8 +1,8 @@
 {
   "id": "456def",
-  "Name": "DEF 456 Solicitors",
+  "name": "DEF 456 Solicitors",
   "url": "https://www.def-456-solicitors.com",
-  "Colours": {
+  "colours": {
     "primary": "0000ff",
     "primaryOpposite": "000000",
     "secondary": "f0f0f0",
