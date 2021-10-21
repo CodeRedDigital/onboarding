@@ -235,7 +235,7 @@ function OnboardingApp({ Component, pageProps }) {
       // flag to redirect to login if the user is unknown
       case "unknownUser":
         draft.app.unknownUser = true
-        draft.app.isLoading = false
+        draft.app.loading = false
         draft.app.appUpdated = true
       // flags for updating localStorage
       case "appFinished":
