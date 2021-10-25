@@ -566,6 +566,20 @@ function OnboardingApp({ Component, pageProps }) {
   ])
   // useEffect to update the localStorage
   useEffect(() => {
+    // check for fail and if so remove local storage
+    if (state.app.quoteData === "fail") {
+      localStorage.removeItem("quote")
+    }
+    if (state.app.firmData === "fail") {
+      localStorage.removeItem("firm")
+    }
+    if (state.app.userData === "fail") {
+      localStorage.removeItem("user")
+    }
+    if (state.app.usersData === "fail") {
+      localStorage.removeItem("users")
+    }
+    // check to see which data has updated and store it locally
     if (state.app.appUpdated) {
       localStorage.setItem("app", JSON.stringify(state.app))
       dispatch({type: "appFinished"})
@@ -612,13 +626,13 @@ function OnboardingApp({ Component, pageProps }) {
     }
   },[state.app.firmData])
   // start useEffect to handle the redirection
-  // useEffect(() => {
-  //   if (state.app.unknownUser) {
-  //     console.log("user is unknown redirecting to /login")
-  //   }
-  // },[
-  //   state.app.unknownUser
-  // ])
+  useEffect(() => {
+    if (state.app.unknownUser) {
+      console.log("user is unknown redirecting to /login")
+    }
+  },[
+    state.app.unknownUser
+  ])
   // end useEffect to handle the redirection
   return (
     <StateContext.Provider value={state}>
