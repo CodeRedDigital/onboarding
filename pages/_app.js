@@ -3,6 +3,7 @@
 import '../styles/main.css'
 
 // packages
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useImmerReducer } from 'use-immer'
 
@@ -17,6 +18,7 @@ import DispatchContext from '../states/DispatchContext'
 import { AxiosPali } from '../src/AxiosRequests'
 
 function OnboardingApp({ Component, pageProps }) {
+  const router = useRouter()
   const initialState = {
     flashMessages: [],
     app: {
@@ -629,6 +631,7 @@ function OnboardingApp({ Component, pageProps }) {
   useEffect(() => {
     if (state.app.unknownUser) {
       console.log("user is unknown redirecting to /login")
+      router.push('/login')
     }
   },[
     state.app.unknownUser
