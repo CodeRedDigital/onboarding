@@ -24,6 +24,8 @@ function OnboardingApp({ Component, pageProps }) {
     app: {
       loggedIn: false,
       loading: true,
+      loadingError: false,
+      loadingErrorMsg: "",
       urlDataFetched: false,
       urlData: {},
       localDataFetched: false,
@@ -32,6 +34,7 @@ function OnboardingApp({ Component, pageProps }) {
       quoteData: null,
       userData: null,
       usersData: null,
+      dataCount: 0,
       appUpdated: false,
       firmUpdated: false,
       quoteUpdated: false,
@@ -182,6 +185,8 @@ function OnboardingApp({ Component, pageProps }) {
         draft.quote.type = action.quote.type;
         draft.quote.addresses = action.quote.associatedAddresses;
         draft.app.quoteData = "success";
+        draft.app.dataCount++
+        console.log("quote download success")
         draft.app.quoteUpdated = true
         draft.app.appUpdated = true
         return;
@@ -205,6 +210,8 @@ function OnboardingApp({ Component, pageProps }) {
             draft.user.agreed.all = action.user.agreed.all;
           }
           draft.app.userData = "success";
+          draft.app.dataCount++
+          console.log("user download success")
           draft.app.userUpdated = true
           draft.app.appUpdated = true
         }
@@ -228,6 +235,8 @@ function OnboardingApp({ Component, pageProps }) {
         draft.firm.thirdfort = action.firm.thirdfort;
         draft.firm.modalContent = action.firm.modalContent;
         draft.app.firmData = "success";
+        draft.app.dataCount++
+        console.log("firm download success")
         draft.app.firmUpdated = true;
         draft.app.appUpdated = true
         return;
@@ -251,14 +260,20 @@ function OnboardingApp({ Component, pageProps }) {
       // data fetch failures
       case "firmFailed":
         draft.app.firmData = "fail";
+        draft.app.dataCount++
+        console.log("firm download fail")
         draft.app.appUpdated = true
         return
       case "quoteFailed":
         draft.app.quoteData = "fail";
+        draft.app.dataCount++
+        console.log("quote download fail")
         draft.app.appUpdated = true
         return
       case "userFailed":
         draft.app.userData = "fail";
+        draft.app.dataCount++
+        console.log("user download fail")
         draft.app.appUpdated = true
         return
       case "usersFailed":
@@ -268,8 +283,16 @@ function OnboardingApp({ Component, pageProps }) {
       // flag to redirect to login if the user is unknown
       case "unknownUser":
         draft.app.unknownUser = true
-        // draft.app.loading = false
         draft.app.appUpdated = true
+      // Data loaded
+      case "loaded":
+        draft.app.loading = false
+        return
+      // There has been an issue loading the user
+      case "loadingIssue":
+        draft.app.loadingError = true
+        draft.app.loadingErrorMsg = action.message
+        return
       // flags for updating localStorage
       case "appFinished":
         draft.app.appUpdated = false
@@ -512,6 +535,7 @@ function OnboardingApp({ Component, pageProps }) {
         localFirmId = localFirm.id;
       }
       if (firmId === localFirmId) {
+        console.log("Using the locally stored firm")
         dispatch({
           type: "firmDownloaded",
           firm: localFirm
@@ -630,11 +654,47 @@ function OnboardingApp({ Component, pageProps }) {
   // start useEffect to handle the redirection
   useEffect(() => {
     if (state.app.unknownUser) {
-      console.log("user is unknown redirecting to /login")
       router.push('/login')
     }
+    if (state.app.dataCount >= 3) {
+      dispatch({ type: "loaded" })
+      if (state.app.quoteData === "success" && state.app.firmData === "success" && state.app.userData === "success") {
+        // all the data has been loaded successfully work out the current state of the user
+        // has the user not been validated
+        if (!state.user.validated) {
+          router.push('/welcome')
+        } else if (!state.user.token) {
+          router.push('/login')
+        } else {
+          console.log("user has a token")
+          // load the associated users
+  
+          // set index of Primary user
+  
+          // set index of current user
+  
+          // check if current user has accepted all terms
+          if (state.user.agreed.all) {
+            // if yes redirect to router.push('/users/state.user.id')
+            router.push(`/users/${state.user.id}`)
+          } else {
+            // if no redirect to router.push('/permissions')
+            router.push('/permissions')
+          }
+        }
+      } else {
+        dispatch({ 
+          type: "loadingIssue",
+          message: "There has been an issue trying to refresh your current session, either login below or contact your Solicitor for the correct URL."
+        })
+        router.push('/login')
+      }
+    }
   },[
-    state.app.unknownUser
+    state.app.unknownUser,
+    state.app.userData,
+    state.app.firmData,
+    state.app.quoteData
   ])
   // end useEffect to handle the redirection
   return (

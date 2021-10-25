@@ -1,9 +1,12 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useContext } from 'react'
 
 // components
-import LoadingScreen from '../components/LoadingScreen'
+import Header from '../components/Header'
+import Main from '../components/Main'
+import Footer from '../components/Footer'
 
 // states
 import StateContext from '../states/StateContext'
@@ -12,9 +15,34 @@ import DispatchContext from '../states/DispatchContext'
 export default function Home() {
   const appState = useContext(StateContext);
   return (
-    <>
-      <h1>Login</h1>
-      <h2>Welcome {appState.app.userData === "success" ? appState.user.firstName : ""}</h2>
-    </>
+    <Main title="login">
+      <h1>{appState.user.firstName} Login</h1>
+      <p>If you don&apos;t have an account <Link href="/create">Create One here</Link>.</p>
+      <div className="column-row">
+        <section className="form-grid">
+          <label htmlFor="email">email</label>
+          <div>
+            <input
+              onChange={e => setPassword(e.target.value)}
+              id="email"
+              type="email"
+              value={appState.user.email} // add the email into the value
+            />
+            <div className="alert alert-danger small"></div>
+          </div>
+          <label htmlFor="password">Password</label>
+          <div>
+            <input onChange={e => setPassword(e.target.value)} id="password" type="password" />
+            <div className="alert alert-danger small"></div>
+          </div>
+          <button className="btn primary" type="submit">
+            Submit
+          </button>
+        </section>
+      </div>
+      <p className="center">
+        <Link href="/forgotten">Forgot your Password?</Link>
+      </p>
+    </Main>
   )
 }
