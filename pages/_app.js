@@ -597,6 +597,20 @@ function OnboardingApp({ Component, pageProps }) {
     state.app.userUpdated,
     state.app.usersUpdated
   ])
+  // start useEffect to handle when firmData has successfully loaded
+  useEffect(() => {
+    if (state.app.firmData === "success") {
+      const root = document.documentElement;
+      root.style.cssText = `
+        --solicitor-primary: #${state.firm.colours.primary};
+        --solicitor-primary-opposite: #${state.firm.colours.primaryOpposite};
+        --solicitor-secondary: #${state.firm.colours.secondary};
+        --solicitor-secondary-opposite: #${state.firm.colours.secondaryOpposite};
+        --solicitor-tertiary: #${state.firm.colours.tertiary};
+        --solicitor-tertiary-opposite: #${state.firm.colours.tertiaryOpposite};
+      `
+    }
+  },[state.app.firmData])
   // start useEffect to handle the redirection
   // useEffect(() => {
   //   if (state.app.unknownUser) {
