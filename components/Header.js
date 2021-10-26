@@ -7,7 +7,7 @@ function Header() {
   return (
     <header>
       {appState.app.firmData === "success" ? <img
-      src={`/images/logos/${appState.firm.logos.colourSvg}`}
+      src={`../images/logos/${appState.firm.logos.colourSvg}`}
       alt={appState.firm.Name}
     /> : ""}
     </header>
