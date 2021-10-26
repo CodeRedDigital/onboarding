@@ -7,7 +7,6 @@ import LoadingSpinner from './LoadingSpinner'
 
 // contexts
 import StateContext from '../states/StateContext'
-import DispatchContext from '../states/DispatchContext'
 
 function LoadingScreen(props) {
   const appState = useContext(StateContext)
