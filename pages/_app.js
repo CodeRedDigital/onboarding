@@ -460,7 +460,6 @@ function OnboardingApp({ Component, pageProps }) {
         });
         dispatch({type: "quoteFailed"});
         dispatch({type: "userFailed"});
-        dispatch({type: "unknownUser"});
       }
     }
     // check that the user is available and associated with the quote
@@ -523,7 +522,6 @@ function OnboardingApp({ Component, pageProps }) {
           value:
             "The user and the quote do not match or the user is not there, please contact the solicitor for the correct link."
         });
-        dispatch({ type: "unknownUser" });
       }
     }
     function checkFirm() {
@@ -574,10 +572,6 @@ function OnboardingApp({ Component, pageProps }) {
         console.log("Hurray time to load the firm");
         checkFirm();
       }
-      // if (state.app.unknownUser && state.app.quoteData && !state.app.userData) {
-      //   console.log("No User but there is a quote and we can use the firmId associated with the quote");
-      //   checkFirm();
-      // }
       // this is just for testing if toke is true set state to loggedIn
       if (state.user.token) {
         // login
@@ -657,7 +651,10 @@ function OnboardingApp({ Component, pageProps }) {
       router.push('/login')
     }
     if (state.app.dataCount >= 3) {
-      dispatch({ type: "loaded" })
+      if (state.app.userData === "fail") {
+        dispatch({type: "unknownUser"});
+      }
+      // dispatch({ type: "loaded" })
       if (state.app.quoteData === "success" && state.app.firmData === "success" && state.app.userData === "success") {
         // all the data has been loaded successfully work out the current state of the user
         // has the user not been validated
