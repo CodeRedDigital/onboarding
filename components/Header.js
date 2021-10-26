@@ -6,10 +6,10 @@ function Header() {
   const appState = useContext(StateContext);
   return (
     <header>
-      <img
+      {appState.app.firmData === "success" ? <img
       src={`/images/logos/${appState.firm.logos.colourSvg}`}
       alt={appState.firm.Name}
-    />
+    /> : ""}
     </header>
   )
 }
