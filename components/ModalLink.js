@@ -1,7 +1,9 @@
+import Link from 'next/link'
+
 function ModalLink(props) {
   return (
     <>
-      <a
+      <Link
         className=""
         href={"#" + props.name + "Modal"}
         data-modal-open={props.name + "Modal"}
@@ -12,7 +14,7 @@ function ModalLink(props) {
         id={props.name + "Modal__trigger-A"}
       >
         {props.name}
-      </a>
+      </Link>
       <section
         className="modal-box a11y-modal"
         id={props.name + "Modal"}
