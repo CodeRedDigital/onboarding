@@ -309,7 +309,21 @@ function OnboardingApp({ Component, pageProps }) {
       case "usersFinished":
         draft.app.usersUpdated = false
         return
-    }
+      // Permissions page dispatches
+      case "agreements":
+        console.log("agreements")
+        draft.user.agreed.tAndC = true
+        draft.user.agreed.gdpr = true
+        draft.user.agreed.all = true
+        draft.app.userUpdated = true
+        if (action.user) {
+          draft.users[action.user].agreed.gdpr = true
+          draft.users[action.user].agreed.tAndC = true
+          draft.users[action.user].agreed.all = true
+          draft.app.usersUpdated = true
+        }
+        return;
+      }
   }
   const [state, dispatch] = useImmerReducer(ourReducer, initialState);
   useEffect(() => {
@@ -694,6 +708,9 @@ function OnboardingApp({ Component, pageProps }) {
     state.app.quoteData
   ])
   // end useEffect to handle the redirection
+  // start when user is logged in
+  
+  // end when user is logged in
   return (
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
