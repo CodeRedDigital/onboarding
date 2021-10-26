@@ -11,7 +11,6 @@ import DispatchContext from '../states/DispatchContext'
 
 function LoadingScreen(props) {
   const appState = useContext(StateContext)
-  const appDispatch = useContext(DispatchContext)
   useEffect(() => {
     document.title = `Onboarding | ${props.title}`
     window.scrollTo(0,0)
