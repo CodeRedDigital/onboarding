@@ -11,7 +11,7 @@ export default function Home() {
   const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
   async function handleSubmit(event) {
-    event.preventDefault();
+    event.preventDefault()
     // here we will stored the data in local storage
     appDispatch({type: "flashMessage", value: "Your password has been saved."})
     appDispatch({ type: "validate" })
