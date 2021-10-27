@@ -24,7 +24,7 @@ export default function Home() {
     // }
   }
   return (
-    <Main>
+    <Main title="Welcome">
       <h1>Welcome {appState.user.firstName}</h1>
       <p>Create a password to proceed.</p>
       <div className="column-row">
