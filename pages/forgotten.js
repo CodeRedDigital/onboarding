@@ -11,12 +11,19 @@ import DispatchContext from '../states/DispatchContext'
 
 export default function Home() {
   const appState = useContext(StateContext);
+  function handleSubmit(event){
+    event.preventDefault()
+    // send the details off to the backend
+    // create user
+    // get token on return
+    // flash message
+  }
   return (
     <Main title="Forgotten Password">
       <h1>{appState.user.firstName}</h1>
       <p>To reset your password please enter your email address.</p>
       <div className="column-row">
-        <section className="form-grid">
+        <form onSubmit={handleSubmit} className="form-grid">
           <label htmlFor="email">email</label>
           <div>
             <input
@@ -30,7 +37,7 @@ export default function Home() {
           <button className="btn primary" type="submit">
             Submit
           </button>
-        </section>
+        </form>
       </div>
     </Main>
   )
