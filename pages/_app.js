@@ -323,6 +323,10 @@ function OnboardingApp({ Component, pageProps }) {
           draft.app.usersUpdated = true
         }
         return;
+      case "validate":
+        draft.user.validated = true
+        draft.app.userUpdated = true
+        return
       }
   }
   const [state, dispatch] = useImmerReducer(ourReducer, initialState);
@@ -700,12 +704,14 @@ function OnboardingApp({ Component, pageProps }) {
         })
         router.push('/login')
       }
+      if (state.user.validated) {}
     }
   },[
     state.app.unknownUser,
     state.app.userData,
     state.app.firmData,
-    state.app.quoteData
+    state.app.quoteData,
+    state.user.validated
   ])
   // end useEffect to handle the redirection
   // start when user is logged in
