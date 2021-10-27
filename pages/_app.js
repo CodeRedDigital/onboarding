@@ -104,6 +104,7 @@ function OnboardingApp({ Component, pageProps }) {
       telephone: "",
       telephoneNoDialCode: "",
       dialCode: "",
+      addresses: [],
       contact: {
         email: false,
         tel: true,
@@ -240,6 +241,13 @@ function OnboardingApp({ Component, pageProps }) {
         draft.app.firmUpdated = true;
         draft.app.appUpdated = true
         return;
+      // save the users to state
+      case "updateAssociatedUsers":
+        draft.users = action.users
+        draft.app.usersUpdated = true
+        draft.app.appUpdated = true
+        draft.app.usersData = "success"
+        return
       // data fetch starting
       case "firmStarted":
         draft.app.firmData = "pending";
@@ -715,7 +723,80 @@ function OnboardingApp({ Component, pageProps }) {
   ])
   // end useEffect to handle the redirection
   // start when user is logged in
-  
+  useEffect(() => {
+    async function getAssociatedUser(userId) {
+      console.log(`getAssociatedUser(${userId})`);
+      try {
+        const fetchUser = await AxiosPali.get(`/data/test/user/${userId}-user.json`);
+        if (fetchUser.data) {
+          console.log("fetchUser.data")
+          console.log(fetchUser.data)
+          return fetchUser.data
+        }
+      } catch (error) {
+        if (error.response.status == "404") {
+          dispatch({
+            type: "flashMessage",
+            value:
+              "There was an issue getting one of the users associated with this Quote, either it does not exist or there was a bad connection. Contact the solicitor who sent you this link if the problem continues"
+          });
+        }
+      }
+    }
+    async function getAllAssociatedUsers() {
+      if (state.quote.associatedUsers.length > 0) {
+        // check that the quote has users associated with it
+        const associatedUsers = state.quote.associatedUsers; // assign the array of associated users in the quote to a shorted variable name
+        let currentUsers = state.users || []; // assign the array of local users in state to a shorted variable name
+        let newUsers = []; // create an empty array to store the associated users in
+        for (let i = 0; i < associatedUsers.length; i++) {
+          // create an loop for the number of associated users in the quote
+          let indexOfUser = currentUsers.findIndex(
+            user => user.id === associatedUsers[i].id
+          ); // check to see if each user is in the local data
+          if (indexOfUser >= 0) {
+            // if the id is of the current user push it into the array and update the user in state
+            const fetchCurrentUser = await getAssociatedUser(
+              state.user.id
+            ).then(result => {
+              // go fetch the associated user from DB
+              return result; // once the fetch has finished return it
+            })
+             // push the fetched user into the array
+            newUsers.push(fetchCurrentUser)
+            // update user in state
+            dispatch({ type: "fullCurrentUser", user: fetchCurrentUser })
+          } else {
+            // if the user is NOT in local data it's index will be -1
+            const fetchedUser = await getAssociatedUser(
+              associatedUsers[i].id
+            ).then(result => {
+              // go fetch the associated user from DB
+              return result; // once the fetch has finished return it
+            });
+            newUsers.push(fetchedUser); // push the fetched user into the array
+          }
+        }
+        dispatch({ type: "updateAssociatedUsers", users: newUsers }); // add the new array into state
+        // set the primaryUser
+      } else {
+        // if there are no associated users display a flash message
+        dispatch({
+          type: "flashMessage",
+          value:
+            "There are no users associated with this quote, please contact the Solicitor that sent you this link."
+        });
+      }
+    }
+    if (state.app.loggedIn) {
+      // fetch users
+      getAllAssociatedUsers();
+    }
+    if (state.app.usersData === "success") {
+      // set index of current and index of primary
+      console.log("the users have been downloaded")
+    }
+  },[state.app.loggedIn])
   // end when user is logged in
   return (
     <StateContext.Provider value={state}>
