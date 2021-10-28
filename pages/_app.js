@@ -196,7 +196,6 @@ function OnboardingApp({ Component, pageProps }) {
         return;
       // when logged in update the user with all details
       case "fullCurrentUser":
-        console.log("updating the current user")
         draft.user = action.user
         draft.app.userUpdated = true
         return
@@ -303,6 +302,11 @@ function OnboardingApp({ Component, pageProps }) {
         draft.user.validated = true
         draft.app.userUpdated = true
         return
+      // assign indexes of primary and current users
+      case "setIndexes":
+        draft.app.indexOfPrimaryUser = action.primaryIndex
+        draft.app.indexOfLoggedInUser = action.currentIndex
+        draft.app.indexOfAssociatedSolicitor = action.solicitorIndex
       }
   }
   const [state, dispatch] = useImmerReducer(ourReducer, initialState);
@@ -458,6 +462,7 @@ function OnboardingApp({ Component, pageProps }) {
     }
     // check that the user is available and associated with the quote
     function checkUser() {
+      dispatch({type: "userStarted"})
       let localUser = state.app.localData.user;
       let urlUser = state.app.urlData.user;
       let trueUser = null;
@@ -519,6 +524,7 @@ function OnboardingApp({ Component, pageProps }) {
       }
     }
     function checkFirm() {
+      dispatch({type: "firmStarted"})
       let firmId = state.quote.associatedFirmId;
       let localFirm = state.app.localData.firm;
       let localFirmId = null;
@@ -657,13 +663,6 @@ function OnboardingApp({ Component, pageProps }) {
         } else if (!state.user.token) {
           router.push('/login')
         } else {
-          console.log("user has a token")
-          // load the associated users
-  
-          // set index of Primary user
-  
-          // set index of current user
-  
           // check if current user has accepted all terms
           if (state.user.agreed.all) {
             // if yes redirect to router.push('/users/state.user.id')
@@ -693,12 +692,9 @@ function OnboardingApp({ Component, pageProps }) {
   // start when user is logged in
   useEffect(() => {
     async function getAssociatedUser(userId) {
-      console.log(`getAssociatedUser(${userId})`);
       try {
         const fetchUser = await AxiosPali.get(`/data/test/user/${userId}-user.json`);
         if (fetchUser.data) {
-          console.log("fetchUser.data")
-          console.log(fetchUser.data)
           return fetchUser.data
         }
       } catch (error) {
@@ -719,11 +715,8 @@ function OnboardingApp({ Component, pageProps }) {
         let newUsers = []; // create an empty array to store the associated users in
         for (let i = 0; i < associatedUsers.length; i++) {
           // create an loop for the number of associated users in the quote
-          let indexOfUser = associatedUsers.findIndex(
-            user => user.id === currentUser.id
-          ); // check to see if each user is in the local data
+          // check to see if the current associated user is in the current logged in user and update it
           if (currentUser.id === associatedUsers[i].id) {
-            console.log("currentUser time")
             // if the id is of the current user push it into the array and update the user in state
             const fetchCurrentUser = await getAssociatedUser(
               state.user.id
@@ -734,8 +727,6 @@ function OnboardingApp({ Component, pageProps }) {
              // push the fetched user into the array
             newUsers.push(fetchCurrentUser)
             // update user in state
-            console.log("updating the current user now logged in")
-            console.log(fetchCurrentUser)
             dispatch({ type: "fullCurrentUser", user: fetchCurrentUser })
           } else {
             // if the user is NOT in local data it's index will be -1
@@ -760,14 +751,25 @@ function OnboardingApp({ Component, pageProps }) {
       }
     }
     if (state.app.loggedIn) {
+      // TO DO check if the users in local storage match the user associated with the quote and if so use that
       // fetch users
       getAllAssociatedUsers();
     }
     if (state.app.usersData === "success") {
       // set index of current and index of primary
-      console.log("the users have been downloaded")
+      // set index of Primary user
+      const primaryIndex = 1
+      // set index of current user
+      const currentIndex = 1
+      // set index of associated solicitor
+      const solicitorIndex = 1
+      // update app state with these values
+      dispatch({ type: "setIndexes", primaryIndex, currentIndex, solicitorIndex })
     }
-  },[state.app.loggedIn])
+  },[
+    state.app.loggedIn,
+    state.app.usersData
+  ])
   // end when user is logged in
   return (
     <StateContext.Provider value={state}>
