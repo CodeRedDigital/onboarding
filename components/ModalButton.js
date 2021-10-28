@@ -11,7 +11,7 @@ function ModalButton(props) {
       >
         {props.label}
       </button>
-      <section className="modal-box" id={props.name + "Modal"} data-modal hidden="true">
+      <section className="modal-box" id={props.name + "Modal"} data-modal hidden={true}>
         <div className="modal-body" data-modal-document>
           <header>
             <h2>{props.label}</h2>
