@@ -176,15 +176,7 @@ function OnboardingApp({ Component, pageProps }) {
         return;
       // save the quote data to state
       case "quoteDownloaded":
-        draft.quote.id = action.quote.id;
-        draft.quote.AML.Provider = action.quote.AML.Provider;
-        draft.quote.AML.thirdfort = action.quote.AML.thirdfort;
-        draft.quote.AML.credas = action.quote.AML.credas;
-        draft.quote.associatedUsers = action.quote.associatedUsers;
-        draft.quote.associatedFirmId = action.quote.associatedFirmId;
-        draft.quote.associatedSolicitorId = action.quote.associatedSolicitorId;
-        draft.quote.type = action.quote.type;
-        draft.quote.addresses = action.quote.associatedAddresses;
+        draft.quote = action.quote
         draft.app.quoteData = "success";
         draft.app.dataCount++
         console.log("quote download success")
@@ -194,22 +186,7 @@ function OnboardingApp({ Component, pageProps }) {
       // save the user data to state
       case "userDownloaded":
         if (action.user) {
-          draft.user.validated = action.user.validated;
-          draft.user.title = action.user.title;
-          draft.user.otherTitle = action.user.otherTitle;
-          draft.user.firstName = action.user.firstName;
-          draft.user.surname = action.user.surname;
-          draft.user.id = action.user.id;
-          draft.user.email = action.user.email;
-          draft.user.token = action.user.token;
-          draft.user.telephone = action.user.telephone;
-          draft.user.telephoneNoDialCode = action.user.telephoneNoDialCode;
-          draft.user.dialCode = action.user.dialCode;
-          if (action.user.agreed) {
-            draft.user.agreed.gdpr = action.user.agreed.gdpr;
-            draft.user.agreed.tAndC = action.user.agreed.tAndC;
-            draft.user.agreed.all = action.user.agreed.all;
-          }
+          draft.user = action.user
           draft.app.userData = "success";
           draft.app.dataCount++
           console.log("user download success")
@@ -217,24 +194,15 @@ function OnboardingApp({ Component, pageProps }) {
           draft.app.appUpdated = true
         }
         return;
+      // when logged in update the user with all details
+      case "fullCurrentUser":
+        console.log("updating the current user")
+        draft.user = action.user
+        draft.app.userUpdated = true
+        return
       // save the firm data to state
       case "firmDownloaded":
-        draft.firm.id = action.firm.id;
-        draft.firm.name = action.firm.name;
-        draft.firm.url = action.firm.url;
-        draft.firm.colours.primary = action.firm.colours.primary;
-        draft.firm.colours.primaryOpposite = action.firm.colours.primaryOpposite;
-        draft.firm.colours.secondary = action.firm.colours.secondary;
-        draft.firm.colours.secondaryOpposite = action.firm.colours.secondaryOpposite;
-        draft.firm.colours.tertiary = action.firm.colours.tertiary;
-        draft.firm.colours.tertiaryOpposite = action.firm.colours.tertiaryOpposite;
-        draft.firm.logos.whiteSvg = action.firm.logos.whiteSvg;
-        draft.firm.logos.whitePng = action.firm.logos.whitePng;
-        draft.firm.logos.colourSvg = action.firm.logos.colourSvg;
-        draft.firm.logos.colourPng = action.firm.logos.colourPng;
-        draft.firm.solicitors = action.firm.solicitors;
-        draft.firm.thirdfort = action.firm.thirdfort;
-        draft.firm.modalContent = action.firm.modalContent;
+        draft.firm = action.firm
         draft.app.firmData = "success";
         draft.app.dataCount++
         console.log("firm download success")
@@ -747,14 +715,15 @@ function OnboardingApp({ Component, pageProps }) {
       if (state.quote.associatedUsers.length > 0) {
         // check that the quote has users associated with it
         const associatedUsers = state.quote.associatedUsers; // assign the array of associated users in the quote to a shorted variable name
-        let currentUsers = state.users || []; // assign the array of local users in state to a shorted variable name
+        let currentUser = state.user || []; // assign the array of local users in state to a shorted variable name
         let newUsers = []; // create an empty array to store the associated users in
         for (let i = 0; i < associatedUsers.length; i++) {
           // create an loop for the number of associated users in the quote
-          let indexOfUser = currentUsers.findIndex(
-            user => user.id === associatedUsers[i].id
+          let indexOfUser = associatedUsers.findIndex(
+            user => user.id === currentUser.id
           ); // check to see if each user is in the local data
-          if (indexOfUser >= 0) {
+          if (currentUser.id === associatedUsers[i].id) {
+            console.log("currentUser time")
             // if the id is of the current user push it into the array and update the user in state
             const fetchCurrentUser = await getAssociatedUser(
               state.user.id
@@ -765,6 +734,8 @@ function OnboardingApp({ Component, pageProps }) {
              // push the fetched user into the array
             newUsers.push(fetchCurrentUser)
             // update user in state
+            console.log("updating the current user now logged in")
+            console.log(fetchCurrentUser)
             dispatch({ type: "fullCurrentUser", user: fetchCurrentUser })
           } else {
             // if the user is NOT in local data it's index will be -1
