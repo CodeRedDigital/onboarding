@@ -40,6 +40,7 @@ function OnboardingApp({ Component, pageProps }) {
       quoteUpdated: false,
       userUpdated: false,
       usersUpdated: false,
+      userFullData: false,
       unknownUser: false,
       indexOfAssociatedSolicitor: null,
       indexOfLoggedInUser: null,
@@ -93,45 +94,7 @@ function OnboardingApp({ Component, pageProps }) {
       addresses: []
     },
     users: [],
-    user: {
-      token: "",
-      id: "",
-      title: "",
-      otherTitle: "",
-      firstName: "",
-      surname: "",
-      email: "",
-      telephone: "",
-      telephoneNoDialCode: "",
-      dialCode: "",
-      addresses: [],
-      contact: {
-        email: false,
-        tel: true,
-        primary: false
-      },
-      isPrimary: false,
-      agreed: {
-        gdpr: false,
-        tAndC: false,
-        all: false
-      },
-      passwordFailCount: 0,
-      passwordResetRequest: 0,
-      AML: {
-        credas: {
-          Sent: false,
-          Date: "",
-          Id: ""
-        },
-        thirdfort: {
-          Sent: false,
-          Date: "",
-          Id: ""
-        }
-      },
-      validated: false
-    }
+    user: {}
   }
   function ourReducer(draft, action) {
     switch (action.type) {
@@ -196,6 +159,13 @@ function OnboardingApp({ Component, pageProps }) {
       case "fullCurrentUser":
         draft.user = action.user
         draft.app.userUpdated = true
+        return
+      // set user data to be full
+      case "userComplete":
+        console.log("complete user")
+        draft.user.complete = true
+        draft.app.userUpdated = true
+        draft.app.appUpdated = true
         return
       // save the firm data to state
       case "firmDownloaded":
@@ -661,14 +631,17 @@ function OnboardingApp({ Component, pageProps }) {
         })
         router.push('/login')
       }
-      if (state.user.validated) {}
+      if (state.user.agreed.all) {
+        router.push(`/users/${state.user.id}`)
+      }
     }
   },[
     state.app.unknownUser,
     state.app.userData,
     state.app.firmData,
     state.app.quoteData,
-    state.user.validated
+    state.user.validated,
+    state.user.agreed
   ])
   // end useEffect to handle the redirection
   // start when user is logged in
@@ -700,16 +673,23 @@ function OnboardingApp({ Component, pageProps }) {
           // check to see if the current associated user is in the current logged in user and update it
           if (currentUser.id === associatedUsers[i].id) {
             // if the id is of the current user push it into the array and update the user in state
-            const fetchCurrentUser = await getAssociatedUser(
-              state.user.id
-            ).then(result => {
-              // go fetch the associated user from DB
-              return result; // once the fetch has finished return it
-            })
-             // push the fetched user into the array
-            newUsers.push(fetchCurrentUser)
-            // update user in state
-            dispatch({ type: "fullCurrentUser", user: fetchCurrentUser })
+            if (currentUser.complete) {
+              console.log("the current user is already full using it")
+              newUsers.push(currentUser)
+            } else {
+              console.log("the current user is not full fetching it")
+              const fetchCurrentUser = await getAssociatedUser(
+                state.user.id
+              ).then(result => {
+                // go fetch the associated user from DB
+                return result; // once the fetch has finished return it
+              })
+               // push the fetched user into the array
+              newUsers.push(fetchCurrentUser)
+              // update user in state
+              dispatch({ type: "fullCurrentUser", user: fetchCurrentUser })
+              dispatch({ type: "userComplete" })
+            }
           } else {
             // if the user is NOT in local data it's index will be -1
             const fetchedUser = await getAssociatedUser(
