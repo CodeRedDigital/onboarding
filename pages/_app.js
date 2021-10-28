@@ -179,7 +179,6 @@ function OnboardingApp({ Component, pageProps }) {
         draft.quote = action.quote
         draft.app.quoteData = "success";
         draft.app.dataCount++
-        console.log("quote download success")
         draft.app.quoteUpdated = true
         draft.app.appUpdated = true
         return;
@@ -189,7 +188,6 @@ function OnboardingApp({ Component, pageProps }) {
           draft.user = action.user
           draft.app.userData = "success";
           draft.app.dataCount++
-          console.log("user download success")
           draft.app.userUpdated = true
           draft.app.appUpdated = true
         }
@@ -204,7 +202,6 @@ function OnboardingApp({ Component, pageProps }) {
         draft.firm = action.firm
         draft.app.firmData = "success";
         draft.app.dataCount++
-        console.log("firm download success")
         draft.app.firmUpdated = true;
         draft.app.appUpdated = true
         return;
@@ -236,19 +233,16 @@ function OnboardingApp({ Component, pageProps }) {
       case "firmFailed":
         draft.app.firmData = "fail";
         draft.app.dataCount++
-        console.log("firm download fail")
         draft.app.appUpdated = true
         return
       case "quoteFailed":
         draft.app.quoteData = "fail";
         draft.app.dataCount++
-        console.log("quote download fail")
         draft.app.appUpdated = true
         return
       case "userFailed":
         draft.app.userData = "fail";
         draft.app.dataCount++
-        console.log("user download fail")
         draft.app.appUpdated = true
         return
       case "usersFailed":
@@ -286,7 +280,6 @@ function OnboardingApp({ Component, pageProps }) {
         return
       // Permissions page dispatches
       case "agreements":
-        console.log("agreements")
         draft.user.agreed.tAndC = true
         draft.user.agreed.gdpr = true
         draft.user.agreed.all = true
@@ -344,8 +337,6 @@ function OnboardingApp({ Component, pageProps }) {
           });
         }
       } catch (error) {
-        console.log("error")
-        console.log(error.response.status)
         if (error.response.status == "404") {
           dispatch({
             type: "flashMessage",
@@ -462,18 +453,17 @@ function OnboardingApp({ Component, pageProps }) {
     }
     // check that the user is available and associated with the quote
     function checkUser() {
-      dispatch({type: "userStarted"})
+      // dispatch({type: "userStarted"})
       let localUser = state.app.localData.user;
       let urlUser = state.app.urlData.user;
       let trueUser = null;
       if (urlUser) {
-        trueUser = urlUser;
+        trueUser = urlUser
       } else if (localUser) {
         trueUser = localUser.id;
       } // checks to see if urlUser exists and if not sets to localUser
       if (isUserInQuote(trueUser) || state.app.quoteData === "fail") {
         // checks to see if the trueUser is in the quote or if the quote failed
-        console.log("the user is in the quote, or quote failed proceed");
         if (localUser) {
           // is user in localStorage
           if (urlUser) {
@@ -514,7 +504,6 @@ function OnboardingApp({ Component, pageProps }) {
           });
         }
       } else {
-        console.log("We are here")
         dispatch({ type: "userFailed" });
         dispatch({
           type: "flashMessage",
@@ -527,22 +516,18 @@ function OnboardingApp({ Component, pageProps }) {
       dispatch({type: "firmStarted"})
       let firmId = state.quote.associatedFirmId;
       let localFirm = state.app.localData.firm;
-      let localFirmId = null;
-      console.log("Getting firm")
+      let localFirmId = null
       if (localFirm) {
         localFirmId = localFirm.id;
       }
       if (firmId === localFirmId) {
-        console.log("Using the locally stored firm")
         dispatch({
           type: "firmDownloaded",
           firm: localFirm
         });
       } else if (firmId) {
-        console.log("using the firmId from quote")
         getFirm(firmId);
       } else{
-        console.log("no firm Id failing")
         dispatch({ type: "firmFailed" });
       }
     }
@@ -565,11 +550,9 @@ function OnboardingApp({ Component, pageProps }) {
         checkQuote();
       }
       if (["success", "fail"].includes(state.app.quoteData)) {
-        console.log("Hurray time to load the user");
         checkUser();
       }
       if (["success", "fail"].includes(state.app.userData)) {
-        console.log("Hurray time to load the firm");
         checkFirm();
       }
       // this is just for testing if toke is true set state to loggedIn
@@ -607,7 +590,6 @@ function OnboardingApp({ Component, pageProps }) {
     if (state.app.firmUpdated) {
       localStorage.setItem("firm", JSON.stringify(state.firm))
       dispatch({type: "firmFinished"})
-      console.log(state.app)
       if (document.querySelector(".loading")) {
         document.querySelector(".loading").classList.add("loaded");
       }
@@ -760,8 +742,7 @@ function OnboardingApp({ Component, pageProps }) {
       // set index of Primary user
       const primaryUser = state.quote.associatedUsers.find(
         ({ primary }) => primary === true
-      );
-      console.log(primaryUser.id)
+      )
       const primaryIndex = state.users.findIndex(user => user.id === primaryUser.id)
       // set index of current user
       const currentIndex = state.users.findIndex(user => user.id === state.user.id)
