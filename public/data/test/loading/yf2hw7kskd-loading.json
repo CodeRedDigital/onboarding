@@ -10,5 +10,6 @@
     "gdpr": false,
     "tAndC": false,
     "all": false
-  }
+  },
+  "complete": false
 }
