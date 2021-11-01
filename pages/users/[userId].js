@@ -1,4 +1,6 @@
-import { useContext, useEffect } from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+
+import { useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
 import { useImmerReducer } from 'use-immer'
 import { AxiosPali } from '../../src/AxiosRequests'
@@ -25,6 +27,7 @@ export default function Home() {
     isDisabled: false,
     thirdfort: false,
     thirdfortAndPrimary: false,
+    primary: false,
     userUpdated: false,
     telUpdated: true,
     amlStarted: false,
@@ -69,6 +72,32 @@ export default function Home() {
       case "currentUserIndex":
         draft.currentUserIndex = action.index;
         return;
+      case "userDownloaded":
+        draft.id = action.user.id;
+        draft.title.value = action.user.title;
+        draft.firstName.value = action.user.firstName;
+        draft.surname.value = action.user.surname;
+        draft.email.value = action.user.email;
+        draft.telephone.value = action.user.telephone;
+        draft.dialCode = action.user.dialCode;
+        draft.telNoDialCode = action.user.telNoDialCode;
+        draft.contact.primary = action.user.contact.primary;
+        draft.contact.email = action.user.contact.email;
+        draft.contact.tel = action.user.contact.tel;
+        if (appState.quote.AML.Provider === "Thirdfort") {
+          draft.thirdfort = true;
+        }
+        if (
+          action.user.id === appState.user.id ||
+          action.user.id === appState.users[primary].id
+        ) {
+          draft.isDisabled = false;
+        } else {
+          draft.isDisabled = true;
+        }
+        draft.telUpdated = false;
+        draft.userIsLoading = false;
+        return;
       case "startLoading":
         draft.userIsLoading = true;
         return;
@@ -78,8 +107,14 @@ export default function Home() {
       case "setName":
         draft.name = `${action.firstName} ${action.surname}`;
         return;
-      case "one":
-        console.log("This is the first case")
+      case "setThirdfortPrimary":
+        if (action.primary) {
+          draft.thirdfortAndPrimary = true
+          draft.primary = true
+        } else {
+          draft.thirdfortAndPrimary = false;
+          draft.primary = false
+        }
         return
     }
   }
@@ -92,9 +127,9 @@ export default function Home() {
     if(appState.app.loading) {
       router.push("/")
     }
-  })
+  },[])
   useEffect(() => {
-    let indexOfUser = appState.users.findIndex(user => user.id === userId);
+    let indexOfUser = appState.users.findIndex(user => user.id === state.userId);
     console.log(`UserIndex = ${indexOfUser}`)
     dispatch({ type: "currentUserIndex", index: indexOfUser });
     if (state.currentUserIndex !== -1) {
@@ -103,20 +138,32 @@ export default function Home() {
         // checks to see if the id is in the list of users in state
         dispatch({
           type: "userDownloaded",
-          user: appState.users[state.currentUserIndex]
+          user: appState.users[state.currentUserIndex],
+          primary: appState.app.indexOfPrimaryUser
         });
       } else {
         // if the id is not in the list of users in state
         getUser(state.userId); // fetches the user from DB
       }
       if (appState.quote.AML.Provider === "Thirdfort") {
+        console.log(`Index of Primary = ${appState.app.indexOfPrimaryUser}`)
         dispatch({
           type: "setThirdfortPrimary",
-          primary: appState.users[state.currentUserIndex].isPrimary
+          primary: (appState.app.indexOfPrimaryUser === state.currentUserIndex ? true: false )
         });
       }
     }
-  }, [userId, state.currentUserIndex]);
+  }, [state.userId, state.currentUserIndex]);
+  useEffect(() => {
+    dispatch({ 
+      type: "setName",
+      firstName: state.firstName.value,
+      surname: state.surname.value
+    })
+  },[
+    state.firstName.value,
+    state.surname.value
+  ])
   // useEffects end here
 
 
@@ -127,8 +174,8 @@ export default function Home() {
       <ul>
         <li>UserId: {state.userId}</li>
         <li>Name: {state.name}</li>
-        <li></li>
-        <li></li>
+        <li>AML: {appState.quote.AML.Provider}</li>
+        <li>Primary: {(state.primary ? "Yes": "No")}</li>
       </ul>
     </Main>
   )
