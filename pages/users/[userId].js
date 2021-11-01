@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useImmerReducer } from 'use-immer'
 import { AxiosPali } from '../../src/AxiosRequests'
@@ -21,10 +21,60 @@ export default function Home() {
   const initialCurrentUserState = {
     userIsLoading: true,
     userId: userId,
-    name: "Dave"
+    currentUserIndex: -1,
+    isDisabled: false,
+    thirdfort: false,
+    thirdfortAndPrimary: false,
+    userUpdated: false,
+    telUpdated: true,
+    amlStarted: false,
+    sendData: false,
+    sendCount: 0,
+    name: "",
+    title: {
+      value: "",
+      hasErrors: false,
+      message: ""
+    },
+    firstName: {
+      value: "",
+      hasErrors: false,
+      message: ""
+    },
+    surname: {
+      value: "",
+      hasErrors: false,
+      message: ""
+    },
+    email: {
+      value: "",
+      hasErrors: false,
+      message: ""
+    },
+    telephone: {
+      value: "",
+      hasErrors: false,
+      message: ""
+    },
+    dialCode: "",
+    telNoDialCode: "",
+    contact: {
+      primary: false,
+      email: false,
+      tel: false
+    }
   }
   function ourReducer(draft, action) {
     switch (action.type) {
+      case "currentUserIndex":
+        draft.currentUserIndex = action.index;
+        return;
+      case "startLoading":
+        draft.userIsLoading = true;
+        return;
+      case "endLoading":
+        draft.userIsLoading = false;
+        return;
       case "setName":
         draft.name = `${action.firstName} ${action.surname}`;
         return;
@@ -37,6 +87,38 @@ export default function Home() {
 
   // Page functions go here
   // Page functions end here
+  // useEffects start here
+  useEffect(() => {
+    if(appState.app.loading) {
+      router.push("/")
+    }
+  })
+  useEffect(() => {
+    let indexOfUser = appState.users.findIndex(user => user.id === userId);
+    console.log(`UserIndex = ${indexOfUser}`)
+    dispatch({ type: "currentUserIndex", index: indexOfUser });
+    if (state.currentUserIndex !== -1) {
+      // stuff to do when currentUserIndex has a value
+      if (appState.users.some(i => i.id.includes(state.userId))) {
+        // checks to see if the id is in the list of users in state
+        dispatch({
+          type: "userDownloaded",
+          user: appState.users[state.currentUserIndex]
+        });
+      } else {
+        // if the id is not in the list of users in state
+        getUser(state.userId); // fetches the user from DB
+      }
+      if (appState.quote.AML.Provider === "Thirdfort") {
+        dispatch({
+          type: "setThirdfortPrimary",
+          primary: appState.users[state.currentUserIndex].isPrimary
+        });
+      }
+    }
+  }, [userId, state.currentUserIndex]);
+  // useEffects end here
+
 
   return (
     <Main>
