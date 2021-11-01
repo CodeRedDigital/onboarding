@@ -1,12 +1,13 @@
 import Link from 'next/link'
 
-function SellerIcon(props) {
+function UserIcon(props) {
   let current = ""
-  if (props.current == props.userId) {
+  if (props.current === props.id) {
     current = "current"
   }
   return (
-    <Link className={current} to={`/users/${props.userId}`}>
+    <Link href={`/users/${props.id}`} data-index={props.index} >
+      <a className={current}>
       <svg
         width="30"
         height="51"
@@ -18,8 +19,9 @@ function SellerIcon(props) {
           strokeWidth="2"
         />
       </svg>
+      </a>
     </Link>
   );
 }
 
-export default SellerIcon;
+export default UserIcon;

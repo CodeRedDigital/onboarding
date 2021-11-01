@@ -2,6 +2,7 @@
 
 import { useEffect, useContext } from 'react'
 import { useRouter } from 'next/router'
+import Link from 'next/link'
 import { useImmerReducer } from 'use-immer'
 import { AxiosPali } from '../../src/AxiosRequests'
 
@@ -168,8 +169,15 @@ export default function Home() {
 
 
   return (
-    <Main>
-      <h1>User { userId }</h1>
+    <Main title={state.name}>
+      <div className="seller-info">
+        <div className="sellers">
+          {appState.quote.associatedUsers.map((user, index) => {
+            return <UserIcon current={state.userId} id={user.id} key={user.id} index={index} />
+          })}
+        </div>
+      </div>
+      <h1>{ state.name }</h1>
       <h2>Welcome {appState.app.userData === "success" ? appState.user.firstName : ""}</h2>
       <ul>
         <li>UserId: {state.userId}</li>
