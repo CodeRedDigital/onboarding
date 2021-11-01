@@ -634,6 +634,7 @@ function OnboardingApp({ Component, pageProps }) {
       if (state.user.agreed.all) {
         router.push(`/users/${state.user.id}`)
       }
+      dispatch({ type: "loaded"})
     }
   },[
     state.app.unknownUser,
@@ -703,6 +704,7 @@ function OnboardingApp({ Component, pageProps }) {
         }
         dispatch({ type: "updateAssociatedUsers", users: newUsers }); // add the new array into state
         // set the primaryUser
+        router.push(`/users/${state.user.id}`)
       } else {
         // if there are no associated users display a flash message
         dispatch({
