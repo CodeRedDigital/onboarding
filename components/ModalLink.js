@@ -3,7 +3,7 @@ import Link from 'next/link'
 function ModalLink(props) {
   return (
     <>
-      <Link
+      <a
         className=""
         href={"#" + props.name + "Modal"}
         data-modal-open={props.name + "Modal"}
@@ -12,9 +12,7 @@ function ModalLink(props) {
         role="button"
         tabIndex="0"
         id={props.name + "Modal__trigger-A"}
-      >
-        {props.name}
-      </Link>
+      >{props.name}</a>
       <section
         className="modal-box a11y-modal"
         id={props.name + "Modal"}
@@ -38,7 +36,6 @@ function ModalLink(props) {
               Close
             </button>
           </footer>
-          {/* <button type="button" className="a11y-modal__close-btn is-icon-btn js-last-focus" aria-label="Close"><span data-modal-x=""></span></button> */}
         </div>
       </section>
     </>
