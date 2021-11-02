@@ -107,6 +107,10 @@ export default function User(props) {
         draft.telUpdated = false;
         draft.userIsLoading = false;
         return;
+      case "telephoneSplit":
+        draft.dialCode = action.dialCode;
+        draft.telNoDialCode = action.telNoDialCode;
+        return;
       case "startLoading":
         draft.userIsLoading = true;
         return;
@@ -178,6 +182,7 @@ export default function User(props) {
         const dialCode = "+" + iti.getSelectedCountryData().dialCode;
         const telNoDialCode = number.slice(dialCode.length);
         dispatch({ type: "telephoneSplit", dialCode, telNoDialCode });
+        appDispatch({ type: "telephoneUpdate", dialCode, telNoDialCode, user: state.currentUserIndex})
       } else {
         console.log("There is currently no value on this field");
       }

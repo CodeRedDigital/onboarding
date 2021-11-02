@@ -154,6 +154,12 @@ function OnboardingApp({ Component, pageProps }) {
           draft.app.userUpdated = true
           draft.app.appUpdated = true
         }
+        return
+      case "telephoneSplit":
+        draft.users[action.user].dialCode = action.dialCode;
+        draft.users[action.user].telNoDialCode = action.telNoDialCode;
+        draft.app.usersUpdated = true
+        draft.app.appUpdated = true
         return;
       // when logged in update the user with all details
       case "fullCurrentUser":
