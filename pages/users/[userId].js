@@ -135,7 +135,7 @@ export default function User(props) {
       sendAmlToUsers(appState.users);
     } else {
       const indexOfSingleUser = appState.users.findIndex(
-        user => user.id === id
+        user => user.id === userId
       );
       sendAmlToUsers([appState.users[indexOfSingleUser]]);
     }
