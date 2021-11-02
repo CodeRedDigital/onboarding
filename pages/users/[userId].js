@@ -374,7 +374,7 @@ export default function User(props) {
             </div>
             {!state.thirdfortAndPrimary && ( // check that the AML provider is thirdfort and the user is not Primary and then load radio buttons
             <div className="pali-radios pali-radios">
-              {appState.users[appState.app.indexOfPrimaryUser].id !== state.id && (
+              {appState.app.indexOfPrimaryUser && appState.users[appState.app.indexOfPrimaryUser].id !== state.id && (
                 <div className="pali-radios__item">
                   <input
                     className="pali-radios__input"
@@ -463,7 +463,7 @@ export default function User(props) {
         >
           Send {appState.quote.AML.Provider} Link for {state.firstName.value}
         </button>
-        {appState.user.id === state.userId &&
+        {appState.app.indexOfPrimaryUser && appState.user.id === state.userId &&
           appState.users[appState.app.indexOfPrimaryUser].id === state.userId && (
             <button
               className="btn primary"
