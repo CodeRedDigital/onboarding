@@ -182,6 +182,11 @@ function OnboardingApp({ Component, pageProps }) {
         draft.app.appUpdated = true
         draft.app.usersData = "success"
         return
+      case "pushUser":
+        draft.users.push(action.user);
+        draft.app.usersUpdated = true;
+        draft.app.appUpdated = true
+        return
       // data fetch starting
       case "firmStarted":
         draft.app.firmData = "pending";
