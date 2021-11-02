@@ -8,6 +8,8 @@ import { useImmerReducer } from 'use-immer'
 import { AxiosPali } from '../../src/AxiosRequests'
 import { decode } from "he" // used for decoding the encoded html for the modal
 import parse from 'html-react-parser'
+import intlTelInput from 'intl-tel-input'
+import 'intl-tel-input/build/css/intlTelInput.css'
 
 // components
 import Main from '../../components/Main'
@@ -154,14 +156,34 @@ export default function User(props) {
   // Page functions end here
   // useEffects start here
   useEffect(() => {
-    console.log(`user has changed to ${userId}`)
-    dispatch({type: "updateUserId", id: userId})
-  },[router.query])
-  useEffect(() => {
     if(appState.app.loading) {
       router.push("/")
     }
   },[])
+  useEffect(() => {
+    console.log(`user has changed to ${userId}`)
+    dispatch({type: "updateUserId", id: userId})
+  },[router.query])
+  useEffect(() => {
+    const input = document.querySelector("#telephone");
+    const iti = intlTelInput(input, {
+      // any initialisation options go here
+      initialCountry: "gb",
+      preferredCountries: [],
+      separateDialCode: true
+    });
+    function splitTelephone() {
+      if (input.value.trim()) {
+        const number = iti.getNumber();
+        const dialCode = "+" + iti.getSelectedCountryData().dialCode;
+        const telNoDialCode = number.slice(dialCode.length);
+        dispatch({ type: "telephoneSplit", dialCode, telNoDialCode });
+      } else {
+        console.log("There is currently no value on this field");
+      }
+    }
+    splitTelephone();
+  }, [state.telephone, userId]);
   useEffect(() => {
     let indexOfUser = appState.users.findIndex(user => user.id === state.userId);
     console.log(`UserIndex = ${indexOfUser}`)
