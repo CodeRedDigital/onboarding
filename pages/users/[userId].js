@@ -262,11 +262,14 @@ export default function User(props) {
       }
     }
   }, [state.userId, state.currentUserIndex]);
-  useEffect(() => {({
-    type: "setName",
-    firstName: state.firstName.value,
-    surname: state.surname.value
-  })},[state.firstName.value, state.surname.value])
+  useEffect(() => {
+    console.log(`updatinging name ${state.firstName.value}`)
+    dispatch({
+      type: "setName",
+      firstName: state.firstName.value,
+      surname: state.surname.value,
+    })
+  },[state.firstName.value, state.surname.value])
   useEffect(() => {
     if (state.userUpdated) {
       localStorage.setItem("currentUser", JSON.stringify(state))
@@ -444,9 +447,7 @@ export default function User(props) {
           </div>
           {!state.thirdfortAndPrimary && ( // check that the AML provider is thirdfort and the user is not Primary and then load radio buttons
             <div className="pali-radios pali-radios">
-              {appState.app.indexOfPrimaryUser &&
-                appState.users[appState.app.indexOfPrimaryUser].id !==
-                  state.id && (
+              {appState.app.indexOfPrimaryUser && appState.users[appState.app.indexOfPrimaryUser].id !== state.userId && (
                   <div className="pali-radios__item">
                     <input
                       className="pali-radios__input"
@@ -454,7 +455,7 @@ export default function User(props) {
                       name="contact"
                       type="radio"
                       value="primary"
-                      checked={props.primarySelected}
+                      checked={state.contact.primary}
                       onClick={() =>
                         dispatch({
                           type: "contactUpdate",
@@ -467,12 +468,7 @@ export default function User(props) {
                     <label
                       className="pali-label pali-radios__label"
                       htmlFor="send-to-primary"
-                    >
-                      {
-                        appState.users[appState.app.indexOfPrimaryUser]
-                          .firstName
-                      }
-                      &apos;s phone
+                    >{appState.users[appState.app.indexOfPrimaryUser].firstName}&apos;s phone
                       {appState.quote.AML.Provider === "CREDAS" && "/email"}
                     </label>
                   </div>
