@@ -16,6 +16,14 @@ import ModalLink from '../../components/ModalLink'
 import StateContext from '../../states/StateContext'
 import DispatchContext from '../../states/DispatchContext'
 
+// export async function getStaticPaths() {
+//   // Return a list of possible value for id
+// }
+
+// export async function getStaticProps({ params }) {
+//   // Fetch necessary data for the blog post using params.id
+// }
+
 export default function Home() {
   const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
@@ -70,6 +78,9 @@ export default function Home() {
   }
   function ourReducer(draft, action) {
     switch (action.type) {
+      case "updateUserId":
+        draft.userId = action.id
+        return
       case "currentUserIndex":
         draft.currentUserIndex = action.index;
         return;
@@ -90,7 +101,7 @@ export default function Home() {
         }
         if (
           action.user.id === appState.user.id ||
-          action.user.id === appState.users[primary].id
+          action.user.id === appState.users[action.primary].id
         ) {
           draft.isDisabled = false;
         } else {
@@ -122,8 +133,22 @@ export default function Home() {
   const [state, dispatch] = useImmerReducer(ourReducer, initialCurrentUserState)
 
   // Page functions go here
+  // function getAllUsers() {
+  //   const users = appState.quote.associatedUsers
+  //   return users.map(user => {
+  //     return {
+  //       params: {
+  //         id: user.id
+  //       }
+  //     }
+  //   })
+  // }
   // Page functions end here
   // useEffects start here
+  useEffect(() => {
+    console.log(`user has changed to ${userId}`)
+    dispatch({type: "updateUserId", id: userId})
+  },[router.query])
   useEffect(() => {
     if(appState.app.loading) {
       router.push("/")
