@@ -1,31 +1,31 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-import { useEffect, useContext } from 'react'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
-import Script from 'next/script'
-import { useImmerReducer } from 'use-immer'
-import { AxiosPali } from '../../src/AxiosRequests'
-import { decode } from "he" // used for decoding the encoded html for the modal
-import parse from 'html-react-parser'
-import intlTelInput from 'intl-tel-input'
-import 'intl-tel-input/build/css/intlTelInput.css'
+import { useEffect, useContext } from "react";
+import { useRouter } from "next/router";
+import Link from "next/link";
+import Script from "next/script";
+import { useImmerReducer } from "use-immer";
+import { AxiosPali } from "../../src/AxiosRequests";
+import { decode } from "he"; // used for decoding the encoded html for the modal
+import parse from "html-react-parser";
+import intlTelInput from "intl-tel-input";
+import "intl-tel-input/build/css/intlTelInput.css";
 
 // components
-import Main from '../../components/Main'
-import UserIcon from '../../components/UserIcon'
-import LoadingSpinner from '../../components/LoadingSpinner'
-import ModalLink from '../../components/ModalLink'
+import Main from "../../components/Main";
+import UserIcon from "../../components/UserIcon";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import ModalLink from "../../components/ModalLink";
 
 // states
-import StateContext from '../../states/StateContext'
-import DispatchContext from '../../states/DispatchContext'
+import StateContext from "../../states/StateContext";
+import DispatchContext from "../../states/DispatchContext";
 
 export default function User(props) {
-  const appState = useContext(StateContext)
-  const appDispatch = useContext(DispatchContext)
-  const router = useRouter()
-  const {userId} = router.query
+  const appState = useContext(StateContext);
+  const appDispatch = useContext(DispatchContext);
+  const router = useRouter();
+  const { userId } = router.query;
   const initialCurrentUserState = {
     userIsLoading: true,
     userId: userId,
@@ -72,12 +72,12 @@ export default function User(props) {
       email: false,
       tel: false
     }
-  }
+  };
   function ourReducer(draft, action) {
     switch (action.type) {
       case "updateUserId":
-        draft.userId = action.id
-        return
+        draft.userId = action.id;
+        return;
       case "currentUserIndex":
         draft.currentUserIndex = action.index;
         return;
@@ -122,16 +122,19 @@ export default function User(props) {
         return;
       case "setThirdfortPrimary":
         if (action.primary) {
-          draft.thirdfortAndPrimary = true
-          draft.primary = true
+          draft.thirdfortAndPrimary = true;
+          draft.primary = true;
         } else {
           draft.thirdfortAndPrimary = false;
-          draft.primary = false
+          draft.primary = false;
         }
-        return
+        return;
     }
   }
-  const [state, dispatch] = useImmerReducer(ourReducer, initialCurrentUserState)
+  const [state, dispatch] = useImmerReducer(
+    ourReducer,
+    initialCurrentUserState
+  );
 
   // Page functions go here
   async function handleSubmit(event) {
@@ -148,7 +151,9 @@ export default function User(props) {
   }
   async function getUser(userId) {
     try {
-      const response = await AxiosPali.get(`/data/test/user/${userId}-user.json`);
+      const response = await AxiosPali.get(
+        `/data/test/user/${userId}-user.json`
+      );
       if (response.data) {
         appDispatch({ type: "pushUser", user: response.data }); // push the missing user into the users Array
         dispatch({ type: "userDownloaded", user: response.data });
@@ -160,38 +165,48 @@ export default function User(props) {
   // Page functions end here
   // useEffects start here
   useEffect(() => {
-    if(appState.app.loading) {
-      router.push("/")
+    if (appState.app.loading) {
+      router.push("/");
     }
-  },[])
+  }, []);
+
   useEffect(() => {
-    console.log(`user has changed to ${userId}`)
-    dispatch({type: "updateUserId", id: userId})
-  },[router.query])
+    console.log(`user has changed to ${userId}`);
+    dispatch({ type: "updateUserId", id: userId });
+  }, [router.query]);
   useEffect(() => {
-    const input = document.querySelector("#telephone");
-    const iti = intlTelInput(input, {
-      // any initialisation options go here
-      initialCountry: "gb",
-      preferredCountries: [],
-      separateDialCode: true
-    });
-    function splitTelephone() {
-      if (input.value.trim()) {
-        const number = iti.getNumber();
-        const dialCode = "+" + iti.getSelectedCountryData().dialCode;
-        const telNoDialCode = number.slice(dialCode.length);
-        dispatch({ type: "telephoneSplit", dialCode, telNoDialCode });
-        appDispatch({ type: "telephoneUpdate", dialCode, telNoDialCode, user: state.currentUserIndex})
-      } else {
-        console.log("There is currently no value on this field");
+    if (document.querySelector("#telephone")) {
+      const input = document.querySelector("#telephone");
+      const iti = intlTelInput(input, {
+        // any initialisation options go here
+        initialCountry: "gb",
+        preferredCountries: [],
+        separateDialCode: true
+      });
+      function splitTelephone() {
+        if (input.value.trim()) {
+          const number = iti.getNumber();
+          const dialCode = "+" + iti.getSelectedCountryData().dialCode;
+          const telNoDialCode = number.slice(dialCode.length);
+          dispatch({ type: "telephoneSplit", dialCode, telNoDialCode });
+          appDispatch({
+            type: "telephoneUpdate",
+            dialCode,
+            telNoDialCode,
+            user: state.currentUserIndex
+          });
+        } else {
+          console.log("There is currently no value on this field");
+        }
       }
+      splitTelephone();
     }
-    splitTelephone();
   }, [state.telephone, userId]);
   useEffect(() => {
-    let indexOfUser = appState.users.findIndex(user => user.id === state.userId);
-    console.log(`UserIndex = ${indexOfUser}`)
+    let indexOfUser = appState.users.findIndex(
+      user => user.id === state.userId
+    );
+    console.log(`UserIndex = ${indexOfUser}`);
     dispatch({ type: "currentUserIndex", index: indexOfUser });
     if (state.currentUserIndex !== -1) {
       // stuff to do when currentUserIndex has a value
@@ -207,37 +222,43 @@ export default function User(props) {
         getUser(state.userId); // fetches the user from DB
       }
       if (appState.quote.AML.Provider === "Thirdfort") {
-        console.log(`Index of Primary = ${appState.app.indexOfPrimaryUser}`)
+        console.log(`Index of Primary = ${appState.app.indexOfPrimaryUser}`);
         dispatch({
           type: "setThirdfortPrimary",
-          primary: (appState.app.indexOfPrimaryUser === state.currentUserIndex ? true: false )
+          primary:
+            appState.app.indexOfPrimaryUser === state.currentUserIndex
+              ? true
+              : false
         });
       }
     }
   }, [state.userId, state.currentUserIndex]);
   useEffect(() => {
-    dispatch({ 
+    dispatch({
       type: "setName",
       firstName: state.firstName.value,
       surname: state.surname.value
-    })
-  },[
-    state.firstName.value,
-    state.surname.value
-  ])
+    });
+  }, [state.firstName.value, state.surname.value]);
   // useEffects end here
-
 
   return (
     <Main title={state.name}>
       <div className="seller-info">
         <div className="sellers">
           {appState.quote.associatedUsers.map((user, index) => {
-            return <UserIcon current={state.userId} id={user.id} key={user.id} index={index} />
+            return (
+              <UserIcon
+                current={state.userId}
+                id={user.id}
+                key={user.id}
+                index={index}
+              />
+            );
           })}
         </div>
       </div>
-      <h1>{ state.name }</h1>
+      <h1>{state.name}</h1>
       <div id="instructions">
         <p>
           We now need to check your details before we proceed. Please check
@@ -246,20 +267,26 @@ export default function User(props) {
         <p>
           Once all of these fields have been completed we will pass them over to
           our trust partner{" "}
-            <ModalLink
-              name={appState.quote.AML.Provider}
-              href="#amlButton"
-              className=""
-              data-modal-open={appState.quote.AML.Provider + "Modal"}
-              data-button={appState.quote.AML.Provider + "Button"}
-              data-name={appState.quote.AML.Provider}
-              modalLinkContent={parse(unescape(state.thirdfort ? appState.firm.modalContent.thirdfort : appState.firm.modalContent.credas))}
-            />
+          <ModalLink
+            name={appState.quote.AML.Provider}
+            href="#amlButton"
+            className=""
+            data-modal-open={appState.quote.AML.Provider + "Modal"}
+            data-button={appState.quote.AML.Provider + "Button"}
+            data-name={appState.quote.AML.Provider}
+            modalLinkContent={parse(
+              unescape(
+                state.thirdfort
+                  ? appState.firm.modalContent.thirdfort
+                  : appState.firm.modalContent.credas
+              )
+            )}
+          />
           , to do Identity and Financial checks.
         </p>
       </div>
       <form onSubmit={handleSubmit} className="user">
-      <section className="form-grid">
+        <section className="form-grid">
           <label htmlFor="title">Title</label>
           <div>
             <input
@@ -367,40 +394,46 @@ export default function User(props) {
             </div>
           </div>
           <label htmlFor="first-name" className="span-grid">
-              Send Identity Check
-            </label>
-            <div id="identity-hint" className="pali-hint">
-              Where would you like your identity check link sent to?
-            </div>
-            {!state.thirdfortAndPrimary && ( // check that the AML provider is thirdfort and the user is not Primary and then load radio buttons
+            Send Identity Check
+          </label>
+          <div id="identity-hint" className="pali-hint">
+            Where would you like your identity check link sent to?
+          </div>
+          {!state.thirdfortAndPrimary && ( // check that the AML provider is thirdfort and the user is not Primary and then load radio buttons
             <div className="pali-radios pali-radios">
-              {appState.app.indexOfPrimaryUser && appState.users[appState.app.indexOfPrimaryUser].id !== state.id && (
-                <div className="pali-radios__item">
-                  <input
-                    className="pali-radios__input"
-                    id="send-to-primary"
-                    name="contact"
-                    type="radio"
-                    value="primary"
-                    checked={props.primarySelected}
-                    onClick={() =>
-                      dispatch({
-                        type: "contactUpdate",
-                        tel: false,
-                        email: false,
-                        primary: true
-                      })
-                    }
-                  />
-                  <label
-                    className="pali-label pali-radios__label"
-                    htmlFor="send-to-primary"
-                  >
-                    {appState.users[appState.app.indexOfPrimaryUser].firstName}&apos;s phone
-                    {appState.quote.AML.Provider === "CREDAS" && "/email"}
-                  </label>
-                </div>
-              )}
+              {appState.app.indexOfPrimaryUser &&
+                appState.users[appState.app.indexOfPrimaryUser].id !==
+                  state.id && (
+                  <div className="pali-radios__item">
+                    <input
+                      className="pali-radios__input"
+                      id="send-to-primary"
+                      name="contact"
+                      type="radio"
+                      value="primary"
+                      checked={props.primarySelected}
+                      onClick={() =>
+                        dispatch({
+                          type: "contactUpdate",
+                          tel: false,
+                          email: false,
+                          primary: true
+                        })
+                      }
+                    />
+                    <label
+                      className="pali-label pali-radios__label"
+                      htmlFor="send-to-primary"
+                    >
+                      {
+                        appState.users[appState.app.indexOfPrimaryUser]
+                          .firstName
+                      }
+                      &apos;s phone
+                      {appState.quote.AML.Provider === "CREDAS" && "/email"}
+                    </label>
+                  </div>
+                )}
               {appState.quote.AML.Provider === "CREDAS" && (
                 <div className="pali-radios__item">
                   <input
@@ -463,8 +496,10 @@ export default function User(props) {
         >
           Send {appState.quote.AML.Provider} Link for {state.firstName.value}
         </button>
-        {appState.app.indexOfPrimaryUser && appState.user.id === state.userId &&
-          appState.users[appState.app.indexOfPrimaryUser].id === state.userId && (
+        {appState.app.indexOfPrimaryUser &&
+          appState.user.id === state.userId &&
+          appState.users[appState.app.indexOfPrimaryUser].id ===
+            state.userId && (
             <button
               className="btn primary"
               disabled={state.isDisabled}
@@ -474,7 +509,13 @@ export default function User(props) {
             </button>
           )}
       </form>
-      <Script id="modal-js" src="/js/modal.js" onLoad={() => {ARIAmodal.init()}} />
+      <Script
+        id="modal-js"
+        src="/js/modal.js"
+        onLoad={() => {
+          ARIAmodal.init();
+        }}
+      />
     </Main>
-  )
+  );
 }
