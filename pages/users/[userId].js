@@ -396,7 +396,7 @@ export default function User(props) {
                     className="pali-label pali-radios__label"
                     htmlFor="send-to-primary"
                   >
-                    {appState.users[appState.app.indexOfPrimaryUser].firstName}'s phone
+                    {appState.users[appState.app.indexOfPrimaryUser].firstName}&apos;s phone
                     {appState.quote.AML.Provider === "CREDAS" && "/email"}
                   </label>
                 </div>
