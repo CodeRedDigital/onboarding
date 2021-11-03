@@ -71,8 +71,10 @@ export default function User(props) {
       primary: false,
       email: false,
       tel: false
-    }
-  };
+    },
+    primaryUser: appState.users[appState.app.indexOfPrimaryUser],
+    loggedInUser: appState.users[appState.app.indexOfLoggedInUser],
+  }
   function ourReducer(draft, action) {
     switch (action.type) {
       case "updateUserId":
@@ -97,8 +99,8 @@ export default function User(props) {
           draft.thirdfort = true;
         }
         if (
-          action.user.id === appState.user.id ||
-          action.user.id === appState.users[action.primary].id
+          action.user.id === action.loggedInId ||
+          action.user.id === !action.primaryId
         ) {
           draft.isDisabled = false;
         } else {
@@ -146,6 +148,7 @@ export default function User(props) {
         return;
       case "userFinished":
         draft.userUpdated = false
+        return;
       case "setName":
         draft.name = `${action.firstName} ${action.surname}`;
         return;
@@ -185,7 +188,7 @@ export default function User(props) {
       );
       if (response.data) {
         appDispatch({ type: "pushUser", user: response.data }); // push the missing user into the users Array
-        dispatch({ type: "userDownloaded", user: response.data });
+        dispatch({ type: "userDownloaded", user: response.data, primaryId: state.primaryUser.id, loggedInId: state.loggedInUser.id });
       }
     } catch (e) {
       console.log("There was an issue getting the user");
@@ -194,8 +197,8 @@ export default function User(props) {
   // Page functions end here
   // useEffects start here
   useEffect(() => {
-    if (appState.app.loading) {
-      router.push("/");
+    if(!state.primaryUser || !state.loggedInUser) {
+      router.push("/")
     }
   }, []);
 
@@ -230,6 +233,7 @@ export default function User(props) {
       }
       splitTelephone();
     }
+    splitTelephone();
   }, [state.telephone.value, userId]);
   useEffect(() => {
     let indexOfUser = appState.users.findIndex(
@@ -244,7 +248,8 @@ export default function User(props) {
         dispatch({
           type: "userDownloaded",
           user: appState.users[state.currentUserIndex],
-          primary: appState.app.indexOfPrimaryUser
+          primaryId: state.primaryUser.id,
+          loggedInId: state.loggedInUser.id
         });
       } else {
         // if the id is not in the list of users in state
@@ -269,7 +274,10 @@ export default function User(props) {
       firstName: state.firstName.value,
       surname: state.surname.value,
     })
-  },[state.firstName.value, state.surname.value])
+  },[
+    state.firstName.value,
+    state.surname.value
+  ])
   useEffect(() => {
     if (state.userUpdated) {
       localStorage.setItem("currentUser", JSON.stringify(state))
@@ -442,12 +450,13 @@ export default function User(props) {
           <label htmlFor="first-name" className="span-grid">
             Send Identity Check
           </label>
-          <div id="identity-hint" className="pali-hint">
-            Where would you like your identity check link sent to?
-          </div>
-          {!state.thirdfortAndPrimary && ( // check that the AML provider is thirdfort and the user is not Primary and then load radio buttons
-            <div className="pali-radios pali-radios">
-              {appState.app.indexOfPrimaryUser && appState.users[appState.app.indexOfPrimaryUser].id !== state.userId && (
+          {!state.thirdfortAndPrimary && (
+            <>
+              <div id="identity-hint" className="pali-hint">
+                Where would you like your identity check link sent to?
+              </div>
+              <div className="pali-radios pali-radios">
+                {state.primaryUser.id !== state.userId && (
                   <div className="pali-radios__item">
                     <input
                       className="pali-radios__input"
@@ -455,7 +464,7 @@ export default function User(props) {
                       name="contact"
                       type="radio"
                       value="primary"
-                      checked={state.contact.primary}
+                      checked={props.primarySelected}
                       onClick={() =>
                         dispatch({
                           type: "contactUpdate",
@@ -468,64 +477,66 @@ export default function User(props) {
                     <label
                       className="pali-label pali-radios__label"
                       htmlFor="send-to-primary"
-                    >{appState.users[appState.app.indexOfPrimaryUser].firstName}&apos;s phone
+                    >
+                      {state.primaryUser.firstName}&apos;s phone
                       {appState.quote.AML.Provider === "CREDAS" && "/email"}
                     </label>
                   </div>
                 )}
-              {appState.quote.AML.Provider === "CREDAS" && (
+                {appState.quote.AML.Provider === "CREDAS" && (
+                  <div className="pali-radios__item">
+                    <input
+                      className="pali-radios__input"
+                      id="send-to-email"
+                      name="contact"
+                      type="radio"
+                      value="email"
+                      disabled={state.isDisabled}
+                      checked={state.contact.email}
+                      onClick={() =>
+                        dispatch({
+                          type: "contactUpdate",
+                          tel: false,
+                          email: true,
+                          primary: false
+                        })
+                      }
+                    />
+                    <label
+                      className="pali-label pali-radios__label"
+                      htmlFor="send-to-email"
+                    >
+                      email
+                    </label>
+                  </div>
+                )}
                 <div className="pali-radios__item">
                   <input
                     className="pali-radios__input"
-                    id="send-to-email"
+                    id="send-to-tel"
                     name="contact"
                     type="radio"
-                    value="email"
+                    value="tel"
                     disabled={state.isDisabled}
-                    checked={state.contact.email}
+                    checked={state.contact.tel}
                     onClick={() =>
                       dispatch({
                         type: "contactUpdate",
-                        tel: false,
-                        email: true,
+                        tel: true,
+                        email: false,
                         primary: false
                       })
                     }
                   />
                   <label
                     className="pali-label pali-radios__label"
-                    htmlFor="send-to-email"
+                    htmlFor="send-to-tel"
                   >
-                    email
+                    telephone
                   </label>
                 </div>
-              )}
-              <div className="pali-radios__item">
-                <input
-                  className="pali-radios__input"
-                  id="send-to-tel"
-                  name="contact"
-                  type="radio"
-                  value="tel"
-                  disabled={state.isDisabled}
-                  checked={state.contact.tel}
-                  onClick={() =>
-                    dispatch({
-                      type: "contactUpdate",
-                      tel: true,
-                      email: false,
-                      primary: false
-                    })
-                  }
-                />
-                <label
-                  className="pali-label pali-radios__label"
-                  htmlFor="send-to-tel"
-                >
-                  telephone
-                </label>
               </div>
-            </div>
+            </>
           )}
         </section>
         <button
@@ -535,10 +546,8 @@ export default function User(props) {
         >
           Send {appState.quote.AML.Provider} Link for {state.firstName.value}
         </button>
-        {appState.app.indexOfPrimaryUser &&
-          appState.user.id === state.userId &&
-          appState.users[appState.app.indexOfPrimaryUser].id ===
-            state.userId && (
+        {appState.user.id === state.userId &&
+          state.primaryUser.id === state.userId && (
             <button
               className="btn primary"
               disabled={state.isDisabled}
