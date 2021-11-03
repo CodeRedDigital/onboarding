@@ -1,5 +1,5 @@
 import Axios from "axios"
 
 export const AxiosPali = Axios.create({
-  baseURL: "http://localhost:3000/"
+  baseURL: process.env.PALI_HOST
 })
