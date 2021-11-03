@@ -233,7 +233,6 @@ export default function User(props) {
       }
       splitTelephone();
     }
-    splitTelephone();
   }, [state.telephone.value, userId]);
   useEffect(() => {
     let indexOfUser = appState.users.findIndex(
