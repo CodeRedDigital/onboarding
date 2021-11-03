@@ -71,7 +71,9 @@ export default function User(props) {
       primary: false,
       email: false,
       tel: false
-    }
+    },
+    primaryUser: appState.users[appState.app.indexOfPrimaryUser],
+    loggedInUser: appState.users[appState.app.indexOfLoggedInUser],
   }
   function ourReducer(draft, action) {
     switch (action.type) {
@@ -98,7 +100,7 @@ export default function User(props) {
         }
         if (
           action.user.id === appState.user.id ||
-          action.user.id === appState.users[action.primary].id
+          action.user.id === action.primaryId
         ) {
           draft.isDisabled = false;
         } else {
@@ -151,7 +153,7 @@ export default function User(props) {
       const response = await AxiosPali.get(`/data/test/user/${userId}-user.json`);
       if (response.data) {
         appDispatch({ type: "pushUser", user: response.data }); // push the missing user into the users Array
-        dispatch({ type: "userDownloaded", user: response.data });
+        dispatch({ type: "userDownloaded", user: response.data, primaryId: state.primaryUser.id });
       }
     } catch (e) {
       console.log("There was an issue getting the user");
@@ -160,7 +162,7 @@ export default function User(props) {
   // Page functions end here
   // useEffects start here
   useEffect(() => {
-    if(appState.app.loading) {
+    if(!state.primaryUser || !state.loggedInUser) {
       router.push("/")
     }
   },[])
@@ -200,7 +202,7 @@ export default function User(props) {
         dispatch({
           type: "userDownloaded",
           user: appState.users[state.currentUserIndex],
-          primary: appState.app.indexOfPrimaryUser
+          primaryId: state.primaryUser.id
         });
       } else {
         // if the id is not in the list of users in state
@@ -375,7 +377,7 @@ export default function User(props) {
                 Where would you like your identity check link sent to?
               </div>
               <div className="pali-radios pali-radios">
-                {appState.users[appState.app.indexOfPrimaryUser].id !== state.id && (
+                {state.primaryUser.id !== state.userId && (
                   <div className="pali-radios__item">
                     <input
                       className="pali-radios__input"
@@ -397,7 +399,7 @@ export default function User(props) {
                       className="pali-label pali-radios__label"
                       htmlFor="send-to-primary"
                     >
-                      {appState.users[appState.app.indexOfPrimaryUser].firstName}&apos;s phone
+                      {state.primaryUser.firstName}&apos;s phone
                       {appState.quote.AML.Provider === "CREDAS" && "/email"}
                     </label>
                   </div>
@@ -466,7 +468,7 @@ export default function User(props) {
           Send {appState.quote.AML.Provider} Link for {state.firstName.value}
         </button>
         {appState.user.id === state.userId &&
-          appState.users[appState.app.indexOfPrimaryUser].id === state.userId && (
+          state.primaryUser.id === state.userId && (
             <button
               className="btn primary"
               disabled={state.isDisabled}
