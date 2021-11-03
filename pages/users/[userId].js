@@ -272,9 +272,8 @@ export default function User(props) {
       token = appState.quote.AML.thirdfort.jwt;
     } else {
       console.log("the current token in state is too old");
-      const jwtToken = async event => {
+      const jwtToken = async () => {
         const res = await fetch('/api/thirdfort/createJWT', {
-          body: JSON.stringify({}),
           headers: {
             'Content-Type': 'application/json'
           },
@@ -291,49 +290,34 @@ export default function User(props) {
       jwtToken()
     }
     console.log(token);
-    let tenant = appState.firm.thirdfort.tenant;
-    let stubUser =
-      appState.firm.solicitors[appState.appData.indexOfAssociatedSolicitor]
-        .thirdfort.stubUser;
-    let currentAssociatedUser = {};
-    currentAssociatedUser = appState.users.findIndex(user => user.id === id);
-    const user = appState.users[currentAssociatedUser];
-    // function to send the thirdfort links
-    // try {
-    // const response = await AxiosThirdfort.post("transactions", transactionBody)
-    // if (response.data) {
-    // console.log(response.data)
-    // }
-    // } catch (error) {
-    // console.log(error);
-    // console.log(`transaction for ${user.firstName} ${user.surname} has failed`)
-    // }
-    // take the array and map over it
-
+    const tenant = appState.firm.thirdfort.tenant;
+    const stubUser = appState.firm.solicitors[appState.app.indexOfAssociatedSolicitor].thirdfort.stubUser;
+    const user = appState.users[state.currentUserIndex];
     const transactionConfig = {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
-        "Tenant-Id": tenant.id
-        // "User-Id": stubUser.id
+        "Tenant-Id": tenant.id,
+        "User-Id": stubUser.id
       }
     };
-    async function thirdfort(config, body) {
-      try {
-        const response = await AxiosThirdfort.post(
-          "transactions",
+    async function thirdfort(config, body, user) {
+      console.log(config)
+      console.log(body)
+      console.log(user)
+      const res = await fetch('api/thirdfort/transactions', {
+        body: JSON.stringify({
+          config,
           body,
-          config
-        );
-        if (response.data) {
-          console.log(response.data);
-        }
-      } catch (error) {
-        console.log(error);
-        console.log(
-          `transaction for ${user.firstName} ${user.surname} has failed`
-        );
-      }
+          user
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        method: 'POST'
+      })
+      const result = await res.json()
+      console.log(result)
     }
     userArray.map(sendingUser => {
       const indexOfUser = appState.users.findIndex(
@@ -417,7 +401,7 @@ export default function User(props) {
       }
       console.log(transactionConfig);
       console.log(transactionBody);
-      thirdfort(transactionConfig, transactionBody);
+      thirdfort(transactionConfig, transactionBody, sendingUser);
     });
     dispatch({ type: "endLoading" });
   }
