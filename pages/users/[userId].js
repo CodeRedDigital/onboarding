@@ -273,7 +273,7 @@ export default function User(props) {
     } else {
       console.log("the current token in state is too old");
       const jwtToken = async event => {
-        const res = await fetch('/api/createJWT', {
+        const res = await fetch('/api/thirdfort/createJWT', {
           body: JSON.stringify({}),
           headers: {
             'Content-Type': 'application/json'
