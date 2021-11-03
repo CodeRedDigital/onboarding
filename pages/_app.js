@@ -193,6 +193,26 @@ function OnboardingApp({ Component, pageProps }) {
         draft.app.usersUpdated = true;
         draft.app.appUpdated = true
         return
+      case "updateUsersArray":
+        draft.users[action.user].title = action.title
+        draft.users[action.user].firstName = action.firstName
+        draft.users[action.user].surname = action.surname
+        draft.users[action.user].email = action.email
+        draft.users[action.user].telephone = action.telephone
+        draft.users[action.user].contact = action.contact
+        draft.app.usersUpdated = true;
+        draft.app.appUpdated = true;
+        if (draft.users[action.user].id === draft.user.id) {
+          draft.user.title = action.title
+          draft.user.firstName = action.firstName
+          draft.user.surname = action.surname
+          draft.user.email = action.email
+          draft.user.telephone = action.telephone
+          draft.user.contact = action.contact
+          draft.app.userUpdated = true
+        }
+        draft.app.appUpdated = true;
+        return
       // data fetch starting
       case "firmStarted":
         draft.app.firmData = "pending";

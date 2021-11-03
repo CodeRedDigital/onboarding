@@ -109,15 +109,45 @@ export default function User(props) {
         draft.telUpdated = false;
         draft.userIsLoading = false;
         return;
+      case "titleUpdate":
+        draft.title.value = action.value;
+        draft.userUpdated = true;
+        return;
+      case "firstNameUpdate":
+        draft.firstName.value = action.value;
+        draft.userUpdated = true;
+        return;
+      case "surnameUpdate":
+        draft.surname.value = action.value;
+        draft.userUpdated = true;
+        return;
+      case "emailUpdate":
+        draft.email.value = action.value;
+        draft.userUpdated = true;
+        return;
+      case "telephoneUpdate":
+        draft.telephone.value = action.value;
+        draft.userUpdated = true;
+        return;
       case "telephoneSplit":
         draft.dialCode = action.dialCode;
         draft.telNoDialCode = action.telNoDialCode;
+        draft.userUpdated = true;
+        return;
+      case "contactUpdate":
+        draft.contact.primary = action.primary;
+        draft.contact.email = action.email;
+        draft.contact.tel = action.tel;
+        draft.userUpdated = true;
         return;
       case "startLoading":
         draft.userIsLoading = true;
         return;
       case "endLoading":
         draft.userIsLoading = false;
+        return;
+      case "userFinished":
+        draft.userUpdated = false
         return;
       case "setName":
         draft.name = `${action.firstName} ${action.surname}`;
@@ -190,7 +220,7 @@ export default function User(props) {
       }
     }
     splitTelephone();
-  }, [state.telephone, userId]);
+  }, [state.telephone.value, userId]);
   useEffect(() => {
     let indexOfUser = appState.users.findIndex(user => user.id === state.userId);
     console.log(`UserIndex = ${indexOfUser}`)
@@ -228,6 +258,22 @@ export default function User(props) {
     state.firstName.value,
     state.surname.value
   ])
+  useEffect(() => {
+    if (state.userUpdated) {
+      localStorage.setItem("currentUser", JSON.stringify(state))
+      appDispatch({ 
+        type: "updateUsersArray",
+        user: state.currentUserIndex,
+        title: state.title.value,
+        firstName: state.firstName.value,
+        surname: state.surname.value,
+        email: state.email.value,
+        telephone: state.telephone.value,
+        contact: state.contact
+      })
+      dispatch({type: "userFinished"})
+    }
+  },[state.userUpdated])
   // useEffects end here
 
 
