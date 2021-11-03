@@ -99,8 +99,8 @@ export default function User(props) {
           draft.thirdfort = true;
         }
         if (
-          action.user.id === appState.user.id ||
-          action.user.id === action.primaryId
+          action.user.id === action.loggedInId ||
+          action.user.id === !action.primaryId
         ) {
           draft.isDisabled = false;
         } else {
@@ -153,7 +153,7 @@ export default function User(props) {
       const response = await AxiosPali.get(`/data/test/user/${userId}-user.json`);
       if (response.data) {
         appDispatch({ type: "pushUser", user: response.data }); // push the missing user into the users Array
-        dispatch({ type: "userDownloaded", user: response.data, primaryId: state.primaryUser.id });
+        dispatch({ type: "userDownloaded", user: response.data, primaryId: state.primaryUser.id, loggedInId: state.loggedInUser.id });
       }
     } catch (e) {
       console.log("There was an issue getting the user");
@@ -202,7 +202,8 @@ export default function User(props) {
         dispatch({
           type: "userDownloaded",
           user: appState.users[state.currentUserIndex],
-          primaryId: state.primaryUser.id
+          primaryId: state.primaryUser.id,
+          loggedInId: state.loggedInUser.id
         });
       } else {
         // if the id is not in the list of users in state
