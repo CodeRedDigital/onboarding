@@ -22,6 +22,7 @@ import StateContext from "../../states/StateContext";
 import DispatchContext from "../../states/DispatchContext";
 
 export default function User(props) {
+  console.log(process.env.THIRD_EMAIL)
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
   const router = useRouter();
@@ -194,6 +195,233 @@ export default function User(props) {
       console.log("There was an issue getting the user");
     }
   }
+  // Start AML functions
+  // Decide which AML Provider to use
+  async function sendAmlToUsers(users) {
+    dispatch({ type: "startLoading" });
+    if (appState.quote.AML.Provider == "CREDAS") {
+      console.log("CREDAS User(s)");
+      sendCredas(users);
+    } else if (appState.quote.AML.Provider == "Thirdfort") {
+      console.log("Thirdfort User(s)");
+      sendThirdfort(users);
+    } else {
+      console.log("There is no AML Provider")
+      appDispatch({ type: "flashMessage", value: "There is no AML Provider associated with this quote, please contact your Solicitor." })
+      dispatch({ type: "endLoading" })
+    }
+  }
+  // CREDAS AML check
+  async function sendCredas(userArray) {
+    let currentAssociatedUser = {};
+    currentAssociatedUser = appState.quote.associatedUsers.findIndex(
+      user => user.id === userArray.id
+    );
+    const currentUser = appState.users[currentAssociatedUser];
+    console.log("currentUser");
+    console.log(currentUser);
+    try {
+      const response = await AxiosCREDAS.post("registrations", {
+        forename: currentUser.firstName,
+        surname: currentUser.surname,
+        regTypeId: appState.CredasEnhancedAMLCode,
+        phoneNumber: currentUser.telNoDialCode,
+        diallingCode: currentUser.dialCode,
+        sendSms: true,
+        sendEmail: false,
+        emailAddress: currentUser.email,
+        parameters: [
+          {
+            key: "ClientName",
+            value: appState.firm.Name
+          },
+          {
+            key: "ClientLogoUrl",
+            value: appState.firm.logos.colourPng
+          },
+          {
+            key: "SolicitorID",
+            value: appState.firm.id
+          }
+        ]
+      });
+      if (response.data) {
+        console.log(response.data);
+        appDispatch({
+          type: "setCredasRegistrationDetails",
+          AMLRegistrationDetails: response.data
+        });
+        // example response:
+        // {
+        // "webJourneyUrl": null,
+        // "id": "6e7de9ed-1db7-484a-a215-2b51c7dfaf27",
+        // "regCode": "G6D575J9"
+        // }
+      }
+    } catch (error) {
+      console.log(error);
+      console.log("This single CREDAS did not work");
+    }
+  }
+  // thirdfort AML check
+  async function sendThirdfort(userArray) {
+    const now = Math.floor(Date.now() / 1000);
+    let token = "";
+    if (now < appState.quote.AML.thirdfort.jwtExpiry) {
+      console.log("the current token in state is OK");
+      token = appState.quote.AML.thirdfort.jwt;
+    } else {
+      console.log("the current token in state is too old");
+      const jwtToken = async event => {
+        const res = await fetch('/api/createJWT', {
+          body: JSON.stringify({}),
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          method: 'POST'
+        })
+        const result = await res.json()
+        token = result.token
+        appDispatch({
+          type: "saveThirdfortToken",
+          token,
+          tokenExpiry: result.tokenExpiry
+        });
+      }
+      jwtToken()
+    }
+    console.log(token);
+    let tenant = appState.firm.thirdfort.tenant;
+    let stubUser =
+      appState.firm.solicitors[appState.appData.indexOfAssociatedSolicitor]
+        .thirdfort.stubUser;
+    let currentAssociatedUser = {};
+    currentAssociatedUser = appState.users.findIndex(user => user.id === id);
+    const user = appState.users[currentAssociatedUser];
+    // function to send the thirdfort links
+    // try {
+    // const response = await AxiosThirdfort.post("transactions", transactionBody)
+    // if (response.data) {
+    // console.log(response.data)
+    // }
+    // } catch (error) {
+    // console.log(error);
+    // console.log(`transaction for ${user.firstName} ${user.surname} has failed`)
+    // }
+    // take the array and map over it
+
+    const transactionConfig = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        "Tenant-Id": tenant.id
+        // "User-Id": stubUser.id
+      }
+    };
+    async function thirdfort(config, body) {
+      try {
+        const response = await AxiosThirdfort.post(
+          "transactions",
+          body,
+          config
+        );
+        if (response.data) {
+          console.log(response.data);
+        }
+      } catch (error) {
+        console.log(error);
+        console.log(
+          `transaction for ${user.firstName} ${user.surname} has failed`
+        );
+      }
+    }
+    userArray.map(sendingUser => {
+      const indexOfUser = appState.users.findIndex(
+        user => user.id === sendingUser.id
+      ); // this is used to dispatch the response to the correct user
+      let telephone = "";
+      if (sendingUser.contact.tel) {
+        telephone = sendingUser.telephone;
+      } else if (sendingUser.contact.primary) {
+        telephone = appState.appData.primaryUser.telephone;
+      }
+      console.log(
+        `id = ${sendingUser.id}, name = ${sendingUser.firstName} ${sendingUser.surname}, index = ${indexOfUser}`
+      );
+      // create the conditional parts telephone if contact primary
+      let transactionBody = {};
+      if (appState.quote.type.toLowerCase().includes("purchase")) {
+        console.log("Quote is purchase");
+        transactionBody = {
+          type: "v2",
+          ref: appState.quote.id,
+          name: "Sale of 123 London Road",
+          request: {
+            actor: {
+              name: `${sendingUser.firstName} ${sendingUser.surname}`,
+              phone: telephone
+            },
+            tasks: [
+              {
+                type: "documents:poa"
+              },
+              {
+                type: "documents:poo"
+              },
+              {
+                type: "report:identity",
+                opts: {
+                  nfc: "preferred"
+                }
+              },
+              {
+                type: "report:footprint"
+              },
+              {
+                type: "report:peps"
+              }
+            ]
+          },
+          metadata: {}
+        };
+      } else {
+        transactionBody = {
+          type: "v2",
+          ref: appState.quote.id,
+          name: "Sale of 123 London Road",
+          request: {
+            actor: {
+              name: `${sendingUser.firstName} ${sendingUser.surname}`,
+              phone: telephone
+            },
+            tasks: [
+              {
+                type: "documents:poa"
+              },
+              {
+                type: "report:identity",
+                opts: {
+                  nfc: "preferred"
+                }
+              },
+              {
+                type: "report:footprint"
+              },
+              {
+                type: "report:peps"
+              }
+            ]
+          },
+          metadata: {}
+        };
+      }
+      console.log(transactionConfig);
+      console.log(transactionBody);
+      thirdfort(transactionConfig, transactionBody);
+    });
+    dispatch({ type: "endLoading" });
+  }
+  // End AML functions
   // Page functions end here
   // useEffects start here
   useEffect(() => {

@@ -301,6 +301,13 @@ function OnboardingApp({ Component, pageProps }) {
         draft.app.indexOfPrimaryUser = action.primaryIndex
         draft.app.indexOfLoggedInUser = action.currentIndex
         draft.app.indexOfAssociatedSolicitor = action.solicitorIndex
+        return
+      case "saveThirdfortToken":
+        draft.quote.AML.thirdfort.jwt = action.token;
+        draft.quote.AML.thirdfort.jwtExpiry = action.tokenExpiry;
+        draft.app.quoteUpdated = true
+        draft.app.appUpdated = true
+        return;
       }
   }
   const [state, dispatch] = useImmerReducer(ourReducer, initialState);
