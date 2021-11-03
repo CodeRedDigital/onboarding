@@ -259,7 +259,7 @@ export default function User(props) {
         </p>
       </div>
       <form onSubmit={handleSubmit} className="user">
-      <section className="form-grid">
+        <section className="form-grid">
           <label htmlFor="title">Title</label>
           <div>
             <input
@@ -367,93 +367,95 @@ export default function User(props) {
             </div>
           </div>
           <label htmlFor="first-name" className="span-grid">
-              Send Identity Check
-            </label>
-            <div id="identity-hint" className="pali-hint">
-              Where would you like your identity check link sent to?
-            </div>
-            {!state.thirdfortAndPrimary && ( // check that the AML provider is thirdfort and the user is not Primary and then load radio buttons
-            <div className="pali-radios pali-radios">
-              {appState.users[appState.app.indexOfPrimaryUser].id !== state.id && (
+            Send Identity Check
+          </label>
+          {!state.thirdfortAndPrimary && (
+            <>
+              <div id="identity-hint" className="pali-hint">
+                Where would you like your identity check link sent to?
+              </div>
+              <div className="pali-radios pali-radios">
+                {appState.users[appState.app.indexOfPrimaryUser].id !== state.id && (
+                  <div className="pali-radios__item">
+                    <input
+                      className="pali-radios__input"
+                      id="send-to-primary"
+                      name="contact"
+                      type="radio"
+                      value="primary"
+                      checked={props.primarySelected}
+                      onClick={() =>
+                        dispatch({
+                          type: "contactUpdate",
+                          tel: false,
+                          email: false,
+                          primary: true
+                        })
+                      }
+                    />
+                    <label
+                      className="pali-label pali-radios__label"
+                      htmlFor="send-to-primary"
+                    >
+                      {appState.users[appState.app.indexOfPrimaryUser].firstName}&apos;s phone
+                      {appState.quote.AML.Provider === "CREDAS" && "/email"}
+                    </label>
+                  </div>
+                )}
+                {appState.quote.AML.Provider === "CREDAS" && (
+                  <div className="pali-radios__item">
+                    <input
+                      className="pali-radios__input"
+                      id="send-to-email"
+                      name="contact"
+                      type="radio"
+                      value="email"
+                      disabled={state.isDisabled}
+                      checked={state.contact.email}
+                      onClick={() =>
+                        dispatch({
+                          type: "contactUpdate",
+                          tel: false,
+                          email: true,
+                          primary: false
+                        })
+                      }
+                    />
+                    <label
+                      className="pali-label pali-radios__label"
+                      htmlFor="send-to-email"
+                    >
+                      email
+                    </label>
+                  </div>
+                )}
                 <div className="pali-radios__item">
                   <input
                     className="pali-radios__input"
-                    id="send-to-primary"
+                    id="send-to-tel"
                     name="contact"
                     type="radio"
-                    value="primary"
-                    checked={props.primarySelected}
-                    onClick={() =>
-                      dispatch({
-                        type: "contactUpdate",
-                        tel: false,
-                        email: false,
-                        primary: true
-                      })
-                    }
-                  />
-                  <label
-                    className="pali-label pali-radios__label"
-                    htmlFor="send-to-primary"
-                  >
-                    {appState.users[appState.app.indexOfPrimaryUser].firstName}&apos;s phone
-                    {appState.quote.AML.Provider === "CREDAS" && "/email"}
-                  </label>
-                </div>
-              )}
-              {appState.quote.AML.Provider === "CREDAS" && (
-                <div className="pali-radios__item">
-                  <input
-                    className="pali-radios__input"
-                    id="send-to-email"
-                    name="contact"
-                    type="radio"
-                    value="email"
+                    value="tel"
                     disabled={state.isDisabled}
-                    checked={state.contact.email}
+                    checked={state.contact.tel}
                     onClick={() =>
                       dispatch({
                         type: "contactUpdate",
-                        tel: false,
-                        email: true,
+                        tel: true,
+                        email: false,
                         primary: false
                       })
                     }
                   />
                   <label
                     className="pali-label pali-radios__label"
-                    htmlFor="send-to-email"
+                    htmlFor="send-to-tel"
                   >
-                    email
+                    telephone
                   </label>
                 </div>
-              )}
-              <div className="pali-radios__item">
-                <input
-                  className="pali-radios__input"
-                  id="send-to-tel"
-                  name="contact"
-                  type="radio"
-                  value="tel"
-                  disabled={state.isDisabled}
-                  checked={state.contact.tel}
-                  onClick={() =>
-                    dispatch({
-                      type: "contactUpdate",
-                      tel: true,
-                      email: false,
-                      primary: false
-                    })
-                  }
-                />
-                <label
-                  className="pali-label pali-radios__label"
-                  htmlFor="send-to-tel"
-                >
-                  telephone
-                </label>
               </div>
-            </div>
+            </>
           )}
         </section>
         <button
