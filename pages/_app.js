@@ -308,6 +308,17 @@ function OnboardingApp({ Component, pageProps }) {
         draft.app.quoteUpdated = true
         draft.app.appUpdated = true
         return;
+      case "saveThirdfortTransaction":
+        console.log(action.index)
+        draft.users[action.index].AML.thirdfort = action.value
+        if (draft.users[action.index].id === draft.user.id) {
+          console.log("usersSame")
+          draft.user.AML.thirdfort = action.value
+          draft.app.userUpdated = true
+        }
+        draft.app.usersUpdated = true
+        draft.app.appUpdated = true
+        return
       }
   }
   const [state, dispatch] = useImmerReducer(ourReducer, initialState);

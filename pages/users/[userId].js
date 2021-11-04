@@ -307,8 +307,19 @@ export default function User(props) {
         method: 'POST'
       })
       const result = await response.json()
-      console.log(result.data)
-      console.log(`updating the user with the data ${indexOfUser}`)
+      if (result.data.error) {
+        appDispatch({
+          type: "flashMessage",
+          value: "There has been an issue please try again, if this persists contact the Solicitor."
+        })
+      } else {
+        console.log("Saving the data to the state")
+        appDispatch({
+          type: "saveThirdfortTransaction",
+          value: result.data,
+          index: result.index
+        })
+      }
     }
     userArray.map(sendingUser => {
       const indexOfUser = appState.users.findIndex(
