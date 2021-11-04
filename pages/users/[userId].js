@@ -288,29 +288,18 @@ export default function User(props) {
       }
       jwtToken()
     }
-    console.log(token);
-    const tenant = appState.firm.thirdfort.tenant;
-    const stubUser = appState.firm.solicitors[appState.app.indexOfAssociatedSolicitor].thirdfort.stubUser;
-    const user = appState.users[state.currentUserIndex];
+    const stubUserId = appState.firm.solicitors[appState.app.indexOfAssociatedSolicitor].thirdfort.stubUser.id;
     const transactionConfig = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-        "Tenant-Id": tenant.id,
-        "User-Id": stubUser.id
-      }
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+      "User-Id": stubUserId
     };
-    async function thirdfort(config, body, user, indexOfUser) {
-      console.log("This is what is being sent")
-      console.log(config)
-      console.log(body)
-      console.log(user)
-      console.log(indexOfUser)
+    async function thirdfort(config, body, indexOfUser) {
       const response = await fetch('/api/thirdfort/transactions', {
         body: JSON.stringify({
           config,
           body,
-          user
+          index: indexOfUser
         }),
         headers: {
           'Content-Type': 'application/json'
@@ -318,7 +307,7 @@ export default function User(props) {
         method: 'POST'
       })
       const result = await response.json()
-      console.log(result)
+      console.log(result.data)
       console.log(`updating the user with the data ${indexOfUser}`)
     }
     userArray.map(sendingUser => {
@@ -401,11 +390,11 @@ export default function User(props) {
           metadata: {}
         };
       }
-      // console.log(transactionConfig);
+      console.log(transactionConfig);
       // console.log(transactionBody);
       console.log("indexOfUser")
       console.log(indexOfUser)
-      thirdfort(transactionConfig, transactionBody, sendingUser, indexOfUser);
+      thirdfort(transactionConfig, transactionBody, indexOfUser);
     });
     dispatch({ type: "endLoading" });
   }
