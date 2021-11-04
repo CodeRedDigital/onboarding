@@ -301,6 +301,7 @@ function OnboardingApp({ Component, pageProps }) {
         draft.app.indexOfLoggedInUser = action.currentIndex
         draft.app.indexOfAssociatedSolicitor = action.solicitorIndex
         return
+      // Thirdfort dispatches
       case "saveThirdfortToken":
         draft.quote.AML.thirdfort.jwt = action.token;
         draft.quote.AML.thirdfort.jwtExpiry = action.tokenExpiry;
@@ -316,9 +317,46 @@ function OnboardingApp({ Component, pageProps }) {
         draft.app.usersUpdated = true
         draft.app.appUpdated = true
         return
+      // CREDAS dispatches
+      case "saveCredasRegTypes":
+        draft.quote.AML.credas.regTypes = action.value
+        draft.app.quoteUpdated = true
+        draft.app.appUpdated = true
       }
   }
   const [state, dispatch] = useImmerReducer(ourReducer, initialState);
+  // functions to use
+  async function getCredasRegTypes() {
+    const response = await fetch('/api/credas/getRegTypes', {
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      method: 'POST'
+    })
+    const result = await response.json()
+    if (result.data.error) {
+      dispatch({
+        type: "flashMessage",
+        value: "There has been an issue trying to get the Credas Reg Types"
+      })
+    } else if (result.data.status == "200") {
+      dispatch({
+        type: "saveCredasRegTypes",
+        value: result.data
+      })
+    } else {
+      console.log("There is a status other than 200")
+      console.log(result.data.status)
+    }
+  }
+  // end of functions
+  useEffect(() => {
+    if (!state.quote.AML.credas.regTypes) {
+      getCredasRegTypes()
+    } else {
+      console.log("Find the CREDAS enhancedAML reg type")
+    }
+  },[state.quote.AML.credas.regTypes])
   useEffect(() => {
     // functions
     // get ids from URL
@@ -611,6 +649,7 @@ function OnboardingApp({ Component, pageProps }) {
       }
     }
     if (state.app.quoteUpdated) {
+
       localStorage.setItem("quote", JSON.stringify(state.quote))
       dispatch({type: "quoteFinished"})
     }
