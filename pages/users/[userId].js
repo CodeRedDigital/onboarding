@@ -22,7 +22,6 @@ import StateContext from "../../states/StateContext";
 import DispatchContext from "../../states/DispatchContext";
 
 export default function User(props) {
-  console.log(process.env.THIRD_EMAIL)
   const appState = useContext(StateContext);
   const appDispatch = useContext(DispatchContext);
   const router = useRouter();
@@ -301,11 +300,13 @@ export default function User(props) {
         "User-Id": stubUser.id
       }
     };
-    async function thirdfort(config, body, user) {
+    async function thirdfort(config, body, user, indexOfUser) {
+      console.log("This is what is being sent")
       console.log(config)
       console.log(body)
       console.log(user)
-      const res = await fetch('api/thirdfort/transactions', {
+      console.log(indexOfUser)
+      const response = await fetch('/api/thirdfort/transactions', {
         body: JSON.stringify({
           config,
           body,
@@ -316,8 +317,9 @@ export default function User(props) {
         },
         method: 'POST'
       })
-      const result = await res.json()
+      const result = await response.json()
       console.log(result)
+      console.log(`updating the user with the data ${indexOfUser}`)
     }
     userArray.map(sendingUser => {
       const indexOfUser = appState.users.findIndex(
@@ -335,7 +337,7 @@ export default function User(props) {
       // create the conditional parts telephone if contact primary
       let transactionBody = {};
       if (appState.quote.type.toLowerCase().includes("purchase")) {
-        console.log("Quote is purchase");
+        // console.log("Quote is purchase");
         transactionBody = {
           type: "v2",
           ref: appState.quote.id,
@@ -399,9 +401,11 @@ export default function User(props) {
           metadata: {}
         };
       }
-      console.log(transactionConfig);
-      console.log(transactionBody);
-      thirdfort(transactionConfig, transactionBody, sendingUser);
+      // console.log(transactionConfig);
+      // console.log(transactionBody);
+      console.log("indexOfUser")
+      console.log(indexOfUser)
+      thirdfort(transactionConfig, transactionBody, sendingUser, indexOfUser);
     });
     dispatch({ type: "endLoading" });
   }
