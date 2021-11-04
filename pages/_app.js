@@ -168,7 +168,6 @@ function OnboardingApp({ Component, pageProps }) {
         return
       // set user data to be full
       case "userComplete":
-        console.log("complete user")
         draft.user.complete = true
         draft.app.userUpdated = true
         draft.app.appUpdated = true
@@ -309,10 +308,8 @@ function OnboardingApp({ Component, pageProps }) {
         draft.app.appUpdated = true
         return;
       case "saveThirdfortTransaction":
-        console.log(action.index)
         draft.users[action.index].AML.thirdfort = action.value
         if (draft.users[action.index].id === draft.user.id) {
-          console.log("usersSame")
           draft.user.AML.thirdfort = action.value
           draft.app.userUpdated = true
         }
@@ -724,10 +721,8 @@ function OnboardingApp({ Component, pageProps }) {
           if (currentUser.id === associatedUsers[i].id) {
             // if the id is of the current user push it into the array and update the user in state
             if (currentUser.complete) {
-              console.log("the current user is already full using it")
               newUsers.push(currentUser)
             } else {
-              console.log("the current user is not full fetching it")
               const fetchCurrentUser = await getAssociatedUser(
                 state.user.id
               ).then(result => {

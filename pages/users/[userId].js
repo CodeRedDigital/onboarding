@@ -199,13 +199,10 @@ export default function User(props) {
   async function sendAmlToUsers(users) {
     dispatch({ type: "startLoading" });
     if (appState.quote.AML.Provider == "CREDAS") {
-      console.log("CREDAS User(s)");
       sendCredas(users);
     } else if (appState.quote.AML.Provider == "Thirdfort") {
-      console.log("Thirdfort User(s)");
       sendThirdfort(users);
     } else {
-      console.log("There is no AML Provider")
       appDispatch({ type: "flashMessage", value: "There is no AML Provider associated with this quote, please contact your Solicitor." })
       dispatch({ type: "endLoading" })
     }
@@ -288,6 +285,7 @@ export default function User(props) {
       }
       jwtToken()
     }
+    // there is an issue her with the token not being set before proceeding due to the await on line 272
     const stubUserId = appState.firm.solicitors[appState.app.indexOfAssociatedSolicitor].thirdfort.stubUser.id;
     const transactionConfig = {
       Authorization: `Bearer ${token}`,
@@ -313,7 +311,6 @@ export default function User(props) {
           value: "There has been an issue please try again, if this persists contact the Solicitor."
         })
       } else {
-        console.log("Saving the data to the state")
         appDispatch({
           type: "saveThirdfortTransaction",
           value: result.data,
@@ -331,13 +328,10 @@ export default function User(props) {
       } else if (sendingUser.contact.primary) {
         telephone = appState.appData.primaryUser.telephone;
       }
-      console.log(
-        `id = ${sendingUser.id}, name = ${sendingUser.firstName} ${sendingUser.surname}, index = ${indexOfUser}`
-      );
       // create the conditional parts telephone if contact primary
       let transactionBody = {};
       if (appState.quote.type.toLowerCase().includes("purchase")) {
-        // console.log("Quote is purchase");
+        // Quote is purchase
         transactionBody = {
           type: "v2",
           ref: appState.quote.id,
@@ -401,10 +395,6 @@ export default function User(props) {
           metadata: {}
         };
       }
-      console.log(transactionConfig);
-      // console.log(transactionBody);
-      console.log("indexOfUser")
-      console.log(indexOfUser)
       thirdfort(transactionConfig, transactionBody, indexOfUser);
     });
     dispatch({ type: "endLoading" });
@@ -419,7 +409,6 @@ export default function User(props) {
   }, []);
 
   useEffect(() => {
-    console.log(`user has changed to ${userId}`);
     dispatch({ type: "updateUserId", id: userId });
   }, [router.query]);
   useEffect(() => {
@@ -454,7 +443,6 @@ export default function User(props) {
     let indexOfUser = appState.users.findIndex(
       user => user.id === state.userId
     );
-    console.log(`UserIndex = ${indexOfUser}`);
     dispatch({ type: "currentUserIndex", index: indexOfUser });
     if (state.currentUserIndex !== -1) {
       // stuff to do when currentUserIndex has a value
@@ -471,7 +459,6 @@ export default function User(props) {
         getUser(state.userId); // fetches the user from DB
       }
       if (appState.quote.AML.Provider === "Thirdfort") {
-        console.log(`Index of Primary = ${appState.app.indexOfPrimaryUser}`);
         dispatch({
           type: "setThirdfortPrimary",
           primary:
@@ -483,7 +470,6 @@ export default function User(props) {
     }
   }, [state.userId, state.currentUserIndex]);
   useEffect(() => {
-    console.log(`updatinging name ${state.firstName.value}`)
     dispatch({
       type: "setName",
       firstName: state.firstName.value,
