@@ -8,5 +8,5 @@ export default async function getRegTypes(req, res) {
   })
   const data = await response.json()
   console.log(data)
-  res.status(201).json({data})
+  res.status(201).json({"status": response.status, data})
 }

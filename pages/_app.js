@@ -339,14 +339,14 @@ function OnboardingApp({ Component, pageProps }) {
         type: "flashMessage",
         value: "There has been an issue trying to get the Credas Reg Types"
       })
-    } else if (result.data.status == "200") {
+    } else if (result.status == "200") {
       dispatch({
         type: "saveCredasRegTypes",
         value: result.data
       })
     } else {
       console.log("There is a status other than 200")
-      console.log(result.data.status)
+      console.log(result.status)
     }
   }
   // end of functions
