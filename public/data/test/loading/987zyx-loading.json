@@ -15,7 +15,7 @@
   "associatedFirmId": "123abc",
   "associatedSolicitorId": "123abc-00001",
   "AML": {
-    "Provider": "Thirdfort",
+    "provider": "Thirdfort",
     "thirdfort": {},
     "credas": {}
   },

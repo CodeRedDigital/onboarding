@@ -15,7 +15,7 @@
   "associatedFirmId": "456def",
   "associatedSolicitorId": "456def-00001",
   "AML": {
-    "Provider": "CREDAS",
+    "provider": "CREDAS",
     "thirdfort": {},
     "credas": {}
   },

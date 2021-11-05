@@ -73,8 +73,8 @@ export default function User(props) {
       tel: false
     },
     primaryUser: appState.users[appState.app.indexOfPrimaryUser],
-    loggedInUser: appState.users[appState.app.indexOfLoggedInUser],
-  }
+    loggedInUser: appState.users[appState.app.indexOfLoggedInUser]
+  };
   function ourReducer(draft, action) {
     switch (action.type) {
       case "updateUserId":
@@ -95,7 +95,7 @@ export default function User(props) {
         draft.contact.primary = action.user.contact.primary;
         draft.contact.email = action.user.contact.email;
         draft.contact.tel = action.user.contact.tel;
-        if (appState.quote.AML.Provider === "Thirdfort") {
+        if (appState.quote.AML.provider === "Thirdfort") {
           draft.thirdfort = true;
         }
         if (
@@ -147,7 +147,7 @@ export default function User(props) {
         draft.userIsLoading = false;
         return;
       case "userFinished":
-        draft.userUpdated = false
+        draft.userUpdated = false;
         return;
       case "setName":
         draft.name = `${action.firstName} ${action.surname}`;
@@ -188,7 +188,12 @@ export default function User(props) {
       );
       if (response.data) {
         appDispatch({ type: "pushUser", user: response.data }); // push the missing user into the users Array
-        dispatch({ type: "userDownloaded", user: response.data, primaryId: state.primaryUser.id, loggedInId: state.loggedInUser.id });
+        dispatch({
+          type: "userDownloaded",
+          user: response.data,
+          primaryId: state.primaryUser.id,
+          loggedInId: state.loggedInUser.id
+        });
       }
     } catch (e) {
       console.log("There was an issue getting the user");
@@ -198,13 +203,17 @@ export default function User(props) {
   // Decide which AML Provider to use
   async function sendAmlToUsers(users) {
     dispatch({ type: "startLoading" });
-    if (appState.quote.AML.Provider == "CREDAS") {
+    if (appState.quote.AML.provider == "CREDAS") {
       sendCredas(users);
-    } else if (appState.quote.AML.Provider == "Thirdfort") {
+    } else if (appState.quote.AML.provider == "Thirdfort") {
       sendThirdfort(users);
     } else {
-      appDispatch({ type: "flashMessage", value: "There is no AML Provider associated with this quote, please contact your Solicitor." })
-      dispatch({ type: "endLoading" })
+      appDispatch({
+        type: "flashMessage",
+        value:
+          "There is no AML Provider associated with this quote, please contact your Solicitor."
+      });
+      dispatch({ type: "endLoading" });
     }
   }
   // CREDAS AML check
@@ -269,53 +278,56 @@ export default function User(props) {
     } else {
       console.log("the current token in state is too old");
       const jwtToken = async () => {
-        const res = await fetch('/api/thirdfort/createJWT', {
+        const res = await fetch("/api/thirdfort/createJWT", {
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
           },
-          method: 'POST'
-        })
-        const result = await res.json()
-        token = result.token
+          method: "POST"
+        });
+        const result = await res.json();
+        token = result.token;
         appDispatch({
           type: "saveThirdfortToken",
           token,
           tokenExpiry: result.tokenExpiry
         });
-      }
-      jwtToken()
+      };
+      jwtToken();
     }
     // there is an issue her with the token not being set before proceeding due to the await on line 272
-    const stubUserId = appState.firm.solicitors[appState.app.indexOfAssociatedSolicitor].thirdfort.stubUser.id;
+    const stubUserId =
+      appState.firm.solicitors[appState.app.indexOfAssociatedSolicitor]
+        .thirdfort.stubUser.id;
     const transactionConfig = {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
       "User-Id": stubUserId
     };
     async function thirdfort(config, body, indexOfUser) {
-      const response = await fetch('/api/thirdfort/transactions', {
+      const response = await fetch("/api/thirdfort/transactions", {
         body: JSON.stringify({
           config,
           body,
           index: indexOfUser
         }),
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         },
-        method: 'POST'
-      })
-      const result = await response.json()
+        method: "POST"
+      });
+      const result = await response.json();
       if (result.data.error) {
         appDispatch({
           type: "flashMessage",
-          value: "There has been an issue please try again, if this persists contact the Solicitor."
-        })
+          value:
+            "There has been an issue please try again, if this persists contact the Solicitor."
+        });
       } else {
         appDispatch({
           type: "saveThirdfortTransaction",
           value: result.data,
           index: result.index
-        })
+        });
       }
     }
     userArray.map(sendingUser => {
@@ -403,8 +415,8 @@ export default function User(props) {
   // Page functions end here
   // useEffects start here
   useEffect(() => {
-    if(!state.primaryUser || !state.loggedInUser) {
-      router.push("/")
+    if (!state.primaryUser || !state.loggedInUser) {
+      router.push("/");
     }
   }, []);
 
@@ -458,7 +470,7 @@ export default function User(props) {
         // if the id is not in the list of users in state
         getUser(state.userId); // fetches the user from DB
       }
-      if (appState.quote.AML.Provider === "Thirdfort") {
+      if (appState.quote.AML.provider === "Thirdfort") {
         dispatch({
           type: "setThirdfortPrimary",
           primary:
@@ -473,16 +485,13 @@ export default function User(props) {
     dispatch({
       type: "setName",
       firstName: state.firstName.value,
-      surname: state.surname.value,
-    })
-  },[
-    state.firstName.value,
-    state.surname.value
-  ])
+      surname: state.surname.value
+    });
+  }, [state.firstName.value, state.surname.value]);
   useEffect(() => {
     if (state.userUpdated) {
-      localStorage.setItem("currentUser", JSON.stringify(state))
-      appDispatch({ 
+      localStorage.setItem("currentUser", JSON.stringify(state));
+      appDispatch({
         type: "updateUsersArray",
         user: state.currentUserIndex,
         title: state.title.value,
@@ -491,10 +500,10 @@ export default function User(props) {
         email: state.email.value,
         telephone: state.telephone.value,
         contact: state.contact
-      })
-      dispatch({type: "userFinished"})
+      });
+      dispatch({ type: "userFinished" });
     }
-  },[state.userUpdated])
+  }, [state.userUpdated]);
   // useEffects end here
 
   return (
@@ -523,12 +532,12 @@ export default function User(props) {
           Once all of these fields have been completed we will pass them over to
           our trust partner{" "}
           <ModalLink
-            name={appState.quote.AML.Provider}
+            name={appState.quote.AML.provider}
             href="#amlButton"
             className=""
-            data-modal-open={appState.quote.AML.Provider + "Modal"}
-            data-button={appState.quote.AML.Provider + "Button"}
-            data-name={appState.quote.AML.Provider}
+            data-modal-open={appState.quote.AML.provider + "Modal"}
+            data-button={appState.quote.AML.provider + "Button"}
+            data-name={appState.quote.AML.provider}
             modalLinkContent={parse(
               unescape(
                 state.thirdfort
@@ -680,11 +689,11 @@ export default function User(props) {
                       htmlFor="send-to-primary"
                     >
                       {state.primaryUser.firstName}&apos;s phone
-                      {appState.quote.AML.Provider === "CREDAS" && "/email"}
+                      {appState.quote.AML.provider === "CREDAS" && "/email"}
                     </label>
                   </div>
                 )}
-                {appState.quote.AML.Provider === "CREDAS" && (
+                {appState.quote.AML.provider === "CREDAS" && (
                   <div className="pali-radios__item">
                     <input
                       className="pali-radios__input"
@@ -745,7 +754,7 @@ export default function User(props) {
           disabled={state.isDisabled}
           data-send={state.userId}
         >
-          Send {appState.quote.AML.Provider} Link for {state.firstName.value}
+          Send {appState.quote.AML.provider} Link for {state.firstName.value}
         </button>
         {appState.user.id === state.userId &&
           state.primaryUser.id === state.userId && (
@@ -754,7 +763,7 @@ export default function User(props) {
               disabled={state.isDisabled}
               data-send="all"
             >
-              Send All {appState.quote.AML.Provider} Links
+              Send All {appState.quote.AML.provider} Links
             </button>
           )}
       </form>
