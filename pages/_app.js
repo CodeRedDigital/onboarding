@@ -351,12 +351,14 @@ function OnboardingApp({ Component, pageProps }) {
   }
   // end of functions
   useEffect(() => {
-    if (!state.quote.AML.credas.regTypes) {
-      getCredasRegTypes()
-    } else {
-      console.log("Find the CREDAS enhancedAML reg type")
+    if (state.app.quoteData && state.quote.AML.provider === "CREDAS") {
+      if (!state.quote.AML.credas.regTypes) {
+        getCredasRegTypes()
+      } else {
+        console.log("Find the CREDAS enhancedAML reg type")
+      }
     }
-  },[state.quote.AML.credas.regTypes])
+  },[state.app.quoteData, state.quote.AML.credas.regTypes])
   useEffect(() => {
     // functions
     // get ids from URL
