@@ -218,10 +218,15 @@ export default function User(props) {
   }
   // CREDAS AML check
   async function sendCredas(userArray) {
-    let currentAssociatedUser = {};
-    currentAssociatedUser = appState.quote.associatedUsers.findIndex(
+    console.log("userArray")
+    console.log(userArray)
+    console.log("appState.quote.associatedUsers")
+    console.log(appState.quote.associatedUsers)
+    const currentAssociatedUser = appState.quote.associatedUsers.findIndex(
       user => user.id === userArray.id
     );
+    console.log("currentAssociatedUser")
+    console.log(currentAssociatedUser)
     const currentUser = appState.users[currentAssociatedUser];
     console.log("currentUser");
     console.log(currentUser);
@@ -342,12 +347,14 @@ export default function User(props) {
       }
       // create the conditional parts telephone if contact primary
       let transactionBody = {};
-      if (appState.quote.type.toLowerCase().includes("purchase")) {
+      if (appState.quote.type.toLowerCase().includes("sale")) {
+        // find the address being sold
+        const address = appState.quote.associatedAddresses.find(address => address.type === "sale")
         // Quote is purchase
         transactionBody = {
           type: "v2",
           ref: appState.quote.id,
-          name: "Sale of 123 London Road",
+          name: `Sale of ${address.address1}`,
           request: {
             actor: {
               name: `${sendingUser.firstName} ${sendingUser.surname}`,
@@ -377,10 +384,11 @@ export default function User(props) {
           metadata: {}
         };
       } else {
+        const address = appState.quote.associatedAddresses.find(address => address.type === "purchase")
         transactionBody = {
           type: "v2",
           ref: appState.quote.id,
-          name: "Sale of 123 London Road",
+          name: `Purchase of ${address.address1}`,
           request: {
             actor: {
               name: `${sendingUser.firstName} ${sendingUser.surname}`,
