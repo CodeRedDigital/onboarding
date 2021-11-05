@@ -322,6 +322,13 @@ function OnboardingApp({ Component, pageProps }) {
         draft.quote.AML.credas.regTypes = action.value
         draft.app.quoteUpdated = true
         draft.app.appUpdated = true
+        return
+      case "saveCredasEnhanced":
+        console.log(`EnhancedCodeTime ${action.value}`)
+        draft.quote.AML.credas.enhancedAMLCode = action.value
+        draft.app.quoteUpdated = true
+        draft.app.appUpdated = true
+        return
       }
   }
   const [state, dispatch] = useImmerReducer(ourReducer, initialState);
@@ -355,7 +362,11 @@ function OnboardingApp({ Component, pageProps }) {
       if (!state.quote.AML.credas.regTypes) {
         getCredasRegTypes()
       } else {
-        console.log("Find the CREDAS enhancedAML reg type")
+        const enhancedAML = state.quote.AML.credas.regTypes.find(code => code.name === "Enhanced AML")
+        dispatch({
+          type: "saveCredasEnhanced",
+          value: enhancedAML.id
+        })
       }
     }
   },[state.app.quoteData, state.quote.AML.credas.regTypes])
