@@ -10,7 +10,7 @@ export default async function getRegTypes(req, res) {
         'accept': 'application/json',
         'apikey': process.env.CREDAS_API_KEY
       },
-      body: {
+      body: JSON.stringify({
         forename: user.firstName,
         surname: user.surname,
         regTypeId: amlCode,
@@ -33,7 +33,7 @@ export default async function getRegTypes(req, res) {
             value: firm.id
           }
         ]
-      },
+      }),
       method: 'POST'
     })
     const data = await response.json()
