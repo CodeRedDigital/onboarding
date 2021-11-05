@@ -217,61 +217,44 @@ export default function User(props) {
     }
   }
   // CREDAS AML check
-  async function sendCredas(userArray) {
-    console.log("userArray")
-    console.log(userArray)
-    console.log("appState.quote.associatedUsers")
-    console.log(appState.quote.associatedUsers)
-    const currentAssociatedUser = appState.quote.associatedUsers.findIndex(
-      user => user.id === userArray.id
-    );
-    console.log("currentAssociatedUser")
-    console.log(currentAssociatedUser)
-    const currentUser = appState.users[currentAssociatedUser];
-    console.log("currentUser");
-    console.log(currentUser);
-    try {
-      const response = await AxiosCREDAS.post("registrations", {
-        forename: currentUser.firstName,
-        surname: currentUser.surname,
-        regTypeId: appState.CredasEnhancedAMLCode,
-        phoneNumber: currentUser.telNoDialCode,
-        diallingCode: currentUser.dialCode,
-        sendSms: true,
-        sendEmail: false,
-        emailAddress: currentUser.email,
-        parameters: [
-          {
-            key: "ClientName",
-            value: appState.firm.Name
-          },
-          {
-            key: "ClientLogoUrl",
-            value: appState.firm.logos.colourPng
-          },
-          {
-            key: "SolicitorID",
-            value: appState.firm.id
-          }
-        ]
+  async function credas(user, indexOfUser) {
+    console.log("User & Index")
+    console.log(user, indexOfUser)
+    const response = await fetch("/api/credas/registrations", {
+      body: JSON.stringify({
+        amlCode: appState.quote.AML.credas.enhancedAMLCode,
+        user,
+        firm: appState.firm,
+        index: indexOfUser
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "POST"
+    })
+    const result = await response.json();
+    if (result.data.error) {
+      appDispatch({
+        type: "flashMessage",
+        value:
+          "There has been an issue please try again, if this persists contact the Solicitor."
       });
-      if (response.data) {
-        console.log(response.data);
-        appDispatch({
-          type: "setCredasRegistrationDetails",
-          AMLRegistrationDetails: response.data
-        });
-        // example response:
-        // {
-        // "webJourneyUrl": null,
-        // "id": "6e7de9ed-1db7-484a-a215-2b51c7dfaf27",
-        // "regCode": "G6D575J9"
-        // }
-      }
-    } catch (error) {
-      console.log(error);
-      console.log("This single CREDAS did not work");
+    } else {
+      appDispatch({
+        type: "saveCredasRegistration",
+        value: result.data,
+        index: result.index
+      });
     }
+  }
+  async function sendCredas(userArray) {
+    userArray.map(sendingUser => {
+      const indexOfUser = appState.users.findIndex(
+        user => user.id === sendingUser.id
+      );
+      credas(sendingUser, indexOfUser)
+    })
+    dispatch({ type: "endLoading" });
   }
   // thirdfort AML check
   async function sendThirdfort(userArray) {
