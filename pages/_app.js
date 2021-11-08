@@ -98,6 +98,9 @@ function OnboardingApp({ Component, pageProps }) {
   }
   function ourReducer(draft, action) {
     switch (action.type) {
+      case "resetApp":
+        draft = initialState
+        return
       // login and out cases
       case "login":
         draft.app.loggedIn = true;

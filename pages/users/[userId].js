@@ -84,9 +84,6 @@ export default function User(props) {
         draft.currentUserIndex = action.index;
         return;
       case "userDownloaded":
-        console.log(action.user)
-        console.log(action.primaryId)
-        console.log(action.loggedInId)
         draft.id = action.user.id;
         draft.title.value = action.user.title;
         draft.firstName.value = action.user.firstName;
@@ -110,7 +107,7 @@ export default function User(props) {
           draft.isDisabled = true;
         }
         draft.telUpdated = false;
-        if (appState.app.indexOfPrimaryUser !== null){
+        if (!appState.app.indexOfPrimaryUser){
           draft.userIsLoading = false;
         }
         return;
@@ -226,8 +223,6 @@ export default function User(props) {
   }
   // CREDAS AML check
   async function credas(user, indexOfUser) {
-    console.log("User & Index")
-    console.log(user, indexOfUser)
     const response = await fetch("/api/credas/registrations", {
       body: JSON.stringify({
         amlCode: appState.quote.AML.credas.enhancedAMLCode,
@@ -460,6 +455,10 @@ export default function User(props) {
       user => user.id === state.userId
     );
     dispatch({ type: "currentUserIndex", index: indexOfUser });
+    if (!state.primaryUser) {
+      appDispatch({ type: "resetApp" })
+      router.push('/')
+    }
     if (state.currentUserIndex !== -1) {
       // stuff to do when currentUserIndex has a value
       if (appState.users.some(i => i.id.includes(state.userId))) {
