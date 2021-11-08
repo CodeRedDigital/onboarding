@@ -84,6 +84,9 @@ export default function User(props) {
         draft.currentUserIndex = action.index;
         return;
       case "userDownloaded":
+        console.log(action.user)
+        console.log(action.primaryId)
+        console.log(action.loggedInId)
         draft.id = action.user.id;
         draft.title.value = action.user.title;
         draft.firstName.value = action.user.firstName;
@@ -497,7 +500,7 @@ export default function User(props) {
   }, [state.userUpdated]);
   // useEffects end here
 
-  return (
+  return (state.userIsLoading ? <LoadingSpinner /> :
     <Main title={state.name}>
       <div className="seller-info">
         <div className="sellers">
