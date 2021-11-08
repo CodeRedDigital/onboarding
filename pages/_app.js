@@ -329,6 +329,15 @@ function OnboardingApp({ Component, pageProps }) {
         draft.app.quoteUpdated = true
         draft.app.appUpdated = true
         return
+      case "saveCredasRegistration":
+        draft.users[action.index].AML.CREDAS = action.value
+        if (draft.users[action.index].id === draft.user.id) {
+          draft.user.AML.CREDAS = action.value
+          draft.app.userUpdated = true
+        }
+        draft.app.usersUpdated = true
+        draft.app.appUpdated = true
+        return
       }
   }
   const [state, dispatch] = useImmerReducer(ourReducer, initialState);
