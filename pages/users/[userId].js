@@ -110,8 +110,13 @@ export default function User(props) {
           draft.isDisabled = true;
         }
         draft.telUpdated = false;
-        draft.userIsLoading = false;
+        if (appState.app.indexOfPrimaryUser !== null){
+          draft.userIsLoading = false;
+        }
         return;
+      case "loadingComplete":
+        draft.userIsLoading = false;
+        return
       case "titleUpdate":
         draft.title.value = action.value;
         draft.userUpdated = true;
@@ -418,6 +423,11 @@ export default function User(props) {
     dispatch({ type: "updateUserId", id: userId });
   }, [router.query]);
   useEffect(() => {
+    if (appState.app.indexOfPrimaryUser !== null && !state.userIsLoading){
+      dispatch({ type: "loadingComplete" })
+    }
+  },[appState.app.indexOfPrimaryUser])
+  useEffect(() => {
     if (document.querySelector("#telephone")) {
       const input = document.querySelector("#telephone");
       const iti = intlTelInput(input, {
@@ -500,7 +510,7 @@ export default function User(props) {
   }, [state.userUpdated]);
   // useEffects end here
 
-  return (state.userIsLoading ? <LoadingSpinner /> :
+  return (state.userIsLoading ? <Main title="loading"><LoadingSpinner /></Main> :
     <Main title={state.name}>
       <div className="seller-info">
         <div className="sellers">
