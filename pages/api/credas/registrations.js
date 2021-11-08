@@ -22,7 +22,7 @@ export default async function getRegTypes(req, res) {
         parameters: [
           {
             key: "ClientName",
-            value: firm.Name
+            value: firm.name
           },
           {
             key: "ClientLogoUrl",
