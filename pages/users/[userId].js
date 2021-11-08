@@ -648,7 +648,7 @@ export default function User(props) {
               Invalid phone number.
             </div>
           </div>
-          <label htmlFor="first-name" className="span-grid">
+          <label htmlFor="contact" className="span-grid">
             Send Identity Check
           </label>
           {!state.thirdfortAndPrimary && (
