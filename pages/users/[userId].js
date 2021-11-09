@@ -474,7 +474,6 @@ export default function User(props) {
       });
       function splitTelephone() {
         if (input.value.trim()) {
-          console.log(iti.getSelectedCountryData().dialCode)
           const number = iti.getNumber()
           const dialCode = "+" + iti.getSelectedCountryData().dialCode;
           const telNoDialCode = number.slice(dialCode.length);

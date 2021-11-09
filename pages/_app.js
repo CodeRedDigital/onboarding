@@ -222,6 +222,7 @@ function OnboardingApp({ Component, pageProps }) {
           draft.app.userUpdated = true
         }
         draft.app.appUpdated = true;
+        draft.app.usersUpdated = true
         return
       // data fetch starting
       case "firmStarted":
