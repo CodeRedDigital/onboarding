@@ -150,6 +150,9 @@ export default function User(props) {
       case "updateTelAfterDelay":
         draft.telUpdated = true;
         return;
+      case "updateAfterDelay":
+        draft.userUpdated = true;
+        return;
       case "contactUpdate":
         draft.contact.primary = action.primary;
         draft.contact.email = action.email;
@@ -425,14 +428,32 @@ export default function User(props) {
     }
   }, []);
   useEffect(() => {
-    console.log(`the state of telUpdated = ${state.telUpdated}`)
     if (!state.telUpdated) {
-      console.log("the telephone delay is happening")
-      console.log(appState.firm.delay)
-      const telDelay = setTimeout(() => dispatch({type: "updateTelAfterDelay"}), 4000);
+      const telDelay = setTimeout(() => dispatch({type: "updateTelAfterDelay"}), appState.firm.delay);
       return () => clearTimeout(telDelay)
-    } else {console.log("No delay happening")}
+    }
   }, [state.telephone.value, userId]);
+  useEffect(() => {
+    if (!state.userIsLoading) {
+      if (
+        state.title.value ||
+        state.firstName.value ||
+        state.surname.value ||
+        state.email.value
+      ) {
+        const delay = setTimeout(
+          () => dispatch({ type: "updateAfterDelay" }),
+          appState.firm.delay
+        );
+        return () => clearTimeout(delay);
+      }
+    }
+  }, [
+    state.title.value,
+    state.firstName.value,
+    state.surname.value,
+    state.email.value
+  ]);
   useEffect(() => {
     dispatch({ type: "updateUserId", id: userId });
   }, [router.query]);
