@@ -327,7 +327,6 @@ function OnboardingApp({ Component, pageProps }) {
         draft.app.appUpdated = true
         return
       case "saveCredasEnhanced":
-        console.log(`EnhancedCodeTime ${action.value}`)
         draft.quote.AML.credas.enhancedAMLCode = action.value
         draft.app.quoteUpdated = true
         draft.app.appUpdated = true
@@ -379,6 +378,31 @@ function OnboardingApp({ Component, pageProps }) {
           type: "saveCredasEnhanced",
           value: enhancedAML.id
         })
+      }
+    } else if (state.app.quoteData && state.quote.AML.provider === "Thirdfort") {
+      const now = Math.floor(Date.now() / 1000);
+      let token = "";
+      if (now < state.quote.AML.thirdfort.jwtExpiry) {
+        console.log("the current token in state is OK");
+        token = state.quote.AML.thirdfort.jwt;
+      } else {
+        console.log("the current token in state is too old");
+        const jwtToken = async () => {
+          const res = await fetch("/api/thirdfort/createJWT", {
+            headers: {
+              "Content-Type": "application/json"
+            },
+            method: "POST"
+          });
+          const result = await res.json();
+          token = result.token;
+          dispatch({
+            type: "saveThirdfortToken",
+            token,
+            tokenExpiry: result.tokenExpiry
+          });
+        };
+        jwtToken();
       }
     }
   },[state.app.quoteData, state.quote.AML.credas.regTypes])
