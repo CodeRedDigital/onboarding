@@ -10,6 +10,7 @@ import { decode } from "he"; // used for decoding the encoded html for the modal
 import parse from "html-react-parser";
 import intlTelInput from "intl-tel-input";
 import "intl-tel-input/build/css/intlTelInput.css";
+const itiUtils = require("intl-tel-input/build/js/utils.js")
 
 // components
 import Main from "../../components/Main";
@@ -35,7 +36,7 @@ export default function User(props) {
     thirdfortAndPrimary: false,
     primary: false,
     userUpdated: false,
-    telUpdated: true,
+    telUpdated: false,
     amlStarted: false,
     sendData: false,
     sendCount: 0,
@@ -132,12 +133,22 @@ export default function User(props) {
         return;
       case "telephoneUpdate":
         draft.telephone.value = action.value;
+        if (action.dialCode){
+          draft.dialCode = action.dialCode
+        }
+        if (action.telNoDialCode){
+          draft.telNoDialCode = action.telNoDialCode
+        }
         draft.userUpdated = true;
         return;
       case "telephoneSplit":
         draft.dialCode = action.dialCode;
         draft.telNoDialCode = action.telNoDialCode;
         draft.userUpdated = true;
+        draft.telUpdated = false;
+        return;
+      case "updateTelAfterDelay":
+        draft.telUpdated = true;
         return;
       case "contactUpdate":
         draft.contact.primary = action.primary;
@@ -413,7 +424,15 @@ export default function User(props) {
       router.push("/");
     }
   }, []);
-
+  useEffect(() => {
+    console.log(`the state of telUpdated = ${state.telUpdated}`)
+    if (!state.telUpdated) {
+      console.log("the telephone delay is happening")
+      console.log(appState.firm.delay)
+      const telDelay = setTimeout(() => dispatch({type: "updateTelAfterDelay"}), 4000);
+      return () => clearTimeout(telDelay)
+    } else {console.log("No delay happening")}
+  }, [state.telephone.value, userId]);
   useEffect(() => {
     dispatch({ type: "updateUserId", id: userId });
   }, [router.query]);
@@ -429,11 +448,13 @@ export default function User(props) {
         // any initialisation options go here
         initialCountry: "gb",
         preferredCountries: [],
-        separateDialCode: true
+        separateDialCode: true,
+        utilsScript: itiUtils
       });
       function splitTelephone() {
         if (input.value.trim()) {
-          const number = iti.getNumber();
+          console.log(iti.getSelectedCountryData().dialCode)
+          const number = iti.getNumber()
           const dialCode = "+" + iti.getSelectedCountryData().dialCode;
           const telNoDialCode = number.slice(dialCode.length);
           dispatch({ type: "telephoneSplit", dialCode, telNoDialCode });
@@ -449,7 +470,7 @@ export default function User(props) {
       }
       splitTelephone();
     }
-  }, [state.telephone.value, userId]);
+  }, [state.telUpdated, userId]);
   useEffect(() => {
     let indexOfUser = appState.users.findIndex(
       user => user.id === state.userId
@@ -502,7 +523,9 @@ export default function User(props) {
         surname: state.surname.value,
         email: state.email.value,
         telephone: state.telephone.value,
-        contact: state.contact
+        contact: state.contact,
+        dialCode: state.dialCode,
+        telNoDialCode: state.telNoDialCode
       });
       dispatch({ type: "userFinished" });
     }

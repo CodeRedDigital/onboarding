@@ -77,7 +77,8 @@ function OnboardingApp({ Component, pageProps }) {
         colourPng: ""
       },
       solicitors: [],
-      modalContent: {}
+      modalContent: {},
+      delay: 2000
     },
     quote: {
       id: "",
@@ -178,7 +179,10 @@ function OnboardingApp({ Component, pageProps }) {
       // save the firm data to state
       case "firmDownloaded":
         draft.firm = action.firm
-        draft.app.firmData = "success";
+        draft.app.firmData = "success"
+        if (!action.firm.delay) {
+          draft.firm.delay = 2000
+        }
         draft.app.dataCount++
         draft.app.firmUpdated = true;
         draft.app.appUpdated = true
@@ -202,6 +206,8 @@ function OnboardingApp({ Component, pageProps }) {
         draft.users[action.user].email = action.email
         draft.users[action.user].telephone = action.telephone
         draft.users[action.user].contact = action.contact
+        draft.users[action.user].dialCode = action.dialCode
+        draft.users[action.user].telNoDialCode = action.telNoDialCode
         draft.app.usersUpdated = true;
         draft.app.appUpdated = true;
         if (draft.users[action.user].id === draft.user.id) {
@@ -211,6 +217,8 @@ function OnboardingApp({ Component, pageProps }) {
           draft.user.email = action.email
           draft.user.telephone = action.telephone
           draft.user.contact = action.contact
+          draft.user.dialCode = action.dialCode
+          draft.user.telNoDialCode = action.telNoDialCode
           draft.app.userUpdated = true
         }
         draft.app.appUpdated = true;
