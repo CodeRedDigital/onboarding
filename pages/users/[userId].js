@@ -190,16 +190,24 @@ export default function User(props) {
   // Page functions go here
   async function handleSubmit(event) {
     event.preventDefault();
-    const buttonClicked = event.nativeEvent.submitter;
+  }
+
+  async function handleClick(event) {
+    event.preventDefault()
+    const buttonClicked = event.target
+    console.log(buttonClicked)
     if (buttonClicked.getAttribute("data-send") === "all") {
+      console.log("button clicked is ALL")
       sendAmlToUsers(appState.users);
     } else {
       const indexOfSingleUser = appState.users.findIndex(
         user => user.id === userId
       );
+      console.log("button clicked is Individual")
       sendAmlToUsers([appState.users[indexOfSingleUser]]);
     }
   }
+
   async function getUser(userId) {
     try {
       const response = await AxiosPali.get(
@@ -796,6 +804,7 @@ export default function User(props) {
           )}
         </section>
         <button
+          onClick={handleClick}
           className="btn primary"
           disabled={state.isDisabled}
           data-send={state.userId}
@@ -805,6 +814,7 @@ export default function User(props) {
         {appState.user.id === state.userId &&
           state.primaryUser.id === state.userId && (
             <button
+              onClick={handleClick}
               className="btn primary"
               disabled={state.isDisabled}
               data-send="all"
