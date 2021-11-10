@@ -244,7 +244,7 @@ export default function User(props) {
     }
   }
   // CREDAS AML check
-  async function credas(user, indexOfUser) {
+  async function credas(user, indexOfUser, indexOfQuoteUser) {
     const response = await fetch("/api/credas/registrations", {
       body: JSON.stringify({
         amlCode: appState.quote.AML.credas.enhancedAMLCode,
@@ -270,7 +270,8 @@ export default function User(props) {
       appDispatch({
         type: "saveCredasRegistration",
         value: credasObj,
-        index: result.index
+        index: result.index,
+        indexOfQuoteUser: indexOfQuoteUser
       });
     }
   }
@@ -279,7 +280,10 @@ export default function User(props) {
       const indexOfUser = appState.users.findIndex(
         user => user.id === sendingUser.id
       );
-      credas(sendingUser, indexOfUser)
+      const indexOfQuoteUser = appState.quote.associatedUsers.findIndex(
+        user => user.id === sendingUser.id
+      );
+      credas(sendingUser, indexOfUser, indexOfQuoteUser)
     })
     dispatch({ type: "endLoading" });
   }

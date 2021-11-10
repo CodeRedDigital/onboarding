@@ -346,7 +346,9 @@ function OnboardingApp({ Component, pageProps }) {
           draft.user.AML.CREDAS = action.value
           draft.app.userUpdated = true
         }
+        draft.quote.associatedUsers[action.indexOfQuoteUser].credas = action.value
         draft.app.usersUpdated = true
+        draft.app.quoteUpdated = true
         draft.app.appUpdated = true
         return
       }
