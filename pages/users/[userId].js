@@ -265,9 +265,11 @@ export default function User(props) {
           "There has been an issue please try again, if this persists contact the Solicitor."
       });
     } else {
+      const credasObj = result.data
+      credasObj.paliQuoteId = appState.quote.id
       appDispatch({
         type: "saveCredasRegistration",
-        value: result.data,
+        value: credasObj,
         index: result.index
       });
     }
