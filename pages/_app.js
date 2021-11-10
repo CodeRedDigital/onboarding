@@ -326,7 +326,9 @@ function OnboardingApp({ Component, pageProps }) {
           draft.user.AML.thirdfort = action.value
           draft.app.userUpdated = true
         }
+        draft.quote.associatedUsers[action.indexOfQuoteUser].thirdfort = action.value
         draft.app.usersUpdated = true
+        draft.app.quoteUpdated = true
         draft.app.appUpdated = true
         return
       // CREDAS dispatches

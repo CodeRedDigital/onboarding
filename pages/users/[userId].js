@@ -322,7 +322,7 @@ export default function User(props) {
       "Content-Type": "application/json",
       "User-Id": stubUserId
     };
-    async function thirdfort(config, body, indexOfUser) {
+    async function thirdfort(config, body, indexOfUser, indexOfQuoteUser) {
       const response = await fetch("/api/thirdfort/transactions", {
         body: JSON.stringify({
           config,
@@ -345,7 +345,8 @@ export default function User(props) {
         appDispatch({
           type: "saveThirdfortTransaction",
           value: result.data,
-          index: result.index
+          index: result.index,
+          indexOfQuoteUser: indexOfQuoteUser
         });
       }
     }
@@ -353,6 +354,9 @@ export default function User(props) {
       const indexOfUser = appState.users.findIndex(
         user => user.id === sendingUser.id
       ); // this is used to dispatch the response to the correct user
+      const indexOfQuoteUser = appState.quote.associatedUsers.findIndex(
+        user => user.id === sendingUser.id
+      ); // this is used to dispatch the response to the correct quote user
       let telephone = "";
       if (sendingUser.contact.tel) {
         telephone = sendingUser.telephone;
@@ -429,7 +433,7 @@ export default function User(props) {
           metadata: {}
         };
       }
-      thirdfort(transactionConfig, transactionBody, indexOfUser);
+      thirdfort(transactionConfig, transactionBody, indexOfUser, indexOfQuoteUser);
     });
     dispatch({ type: "endLoading" });
   }
