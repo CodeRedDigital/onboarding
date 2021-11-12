@@ -1,10 +1,10 @@
-## **Get Quote Summary**
+## **Get User Summary**
 
-Returns json data about a quote before user is authenticated.
+Returns json data about a user before user is authenticated.
 
 - **URL**
 
-  /quotes/summary
+  /users/summary
 
 - **Method:**
 
@@ -26,30 +26,19 @@ Returns json data about a quote before user is authenticated.
     **Content:** 
     ```javascript
       {
-        "id": "987zyx",
-        "associatedUsers": [
-          {
-            "id": "yf2hw7wehu",
-            "primary": true,
-            "updated": 1630057276474
-          },
-          {
-            "id": "yf2hw7kskd",
-            "primary": false,
-            "updated": 1630057276474
-          }
-        ],
-        "associatedFirmId": "123abc",
-        "AML": {
-          "provider": "Thirdfort"
-        }
+        "id": "yf2hw7kskd",
+        "title": "Mrs",
+        "firstName": "Joanne",
+        "surname": "Blogs",
+        "email": "joanneblogs@example.com",
+        "validated": true
       }
     ```
 
 - **Error Response:**
 
   - **Code:** 404 NOT FOUND <br />
-    **Content:** `{ error : "Quote can not be found" }`
+    **Content:** `{ error : "User can not be found" }`
 
   OR
 
@@ -60,7 +49,7 @@ Returns json data about a quote before user is authenticated.
 
   ```javascript
     fetch({
-      url: "/quotes/summary?id=987zyx",
+      url: "/users/summary?id=yf2hw7kskd",
       dataType: "json",
       type : "GET",
       headers : {

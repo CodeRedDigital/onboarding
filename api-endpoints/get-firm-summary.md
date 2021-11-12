@@ -1,10 +1,10 @@
-## **Get Quote Summary**
+## **Get Firm Details**
 
-Returns json data about a quote before user is authenticated.
+Returns json data about a firm before user is authenticated.
 
 - **URL**
 
-  /quotes/summary
+  /firm/summary
 
 - **Method:**
 
@@ -26,22 +26,22 @@ Returns json data about a quote before user is authenticated.
     **Content:** 
     ```javascript
       {
-        "id": "987zyx",
-        "associatedUsers": [
-          {
-            "id": "yf2hw7wehu",
-            "primary": true,
-            "updated": 1630057276474
-          },
-          {
-            "id": "yf2hw7kskd",
-            "primary": false,
-            "updated": 1630057276474
-          }
-        ],
-        "associatedFirmId": "123abc",
-        "AML": {
-          "provider": "Thirdfort"
+        "id": "123abc",
+        "name": "ABC 123 Solicitors",
+        "url": "https://www.abc-123-solicitors.com",
+        "colours": {
+          "primary": "ff0000",
+          "primaryOpposite": "000000",
+          "secondary": "00ff00",
+          "secondaryOpposite": "ffffff",
+          "secondary": "0000ff",
+          "secondaryOpposite": "ffffff"
+        },
+        "logos": {
+          "whiteSvg": "abc-123-logo-white.svg",
+          "whitePng": "abc-123-logo-white.png",
+          "colourSvg": "abc-123-logo-colour.svg",
+          "colourPng": "abc-123-logo-colour.png"
         }
       }
     ```
@@ -60,11 +60,11 @@ Returns json data about a quote before user is authenticated.
 
   ```javascript
     fetch({
-      url: "/quotes/summary?id=987zyx",
+      url: "/firm/summary?id=abc123",
       dataType: "json",
       type : "GET",
       headers : {
-        Authorization: `Bearer ${JWT}`,
+        'apikey': SECRET_API_KEY,
         "Content-Type": "application/json"
       };
     });

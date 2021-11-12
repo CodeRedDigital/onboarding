@@ -132,7 +132,7 @@ Returns json data about a firm after user is authenticated.
 
   ```javascript
     fetch({
-      url: "/quotes/summary?id=abc123",
+      url: "/firm/details?id=abc123",
       dataType: "json",
       type : "GET",
       headers : {

@@ -74,7 +74,7 @@ Returns json data about a quote after user is authenticated.
 
   ```javascript
     fetch({
-      url: "/quotes/summary?id=abc123",
+      url: "/quotes/details?id=abc123",
       dataType: "json",
       type : "GET",
       headers : {
