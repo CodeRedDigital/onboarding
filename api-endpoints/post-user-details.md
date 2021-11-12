@@ -8,7 +8,7 @@ POSTs the user details to update the user in DB.
 
 - **Method:**
 
-  `GET`
+  `POST`
 
 - **URL Params**
 
