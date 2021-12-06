@@ -778,7 +778,7 @@ function OnboardingApp({ Component, pageProps }) {
         })
         router.push('/login')
       }
-      if (state.user.agreed.all) {
+      if (state.user.agreed !== undefined && state.user.agreed.all) {
         router.push(`/users/${state.user.id}`)
       }
       dispatch({ type: "loaded"})
