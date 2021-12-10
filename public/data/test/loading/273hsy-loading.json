@@ -3,12 +3,12 @@
   "associatedUsers": [
     {
       "id": "jasia8js",
-      "primary": false,
+      "primary": true,
       "updated": 1630057276474
     },
     {
       "id": "ksauw783h",
-      "primary": true,
+      "primary": false,
       "updated": 1630057276474
     }
   ],
