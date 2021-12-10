@@ -1,0 +1,42 @@
+{
+  "id": "ksauw783h",
+  "title": "Mr",
+  "firstName": "Kieran",
+  "surname": "Parkin",
+  "email": "kieran.parkin@example.com",
+  "telephone": "+447860595913",
+  "dialCode": "+44",
+  "telNoDialCode": "7860595913",
+  "contact": {
+    "primary": false,
+    "email": false,
+    "tel": true
+  },
+  "validated": true,
+  "token": true,
+  "agreed": {
+    "gdpr": true,
+    "tAndC": true,
+    "all": true
+  },
+  "addresses": [
+    {
+      "type": "Primary",
+      "firstLine": "106 Newgate Street",
+      "secondLine": "",
+      "townCity": "Johnston",
+      "county": "Pembrokeshire",
+      "postCode": "SA62 4WF"
+    }
+  ],
+  "cases": [
+    {
+      "firm": "789ghi",
+      "id": "738hse",
+      "AML": {
+        "thirdfort": {},
+        "CREDAS": {}
+      }
+    }
+  ]
+}

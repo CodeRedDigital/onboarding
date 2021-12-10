@@ -1,0 +1,15 @@
+{
+  "id": "n84cw8mm",
+  "title": "Mr",
+  "firstName": "Derek",
+  "surname": "Summer",
+  "email": "derek.summer@example.com",
+  "telephone": "+447777123456",
+  "validated": true,
+  "token": true,
+  "agreed": {
+    "gdpr": true,
+    "tAndC": true,
+    "all": true
+  }
+}
