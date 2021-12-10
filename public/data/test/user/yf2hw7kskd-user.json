@@ -70,5 +70,38 @@
         "CREDAS": {}
       }
     }
-  ]
+  ],
+  "AML": {
+    "type": "v2",
+    "status": "open",
+    "name": "Purchase of 456 London Road",
+    "ref": "987zyx",
+    "request": {
+      "actor": { 
+        "name": "Joanne Blogs",
+        "phone": "+447777123456"
+      },
+      "tasks": []
+    },
+    "metadata": {
+      "context": {
+        "tenant_id": "558533677"
+      },
+      "print": {
+        "tenant": "ABC 123 Solicitors",
+        "user": "Henry Lawman"
+      },
+      "created_at": "2021-12-10T17:28:23.260Z",
+      "created_by": "558533679",
+      "notify": {
+        "type": "email",
+        "data": {}
+      },
+      "ce": {
+        "uri": "/v1/checks/639014659"
+      }
+    },
+    "id": "629005135",
+    "reports": []
+  }
 }
