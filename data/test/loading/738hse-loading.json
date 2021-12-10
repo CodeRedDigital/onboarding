@@ -2,18 +2,18 @@
   "id": "738hse",
   "associatedUsers": [
     {
-      "id": "yf2hw7wehu",
+      "id": "jasia8js",
       "primary": false,
       "updated": 1630057276474
     },
     {
-      "id": "yf2hw7kskd",
+      "id": "ksauw783h",
       "primary": true,
       "updated": 1630057276474
     }
   ],
-  "associatedFirmId": "456def",
-  "associatedSolicitorId": "456def-00003",
+  "associatedFirmId": "789ghi",
+  "associatedSolicitorId": "789ghi-00003",
   "AML": {
     "provider": "Thirdfort",
     "thirdfort": {},
