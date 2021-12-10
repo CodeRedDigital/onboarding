@@ -1,0 +1,33 @@
+{
+  "id": "654wvu",
+  "associatedUsers": [
+    {
+      "id": "n5hcf7f",
+      "primary": true,
+      "updated": 1630057276474
+    },
+    {
+      "id": "n84cw8mm",
+      "primary": false,
+      "updated": 1630057276474
+    }
+  ],
+  "associatedFirmId": "456def",
+  "associatedSolicitorId": "456def-00001",
+  "AML": {
+    "provider": "CREDAS",
+    "thirdfort": {},
+    "credas": {}
+  },
+  "type": "sale",
+  "associatedAddresses": [
+    {
+      "address1": "123 London Road",
+      "address2": "",
+      "town": "London",
+      "county": "Greater London",
+      "postCode": "E8 1AA",
+      "type": "sale"
+    }
+  ]
+}

@@ -37,38 +37,9 @@
       "postCode": "SE12 1AA"
     }
   ],
-  "cases": [
-    {
-      "firm": "123abc",
-      "id": "987tsr",
-      "AML": {
-        "thirdfort": {},
-        "CREDAS": {}
-      }
-    },
-    {
-      "firm": "123abc",
-      "id": "987xyz",
-      "AML": {
-        "thirdfort": {},
-        "CREDAS": {}
-      }
-    },
-    {
-      "firm": "123abc",
-      "id": "987zyx",
-      "AML": {
-        "thirdfort": {},
-        "CREDAS": {}
-      }
-    },
-    {
-      "firm": "456def",
-      "id": "738hse",
-      "AML": {
-        "thirdfort": {},
-        "CREDAS": {}
-      }
-    }
-  ]
+  "AML": {
+    "thirdfort": {},
+    "CREDAS": {}
+  },
+  "complete": true
 }

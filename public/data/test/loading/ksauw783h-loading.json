@@ -1,0 +1,15 @@
+{
+  "id": "ksauw783h",
+  "title": "Mr",
+  "firstName": "Kieran",
+  "surname": "Parkin",
+  "email": "kieran.parkin@example.com",
+  "telephone": "+447860595913",
+  "validated": true,
+  "token": true,
+  "agreed": {
+    "gdpr": true,
+    "tAndC": true,
+    "all": true
+  }
+}

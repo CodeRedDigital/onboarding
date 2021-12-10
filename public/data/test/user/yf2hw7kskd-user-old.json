@@ -1,12 +1,12 @@
 {
   "id": "yf2hw7kskd",
   "title": "Mrs",
-  "firstName": "Joanna",
+  "firstName": "Joanne",
   "surname": "Blogs",
-  "email": "joannablogs@example.com",
-  "telephone": "+447777123456",
+  "email": "joanneblogs@example.com",
+  "telephone": "+447754981992",
   "dialCode": "+44",
-  "telNoDialCode": "7777123456",
+  "telNoDialCode": "7754981992",
   "contact": {
     "primary": false,
     "email": false,
@@ -37,38 +37,9 @@
       "postCode": "SE12 1AA"
     }
   ],
-  "cases": [
-    {
-      "firm": "123abc",
-      "id": "987tsr",
-      "AML": {
-        "thirdfort": {},
-        "CREDAS": {}
-      }
-    },
-    {
-      "firm": "123abc",
-      "id": "987xyz",
-      "AML": {
-        "thirdfort": {},
-        "CREDAS": {}
-      }
-    },
-    {
-      "firm": "123abc",
-      "id": "987zyx",
-      "AML": {
-        "thirdfort": {},
-        "CREDAS": {}
-      }
-    },
-    {
-      "firm": "456def",
-      "id": "738hse",
-      "AML": {
-        "thirdfort": {},
-        "CREDAS": {}
-      }
-    }
-  ]
+  "AML": {
+    "thirdfort": {},
+    "CREDAS": {}
+  },
+  "complete": true
 }

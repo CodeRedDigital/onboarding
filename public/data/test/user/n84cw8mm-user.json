@@ -1,9 +1,9 @@
 {
-  "id": "yf2hw7kskd",
-  "title": "Mrs",
-  "firstName": "Joanna",
-  "surname": "Blogs",
-  "email": "joannablogs@example.com",
+  "id": "n84cw8mm",
+  "title": "Mr",
+  "firstName": "Derek",
+  "surname": "Summer",
+  "email": "derek.summer@example.com",
   "telephone": "+447777123456",
   "dialCode": "+44",
   "telNoDialCode": "7777123456",
@@ -15,9 +15,9 @@
   "validated": true,
   "token": true,
   "agreed": {
-    "gdpr": false,
-    "tAndC": false,
-    "all": false
+    "gdpr": true,
+    "tAndC": true,
+    "all": true
   },
   "addresses": [
     {
@@ -39,32 +39,8 @@
   ],
   "cases": [
     {
-      "firm": "123abc",
-      "id": "987tsr",
-      "AML": {
-        "thirdfort": {},
-        "CREDAS": {}
-      }
-    },
-    {
-      "firm": "123abc",
-      "id": "987xyz",
-      "AML": {
-        "thirdfort": {},
-        "CREDAS": {}
-      }
-    },
-    {
-      "firm": "123abc",
-      "id": "987zyx",
-      "AML": {
-        "thirdfort": {},
-        "CREDAS": {}
-      }
-    },
-    {
       "firm": "456def",
-      "id": "738hse",
+      "id": "654wvu",
       "AML": {
         "thirdfort": {},
         "CREDAS": {}

@@ -1,0 +1,33 @@
+{
+  "id": "273hsy",
+  "associatedUsers": [
+    {
+      "id": "jasia8js",
+      "primary": false,
+      "updated": 1630057276474
+    },
+    {
+      "id": "ksauw783h",
+      "primary": true,
+      "updated": 1630057276474
+    }
+  ],
+  "associatedFirmId": "789ghi",
+  "associatedSolicitorId": "789ghi-00003",
+  "AML": {
+    "provider": "Thirdfort",
+    "thirdfort": {},
+    "credas": {}
+  },
+  "type": "sale",
+  "associatedAddresses": [
+    {
+      "address1": "56 Bristol Street",
+      "address2": "",
+      "town": "Bath",
+      "county": "Greater London",
+      "postCode": "BA8 1AA",
+      "type": "sale"
+    }
+  ]
+}
