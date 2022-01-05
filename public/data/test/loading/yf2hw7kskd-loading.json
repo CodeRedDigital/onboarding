@@ -1,14 +1,14 @@
 {
   "id": "yf2hw7kskd",
-  "title": "Mrs",
-  "firstName": "Joanne",
-  "surname": "Blogs",
-  "email": "joanneblogs@example.com",
+  "title": "Mr",
+  "firstName": "Dave",
+  "surname": "Tester",
+  "email": "davetester@example.com",
   "validated": true,
   "token": true,
   "agreed": {
-    "gdpr": false,
-    "tAndC": false,
-    "all": false
+    "gdpr": true,
+    "tAndC": true,
+    "all": true
   }
 }
