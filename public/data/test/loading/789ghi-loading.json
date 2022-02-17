@@ -3,10 +3,26 @@
   "name": "GHI 789 Solicitors",
   "url": "https://www.ghi-789-solicitors.com",
   "colours": {
-    "primary": "0000ff",
-    "primaryOpposite": "000000",
-    "secondary": "f0f0f0",
-    "secondaryOpposite": "0f0f0f"
+    "primary": "276fbf",
+    "primaryContrast": "white",
+    "secondary": "d0021b",
+    "secondaryContrast": "black",
+    "tertiary": "047658",
+    "tertiaryContrast": "white",
+    "warning": "f03c3c",
+    "warningContrast": "white",
+    "success": "34c471",
+    "successContrast": "white",
+    "notice": "ffa500",
+    "noticeContrast": "black",
+    "white": "faf9f9",
+    "lightGrey": "f0f0f0",
+    "lightGreyContrast": "black",
+    "grey": "c2c2c2",
+    "greyContrast": "black",
+    "darkGrey": "474747",
+    "darkGreyContrast": "white",
+    "black": "040302"
   },
   "logos": {
     "whiteSvg": "ghi-789-logo-white.svg",
@@ -84,7 +100,7 @@
           },
           "id": "558565988"
         }
-      }
+      }``
     },
     {
       "id": "789ghi-00003",

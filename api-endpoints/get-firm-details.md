@@ -23,7 +23,7 @@ Returns json data about a firm after user is authenticated.
 - **Success Response:**
 
   - **Code:** 200 <br />
-    **Content:** 
+    **Content:**
     ```javascript
       {
         "id": "123abc",
@@ -31,9 +31,25 @@ Returns json data about a firm after user is authenticated.
         "url": "https://www.abc-123-solicitors.com",
         "colours": {
           "primary": "ff0000",
-          "primaryOpposite": "000000",
+          "primaryContrast": "white",
           "secondary": "00ff00",
-          "secondaryOpposite": "ffffff"
+          "secondaryContrast": "black",
+          "tertiary": "0000ff",
+          "tertiaryContrast": "black",
+          "warning": "f03c3c",
+          "warningContrast": "white",
+          "success": "34c471",
+          "successContrast": "white",
+          "notice": "ffa500",
+          "noticeContrast": "black",
+          "white": "ffffff",
+          "lightGrey": "eaeaea",
+          "lightGreyContrast": "black",
+          "grey": "c2c2c2",
+          "greyContrast": "black",
+          "darkGrey": "474747",
+          "darkGreyContrast": "white",
+          "black": "000000"
         },
         "logos": {
           "whiteSvg": "abc-123-logo-white.svg",

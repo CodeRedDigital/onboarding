@@ -1,24 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 // styles
-import '../styles/main.css'
+import "../styles/main.css";
 
 // packages
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
-import { useImmerReducer } from 'use-immer'
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { useImmerReducer } from "use-immer";
 
 //components
-import FlashMessages from '../components/FlashMessages'
+import FlashMessages from "../components/FlashMessages";
 
 // states
-import StateContext from '../states/StateContext'
-import DispatchContext from '../states/DispatchContext'
+import StateContext from "../states/StateContext";
+import DispatchContext from "../states/DispatchContext";
 
 // modules
-import { AxiosPali } from '../src/AxiosRequests'
+import { AxiosPali } from "../src/AxiosRequests";
 
 function OnboardingApp({ Component, pageProps }) {
-  const router = useRouter()
+  const router = useRouter();
   const initialState = {
     flashMessages: [],
     app: {
@@ -64,11 +64,25 @@ function OnboardingApp({ Component, pageProps }) {
       url: "",
       colours: {
         primary: "",
-        primaryOpposite: "",
+        primaryContrast: "",
         secondary: "",
-        secondaryOpposite: "",
+        secondaryContrast: "",
         tertiary: "",
-        tertiaryOpposite: ""
+        tertiaryContrast: "",
+        warning: "",
+        warningContrast: "",
+        success: "",
+        successContrast: "",
+        notice: "",
+        noticeContrast: "",
+        white: "",
+        lightGrey: "",
+        lightGreyContrast: "",
+        grey: "",
+        greyContrast: "",
+        darkGrey: "",
+        darkGreyContrast: "",
+        black: ""
       },
       logos: {
         whiteSvg: "",
@@ -96,12 +110,12 @@ function OnboardingApp({ Component, pageProps }) {
     },
     users: [],
     user: {}
-  }
+  };
   function ourReducer(draft, action) {
     switch (action.type) {
       case "resetApp":
-        draft = initialState
-        return
+        draft = initialState;
+        return;
       // login and out cases
       case "login":
         draft.app.loggedIn = true;
@@ -116,283 +130,290 @@ function OnboardingApp({ Component, pageProps }) {
       // save the data from the url into app state
       case "saveUrlData":
         if (action.quote) {
-          draft.app.urlData.quote = action.quote
+          draft.app.urlData.quote = action.quote;
         }
         if (action.user) {
-          draft.app.urlData.user = action.user
+          draft.app.urlData.user = action.user;
         }
-        draft.app.urlDataFetched = true
-        draft.app.appUpdated = true
+        draft.app.urlDataFetched = true;
+        draft.app.appUpdated = true;
         return;
       // save the data from localStorage into app state
       case "saveLocalData":
         if (action.quote) {
-          draft.app.localData.quote = action.quote
+          draft.app.localData.quote = action.quote;
         }
         if (action.user) {
-          draft.app.localData.user = action.user
+          draft.app.localData.user = action.user;
         }
         if (action.firm) {
-          draft.app.localData.firm = action.firm
+          draft.app.localData.firm = action.firm;
         }
         if (action.users) {
-          draft.app.localData.users = action.users
+          draft.app.localData.users = action.users;
         }
-        draft.app.localDataFetched = true
-        draft.app.appUpdated = true
+        draft.app.localDataFetched = true;
+        draft.app.appUpdated = true;
         return;
       // save the quote data to state
       case "quoteDownloaded":
-        draft.quote = action.quote
+        draft.quote = action.quote;
         draft.app.quoteData = "success";
-        draft.app.dataCount++
-        draft.app.quoteUpdated = true
-        draft.app.appUpdated = true
+        draft.app.dataCount++;
+        draft.app.quoteUpdated = true;
+        draft.app.appUpdated = true;
         return;
       // save the user data to state
       case "userDownloaded":
         if (action.user) {
-          draft.user = action.user
+          draft.user = action.user;
           draft.app.userData = "success";
-          draft.app.dataCount++
-          draft.app.userUpdated = true
-          draft.app.appUpdated = true
+          draft.app.dataCount++;
+          draft.app.userUpdated = true;
+          draft.app.appUpdated = true;
         }
-        return
+        return;
       case "telephoneSplit":
         draft.users[action.user].dialCode = action.dialCode;
         draft.users[action.user].telNoDialCode = action.telNoDialCode;
-        draft.app.usersUpdated = true
-        draft.app.appUpdated = true
+        draft.app.usersUpdated = true;
+        draft.app.appUpdated = true;
         return;
       // when logged in update the user with all details
       case "fullCurrentUser":
-        draft.user = action.user
-        draft.app.userUpdated = true
-        return
+        draft.user = action.user;
+        draft.app.userUpdated = true;
+        return;
       // set user data to be full
       case "userComplete":
-        draft.user.complete = true
-        draft.app.userUpdated = true
-        draft.app.appUpdated = true
-        return
+        draft.user.complete = true;
+        draft.app.userUpdated = true;
+        draft.app.appUpdated = true;
+        return;
       // save the firm data to state
       case "firmDownloaded":
-        draft.firm = action.firm
-        draft.app.firmData = "success"
+        draft.firm = action.firm;
+        draft.app.firmData = "success";
         if (!action.firm.delay) {
-          draft.firm.delay = 2000
+          draft.firm.delay = 2000;
         }
-        draft.app.dataCount++
+        draft.app.dataCount++;
         draft.app.firmUpdated = true;
-        draft.app.appUpdated = true
+        draft.app.appUpdated = true;
         return;
       // save the users to state
       case "updateAssociatedUsers":
-        draft.users = action.users
-        draft.app.usersUpdated = true
-        draft.app.appUpdated = true
-        draft.app.usersData = "success"
-        return
+        draft.users = action.users;
+        draft.app.usersUpdated = true;
+        draft.app.appUpdated = true;
+        draft.app.usersData = "success";
+        return;
       case "pushUser":
         draft.users.push(action.user);
         draft.app.usersUpdated = true;
-        draft.app.appUpdated = true
-        return
+        draft.app.appUpdated = true;
+        return;
       case "updateUsersArray":
-        draft.users[action.user].title = action.title
-        draft.users[action.user].firstName = action.firstName
-        draft.users[action.user].surname = action.surname
-        draft.users[action.user].email = action.email
-        draft.users[action.user].telephone = action.telephone
-        draft.users[action.user].contact = action.contact
-        draft.users[action.user].dialCode = action.dialCode
-        draft.users[action.user].telNoDialCode = action.telNoDialCode
+        draft.users[action.user].title = action.title;
+        draft.users[action.user].firstName = action.firstName;
+        draft.users[action.user].surname = action.surname;
+        draft.users[action.user].email = action.email;
+        draft.users[action.user].telephone = action.telephone;
+        draft.users[action.user].contact = action.contact;
+        draft.users[action.user].dialCode = action.dialCode;
+        draft.users[action.user].telNoDialCode = action.telNoDialCode;
         draft.app.usersUpdated = true;
         draft.app.appUpdated = true;
         if (draft.users[action.user].id === draft.user.id) {
-          draft.user.title = action.title
-          draft.user.firstName = action.firstName
-          draft.user.surname = action.surname
-          draft.user.email = action.email
-          draft.user.telephone = action.telephone
-          draft.user.contact = action.contact
-          draft.user.dialCode = action.dialCode
-          draft.user.telNoDialCode = action.telNoDialCode
-          draft.app.userUpdated = true
+          draft.user.title = action.title;
+          draft.user.firstName = action.firstName;
+          draft.user.surname = action.surname;
+          draft.user.email = action.email;
+          draft.user.telephone = action.telephone;
+          draft.user.contact = action.contact;
+          draft.user.dialCode = action.dialCode;
+          draft.user.telNoDialCode = action.telNoDialCode;
+          draft.app.userUpdated = true;
         }
         draft.app.appUpdated = true;
-        draft.app.usersUpdated = true
-        return
+        draft.app.usersUpdated = true;
+        return;
       // data fetch starting
       case "firmStarted":
         draft.app.firmData = "pending";
-        draft.app.appUpdated = true
-        return
+        draft.app.appUpdated = true;
+        return;
       case "quoteStarted":
         draft.app.quoteData = "pending";
-        draft.app.appUpdated = true
-        return
+        draft.app.appUpdated = true;
+        return;
       case "userStarted":
         draft.app.userData = "pending";
-        draft.app.appUpdated = true
-        return
+        draft.app.appUpdated = true;
+        return;
       case "usersStarted":
         draft.app.usersData = "pending";
-        draft.app.appUpdated = true
-        return
+        draft.app.appUpdated = true;
+        return;
       // data fetch failures
       case "firmFailed":
         draft.app.firmData = "fail";
-        draft.app.dataCount++
-        draft.app.appUpdated = true
-        return
+        draft.app.dataCount++;
+        draft.app.appUpdated = true;
+        return;
       case "quoteFailed":
         draft.app.quoteData = "fail";
-        draft.app.dataCount++
-        draft.app.appUpdated = true
-        return
+        draft.app.dataCount++;
+        draft.app.appUpdated = true;
+        return;
       case "userFailed":
         draft.app.userData = "fail";
-        draft.app.dataCount++
-        draft.app.appUpdated = true
-        return
+        draft.app.dataCount++;
+        draft.app.appUpdated = true;
+        return;
       case "usersFailed":
         draft.app.usersData = "fail";
-        draft.app.appUpdated = true
-        return
+        draft.app.appUpdated = true;
+        return;
       // flag to redirect to login if the user is unknown
       case "unknownUser":
-        draft.app.unknownUser = true
-        draft.app.appUpdated = true
+        draft.app.unknownUser = true;
+        draft.app.appUpdated = true;
       // Data loaded
       case "loaded":
-        draft.app.loading = false
-        return
+        draft.app.loading = false;
+        return;
       // There has been an issue loading the user
       case "loadingIssue":
-        draft.app.loadingError = true
-        draft.app.loadingErrorMsg = action.message
-        return
+        draft.app.loadingError = true;
+        draft.app.loadingErrorMsg = action.message;
+        return;
       // flags for updating localStorage
       case "appFinished":
-        draft.app.appUpdated = false
-        return
+        draft.app.appUpdated = false;
+        return;
       case "firmFinished":
-        draft.app.firmUpdated = false
-        return
+        draft.app.firmUpdated = false;
+        return;
       case "quoteFinished":
-        draft.app.quoteUpdated = false
-        return
+        draft.app.quoteUpdated = false;
+        return;
       case "userFinished":
-        draft.app.userUpdated = false
-        return
+        draft.app.userUpdated = false;
+        return;
       case "usersFinished":
-        draft.app.usersUpdated = false
-        return
+        draft.app.usersUpdated = false;
+        return;
       // Permissions page dispatches
       case "agreements":
-        draft.user.agreed.tAndC = true
-        draft.user.agreed.gdpr = true
-        draft.user.agreed.all = true
-        draft.app.userUpdated = true
+        draft.user.agreed.tAndC = true;
+        draft.user.agreed.gdpr = true;
+        draft.user.agreed.all = true;
+        draft.app.userUpdated = true;
         if (action.user) {
-          draft.users[action.user].agreed.gdpr = true
-          draft.users[action.user].agreed.tAndC = true
-          draft.users[action.user].agreed.all = true
-          draft.app.usersUpdated = true
+          draft.users[action.user].agreed.gdpr = true;
+          draft.users[action.user].agreed.tAndC = true;
+          draft.users[action.user].agreed.all = true;
+          draft.app.usersUpdated = true;
         }
         return;
       case "validate":
-        draft.user.validated = true
-        draft.app.userUpdated = true
-        return
+        draft.user.validated = true;
+        draft.app.userUpdated = true;
+        return;
       // assign indexes of primary and current users
       case "setIndexes":
-        draft.app.indexOfPrimaryUser = action.primaryIndex
-        draft.app.indexOfLoggedInUser = action.currentIndex
-        draft.app.indexOfAssociatedSolicitor = action.solicitorIndex
-        return
+        draft.app.indexOfPrimaryUser = action.primaryIndex;
+        draft.app.indexOfLoggedInUser = action.currentIndex;
+        draft.app.indexOfAssociatedSolicitor = action.solicitorIndex;
+        return;
       // Thirdfort dispatches
       case "saveThirdfortToken":
         draft.quote.AML.thirdfort.jwt = action.token;
         draft.quote.AML.thirdfort.jwtExpiry = action.tokenExpiry;
-        draft.app.quoteUpdated = true
-        draft.app.appUpdated = true
+        draft.app.quoteUpdated = true;
+        draft.app.appUpdated = true;
         return;
       case "saveThirdfortTransaction":
-        draft.users[action.index].AML.thirdfort = action.value
+        draft.users[action.index].AML.thirdfort = action.value;
         if (draft.users[action.index].id === draft.user.id) {
-          draft.user.AML.thirdfort = action.value
-          draft.app.userUpdated = true
+          draft.user.AML.thirdfort = action.value;
+          draft.app.userUpdated = true;
         }
-        draft.quote.associatedUsers[action.indexOfQuoteUser].thirdfort = action.value
-        draft.app.usersUpdated = true
-        draft.app.quoteUpdated = true
-        draft.app.appUpdated = true
-        return
+        draft.quote.associatedUsers[action.indexOfQuoteUser].thirdfort =
+          action.value;
+        draft.app.usersUpdated = true;
+        draft.app.quoteUpdated = true;
+        draft.app.appUpdated = true;
+        return;
       // CREDAS dispatches
       case "saveCredasRegTypes":
-        draft.quote.AML.credas.regTypes = action.value
-        draft.app.quoteUpdated = true
-        draft.app.appUpdated = true
-        return
+        draft.quote.AML.credas.regTypes = action.value;
+        draft.app.quoteUpdated = true;
+        draft.app.appUpdated = true;
+        return;
       case "saveCredasEnhanced":
-        draft.quote.AML.credas.enhancedAMLCode = action.value
-        draft.app.quoteUpdated = true
-        draft.app.appUpdated = true
-        return
+        draft.quote.AML.credas.enhancedAMLCode = action.value;
+        draft.app.quoteUpdated = true;
+        draft.app.appUpdated = true;
+        return;
       case "saveCredasRegistration":
-        draft.users[action.index].AML.CREDAS = action.value
+        draft.users[action.index].AML.CREDAS = action.value;
         if (draft.users[action.index].id === draft.user.id) {
-          draft.user.AML.CREDAS = action.value
-          draft.app.userUpdated = true
+          draft.user.AML.CREDAS = action.value;
+          draft.app.userUpdated = true;
         }
-        draft.quote.associatedUsers[action.indexOfQuoteUser].credas = action.value
-        draft.app.usersUpdated = true
-        draft.app.quoteUpdated = true
-        draft.app.appUpdated = true
-        return
-      }
+        draft.quote.associatedUsers[action.indexOfQuoteUser].credas =
+          action.value;
+        draft.app.usersUpdated = true;
+        draft.app.quoteUpdated = true;
+        draft.app.appUpdated = true;
+        return;
+    }
   }
   const [state, dispatch] = useImmerReducer(ourReducer, initialState);
   // functions to use
   async function getCredasRegTypes() {
-    const response = await fetch('/api/credas/getRegTypes', {
+    const response = await fetch("/api/credas/getRegTypes", {
       headers: {
-        'Content-Type': 'application/json'
+        "Content-Type": "application/json"
       },
-      method: 'POST'
-    })
-    const result = await response.json()
+      method: "POST"
+    });
+    const result = await response.json();
     if (result.data.error) {
       dispatch({
         type: "flashMessage",
         value: "There has been an issue trying to get the Credas Reg Types"
-      })
+      });
     } else if (result.status == "200") {
       dispatch({
         type: "saveCredasRegTypes",
         value: result.data
-      })
+      });
     } else {
-      console.log("There is a status other than 200")
-      console.log(result.status)
+      console.log("There is a status other than 200");
+      console.log(result.status);
     }
   }
   // end of functions
   useEffect(() => {
     if (state.app.quoteData && state.quote.AML.provider === "CREDAS") {
       if (!state.quote.AML.credas.regTypes) {
-        getCredasRegTypes()
+        getCredasRegTypes();
       } else {
-        const enhancedAML = state.quote.AML.credas.regTypes.find(code => code.name === "Enhanced AML")
+        const enhancedAML = state.quote.AML.credas.regTypes.find(
+          code => code.name === "Enhanced AML"
+        );
         dispatch({
           type: "saveCredasEnhanced",
           value: enhancedAML.id
-        })
+        });
       }
-    } else if (state.app.quoteData && state.quote.AML.provider === "Thirdfort") {
+    } else if (
+      state.app.quoteData &&
+      state.quote.AML.provider === "Thirdfort"
+    ) {
       const now = Math.floor(Date.now() / 1000);
       let token = "";
       if (now < state.quote.AML.thirdfort.jwtExpiry) {
@@ -418,7 +439,7 @@ function OnboardingApp({ Component, pageProps }) {
         jwtToken();
       }
     }
-  },[state.app.quoteData, state.quote.AML.credas.regTypes])
+  }, [state.app.quoteData, state.quote.AML.credas.regTypes]);
   useEffect(() => {
     // functions
     // get ids from URL
@@ -459,7 +480,7 @@ function OnboardingApp({ Component, pageProps }) {
             value:
               "There was an issue getting the quote, either it does not exist or there was a bad connection. Contact the solicitor who sent you this link if the problem continues"
           });
-          dispatch({type: "quoteFailed"});
+          dispatch({ type: "quoteFailed" });
         }
       }
     }
@@ -485,7 +506,7 @@ function OnboardingApp({ Component, pageProps }) {
             type: "userDownloaded",
             user: fetchUser.data
           });
-        } 
+        }
       } catch (error) {
         if (error.response.status == "404") {
           dispatch({
@@ -523,7 +544,7 @@ function OnboardingApp({ Component, pageProps }) {
     // check to see which things need updating
     // check to see if the quote is available
     function checkQuote() {
-      dispatch({type: "quoteStarted"})
+      dispatch({ type: "quoteStarted" });
       let localQuote = state.app.localData.quote;
       let urlQuote = state.app.urlData.quote;
       if (localQuote) {
@@ -556,15 +577,15 @@ function OnboardingApp({ Component, pageProps }) {
         console.log(
           "A5. there is no quote but there is a user we shall display an array of quotes associated with the user"
         );
-        dispatch({ type: "quoteFailed" })
+        dispatch({ type: "quoteFailed" });
       } else {
         dispatch({
           type: "flashMessage",
           value:
             "There is an issue with the link you were sent please contact the solicitor to rectify this. The Quote and User are missing."
         });
-        dispatch({type: "quoteFailed"});
-        dispatch({type: "userFailed"});
+        dispatch({ type: "quoteFailed" });
+        dispatch({ type: "userFailed" });
       }
     }
     // check that the user is available and associated with the quote
@@ -574,7 +595,7 @@ function OnboardingApp({ Component, pageProps }) {
       let urlUser = state.app.urlData.user;
       let trueUser = null;
       if (urlUser) {
-        trueUser = urlUser
+        trueUser = urlUser;
       } else if (localUser) {
         trueUser = localUser.id;
       } // checks to see if urlUser exists and if not sets to localUser
@@ -629,10 +650,10 @@ function OnboardingApp({ Component, pageProps }) {
       }
     }
     function checkFirm() {
-      dispatch({type: "firmStarted"})
+      dispatch({ type: "firmStarted" });
       let firmId = state.quote.associatedFirmId;
       let localFirm = state.app.localData.firm;
-      let localFirmId = null
+      let localFirmId = null;
       if (localFirm) {
         localFirmId = localFirm.id;
       }
@@ -643,7 +664,7 @@ function OnboardingApp({ Component, pageProps }) {
         });
       } else if (firmId) {
         getFirm(firmId);
-      } else{
+      } else {
         dispatch({ type: "firmFailed" });
       }
     }
@@ -677,128 +698,183 @@ function OnboardingApp({ Component, pageProps }) {
         dispatch({ type: "login" });
       }
     }
-  },[
+  }, [
     state.app.urlDataFetched,
     state.app.localDataFetched,
     state.app.quoteData,
     state.app.userData
-  ])
+  ]);
   // useEffect to update the localStorage
   useEffect(() => {
     // check for fail and if so remove local storage
     if (state.app.quoteData === "fail") {
-      localStorage.removeItem("quote")
+      localStorage.removeItem("quote");
     }
     if (state.app.firmData === "fail") {
-      localStorage.removeItem("firm")
+      localStorage.removeItem("firm");
     }
     if (state.app.userData === "fail") {
-      localStorage.removeItem("user")
+      localStorage.removeItem("user");
     }
     if (state.app.usersData === "fail") {
-      localStorage.removeItem("users")
+      localStorage.removeItem("users");
     }
     // check to see which data has updated and store it locally
     if (state.app.appUpdated) {
-      localStorage.setItem("app", JSON.stringify(state.app))
-      dispatch({type: "appFinished"})
+      localStorage.setItem("app", JSON.stringify(state.app));
+      dispatch({ type: "appFinished" });
     }
     if (state.app.firmUpdated) {
-      localStorage.setItem("firm", JSON.stringify(state.firm))
-      dispatch({type: "firmFinished"})
+      localStorage.setItem("firm", JSON.stringify(state.firm));
+      dispatch({ type: "firmFinished" });
       if (document.querySelector(".loading")) {
         document.querySelector(".loading").classList.add("loaded");
       }
     }
     if (state.app.quoteUpdated) {
-
-      localStorage.setItem("quote", JSON.stringify(state.quote))
-      dispatch({type: "quoteFinished"})
+      localStorage.setItem("quote", JSON.stringify(state.quote));
+      dispatch({ type: "quoteFinished" });
     }
     if (state.app.userUpdated) {
-      localStorage.setItem("user", JSON.stringify(state.user))
-      dispatch({type: "userFinished"})
+      localStorage.setItem("user", JSON.stringify(state.user));
+      dispatch({ type: "userFinished" });
     }
     if (state.app.usersUpdated) {
-      localStorage.setItem("users", JSON.stringify(state.users))
-      dispatch({type: "usersFinished"})
+      localStorage.setItem("users", JSON.stringify(state.users));
+      dispatch({ type: "usersFinished" });
     }
-  },[
+  }, [
     state.app.appUpdated,
     state.app.firmUpdated,
     state.app.quoteUpdated,
     state.app.userUpdated,
     state.app.usersUpdated
-  ])
+  ]);
   // start useEffect to handle when firmData has successfully loaded
   useEffect(() => {
     if (state.app.firmData === "success") {
       const root = document.documentElement;
       root.style.cssText = `
-        --solicitor-primary: #${state.firm.colours.primary};
-        --solicitor-primary-opposite: #${state.firm.colours.primaryOpposite};
-        --solicitor-secondary: #${state.firm.colours.secondary};
-        --solicitor-secondary-opposite: #${state.firm.colours.secondaryOpposite};
-        --solicitor-tertiary: #${state.firm.colours.tertiary};
-        --solicitor-tertiary-opposite: #${state.firm.colours.tertiaryOpposite};
-      `
+        --primary: #${state.firm.colours.primary};
+        --primary-contrast: #${state.firm.colours.primaryContrast};
+        --secondary: #${state.firm.colours.secondary};
+        --secondary-contrast: #${state.firm.colours.secondaryContrast};
+        --tertiary: #${state.firm.colours.tertiary};
+        --tertiary-contrast: #${state.firm.colours.tertiaryContrast};
+      `;
+      root.style.cssText = `
+        --white: #${state.firm.colours.white};
+        --black: #${state.firm.colours.black};
+        --primary-100: #${state.firm.colours.primary};
+        --primary-75: #${state.firm.colours.primary}bf;
+        --primary-50: #${state.firm.colours.primary}80;
+        --primary-25: #${state.firm.colours.primary}40;
+        --primaryContrast: var(--${state.firm.colours.primaryContrast});
+        --secondary-100: #${state.firm.colours.secondary};
+        --secondary-75: #${state.firm.colours.secondary}bf;
+        --secondary-50: #${state.firm.colours.secondary}80;
+        --secondary-25: #${state.firm.colours.secondary}40;
+        --secondaryContrast: var(--${state.firm.colours.secondaryContrast});
+        --tertiary-100: #${state.firm.colours.tertiary};
+        --tertiary-75: #${state.firm.colours.tertiary}bf;
+        --tertiary-50: #${state.firm.colours.tertiary}80;
+        --tertiary-25: #${state.firm.colours.tertiary}40;
+        --tertiaryContrast: var(--${state.firm.colours.tertiaryContrast});
+        --lightGrey-100: #${state.firm.colours.lightGrey};
+        --lightGrey-75: #${state.firm.colours.lightGrey}bf;
+        --lightGrey-50: #${state.firm.colours.lightGrey}80;
+        --lightGrey-25: #${state.firm.colours.lightGrey}40;
+        --lightGreyContrast: var(--${state.firm.colours.lightGreyContrast});
+        --grey-100: #${state.firm.colours.grey};
+        --grey-75: #${state.firm.colours.grey}bf;
+        --grey-50: #${state.firm.colours.grey}80;
+        --grey-25: #${state.firm.colours.grey}40;
+        --greyContrast: var(--${state.firm.colours.greyContrast});
+        --darkGrey-100: #${state.firm.colours.darkGrey};
+        --darkGrey-75: #${state.firm.colours.darkGrey}bf;
+        --darkGrey-50: #${state.firm.colours.darkGrey}80;
+        --darkGrey-25: #${state.firm.colours.darkGrey}40;
+        --darkGreyContrast: var(--${state.firm.colours.darkGreyContrast});
+        --success-100: #${state.firm.colours.success};
+        --success-75: #${state.firm.colours.success}bf;
+        --success-50: #${state.firm.colours.success}80;
+        --success-25: #${state.firm.colours.success}40;
+        --successContrast: var(--${state.firm.colours.successContrast});
+        --notice-100: #${state.firm.colours.notice};
+        --notice-75: #${state.firm.colours.notice}bf;
+        --notice-50: #${state.firm.colours.notice}80;
+        --notice-25: #${state.firm.colours.notice}40;
+        --noticeContrast: var(--${state.firm.colours.noticeContrast});
+        --warning-100: #${state.firm.colours.warning};
+        --warning-75: #${state.firm.colours.warning}bf;
+        --warning-50: #${state.firm.colours.warning}80;
+        --warning-25: #${state.firm.colours.warning}40;
+        --warningContrast: var(--${state.firm.colours.warningContrast});
+      `;
     }
-  },[state.app.firmData])
+  }, [state.app.firmData]);
   // start useEffect to handle the redirection
   useEffect(() => {
     if (state.app.unknownUser) {
-      router.push('/login')
+      router.push("/login");
     }
     if (state.app.dataCount >= 3) {
       if (state.app.userData === "fail") {
-        dispatch({type: "unknownUser"});
+        dispatch({ type: "unknownUser" });
       }
       // dispatch({ type: "loaded" })
-      if (state.app.quoteData === "success" && state.app.firmData === "success" && state.app.userData === "success") {
+      if (
+        state.app.quoteData === "success" &&
+        state.app.firmData === "success" &&
+        state.app.userData === "success"
+      ) {
         // all the data has been loaded successfully work out the current state of the user
         // has the user not been validated
         if (!state.user.validated) {
-          router.push('/welcome')
+          router.push("/welcome");
         } else if (!state.user.token) {
-          router.push('/login')
+          router.push("/login");
         } else {
           // check if current user has accepted all terms
           if (state.user.agreed.all) {
             // if yes redirect to router.push('/users/state.user.id')
-            router.push(`/users/${state.user.id}`)
+            router.push(`/users/${state.user.id}`);
           } else {
             // if no redirect to router.push('/permissions')
-            router.push('/permissions')
+            router.push("/permissions");
           }
         }
       } else {
-        dispatch({ 
+        dispatch({
           type: "loadingIssue",
-          message: "There has been an issue trying to refresh your current session, either login below or contact your Solicitor for the correct URL."
-        })
-        router.push('/login')
+          message:
+            "There has been an issue trying to refresh your current session, either login below or contact your Solicitor for the correct URL."
+        });
+        router.push("/login");
       }
       if (state.user.agreed !== undefined && state.user.agreed.all) {
-        router.push(`/users/${state.user.id}`)
+        router.push(`/users/${state.user.id}`);
       }
-      dispatch({ type: "loaded"})
+      dispatch({ type: "loaded" });
     }
-  },[
+  }, [
     state.app.unknownUser,
     state.app.userData,
     state.app.firmData,
     state.app.quoteData,
     state.user.validated,
     state.user.agreed
-  ])
+  ]);
   // end useEffect to handle the redirection
   // start when user is logged in
   useEffect(() => {
     async function getAssociatedUser(userId) {
       try {
-        const fetchUser = await AxiosPali.get(`/data/test/user/${userId}-user.json`);
+        const fetchUser = await AxiosPali.get(
+          `/data/test/user/${userId}-user.json`
+        );
         if (fetchUser.data) {
-          return fetchUser.data
+          return fetchUser.data;
         }
       } catch (error) {
         if (error.response.status == "404") {
@@ -822,19 +898,19 @@ function OnboardingApp({ Component, pageProps }) {
           if (currentUser.id === associatedUsers[i].id) {
             // if the id is of the current user push it into the array and update the user in state
             if (currentUser.complete) {
-              newUsers.push(currentUser)
+              newUsers.push(currentUser);
             } else {
               const fetchCurrentUser = await getAssociatedUser(
                 state.user.id
               ).then(result => {
                 // go fetch the associated user from DB
                 return result; // once the fetch has finished return it
-              })
-               // push the fetched user into the array
-              newUsers.push(fetchCurrentUser)
+              });
+              // push the fetched user into the array
+              newUsers.push(fetchCurrentUser);
               // update user in state
-              dispatch({ type: "fullCurrentUser", user: fetchCurrentUser })
-              dispatch({ type: "userComplete" })
+              dispatch({ type: "fullCurrentUser", user: fetchCurrentUser });
+              dispatch({ type: "userComplete" });
             }
           } else {
             // if the user is NOT in local data it's index will be -1
@@ -849,7 +925,7 @@ function OnboardingApp({ Component, pageProps }) {
         }
         dispatch({ type: "updateAssociatedUsers", users: newUsers }); // add the new array into state
         // set the primaryUser
-        router.push(`/users/${state.user.id}`)
+        router.push(`/users/${state.user.id}`);
       } else {
         // if there are no associated users display a flash message
         dispatch({
@@ -869,20 +945,28 @@ function OnboardingApp({ Component, pageProps }) {
       // set index of Primary user
       const primaryUser = state.quote.associatedUsers.find(
         ({ primary }) => primary === true
-      )
-      const primaryIndex = state.users.findIndex(user => user.id === primaryUser.id)
+      );
+      const primaryIndex = state.users.findIndex(
+        user => user.id === primaryUser.id
+      );
       // set index of current user
-      const currentIndex = state.users.findIndex(user => user.id === state.user.id)
+      const currentIndex = state.users.findIndex(
+        user => user.id === state.user.id
+      );
       // set index of associated solicitor
-      const solicitor = state.quote.associatedSolicitorId
-      const solicitorIndex = state.firm.solicitors.findIndex(sol => sol.id === solicitor)
+      const solicitor = state.quote.associatedSolicitorId;
+      const solicitorIndex = state.firm.solicitors.findIndex(
+        sol => sol.id === solicitor
+      );
       // update app state with these values
-      dispatch({ type: "setIndexes", primaryIndex, currentIndex, solicitorIndex })
+      dispatch({
+        type: "setIndexes",
+        primaryIndex,
+        currentIndex,
+        solicitorIndex
+      });
     }
-  },[
-    state.app.loggedIn,
-    state.app.usersData
-  ])
+  }, [state.app.loggedIn, state.app.usersData]);
   // end when user is logged in
   return (
     <StateContext.Provider value={state}>
@@ -891,7 +975,7 @@ function OnboardingApp({ Component, pageProps }) {
         <Component {...pageProps} />
       </DispatchContext.Provider>
     </StateContext.Provider>
-  )
+  );
 }
 
-export default OnboardingApp
+export default OnboardingApp;

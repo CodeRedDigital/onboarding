@@ -4,9 +4,9 @@
   "url": "https://www.abc-123-solicitors.com",
   "colours": {
     "primary": "ff0000",
-    "primaryOpposite": "000000",
+    "primary-contrast": "000000",
     "secondary": "00ff00",
-    "secondaryOpposite": "ffffff"
+    "secondary-contrast": "ffffff"
   },
   "logos": {
     "whiteSvg": "abc-123-logo-white.svg",

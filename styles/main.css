@@ -182,18 +182,18 @@ select {
 }
 
 .btn.primary {
-  background-color: var(--solicitor-primary, var(--primary-solid));
-  color: var(--solicitor-primary-contrast, var(--primary-contrast));
+  background-color: var(--primary, var(--primary-solid));
+  color: var(--primary-contrast, var(--primary-contrast));
 }
 
 .btn.secondary {
-  background-color: var(--solicitor-secondary, var(--secondary-solid));
-  color: var(--solicitor-secondary-contrast, var(--secondary-contrast));
+  background-color: var(--secondary, var(--secondary-solid));
+  color: var(--secondary-contrast, var(--secondary-contrast));
 }
 
 .btn.tertiary {
-  background-color: var(--solicitor-tertiary, var(--tertiary-solid));
-  color: var(--solicitor-tertiary-contrast, var(--tertiary-contrast));
+  background-color: var(--tertiary, var(--tertiary-solid));
+  color: var(--tertiary-contrast, var(--tertiary-contrast));
 }
 
 .btn.warning {
@@ -212,13 +212,13 @@ label,
 .radios-group__label {
   font-family: var(--heading-font);
   font-size: 1.3em;
-  color: var(--solicitor-primary, var(--primary-solid));
+  color: var(--primary, var(--primary-solid));
   font-weight: var(--heavy);
 }
 
 input {
   margin-bottom: 1rem;
-  border-color: var(--solicitor-primary, var(--primary-solid));
+  border-color: var(--primary, var(--primary-solid));
 }
 
 .alert {
@@ -251,7 +251,7 @@ input:invalid ~ .alert-danger,
   line-height: 1.25;
   display: block;
   margin-bottom: 5px;
-  color: var(--solicitor-primary, var(--primary-solid));
+  color: var(--primary, var(--primary-solid));
 }
 @media (min-width: 40.0625em) {
   .pali-hint {
@@ -328,7 +328,7 @@ input:invalid ~ .alert-danger,
   padding-left: 15px;
 }
 .pali-radios__input:focus + .pali-radios__label:before {
-  outline: 4px dotted var(--solicitor-secondary, var(--secondary-solid));
+  outline: 4px dotted var(--secondary, var(--secondary-solid));
 }
 .pali-radios__input:checked + .pali-radios__label:after {
   opacity: 1;
@@ -399,13 +399,13 @@ h6 {
 h1,
 h3,
 h5 {
-  color: var(--solicitor-secondary, var(--secondary-solid));
+  color: var(--secondary, var(--secondary-solid));
 }
 
 h2,
 h4,
 h6 {
-  color: var(--solicitor-primary, var(--primary-solid));
+  color: var(--primary, var(--primary-solid));
 }
 
 h1 {
@@ -440,7 +440,7 @@ body,
 header {
   height: 7vh;
   width: 100vw;
-  background-color: var(--solicitor-primary, var(--primary-solid));
+  background-color: var(--primary, var(--primary-solid));
   display: flex;
   justify-content: center;
   align-items: center;
@@ -474,7 +474,7 @@ p {
 }
 
 a {
-  color: var(--solicitor-primary, var(--primary-solid));
+  color: var(--primary, var(--primary-solid));
   text-decoration: underline;
   cursor: pointer;
 }
@@ -548,7 +548,7 @@ footer ul {
 /* modal styles */
 section.modal-box {
   background-color: white;
-  border: solid 2px var(--solicitor-primary, var(--primary-solid));
+  border: solid 2px var(--primary, var(--primary-solid));
   border-radius: 2px;
   height: 90vh;
   width: 90vw;
@@ -577,13 +577,13 @@ section.modal-box {
 }
 
 .modal-box h2 {
-  color: var(--solicitor-primary-contrast, var(--primary-contrast));
-  background-color: var(--solicitor-primary, var(--primary-solid));
+  color: var(--primary-contrast, var(--primary-contrast));
+  background-color: var(--primary, var(--primary-solid));
 }
 
 .modal-box h3 {
-  color: var(--solicitor-primary-contrast, var(--primary-contrast));
-  background-color: var(--solicitor-primary, var(--primary-solid));
+  color: var(--primary-contrast, var(--primary-contrast));
+  background-color: var(--primary, var(--primary-solid));
 }
 
 .modal-box .modal-content {
@@ -596,7 +596,7 @@ section.modal-box {
 }
 
 .modal-box footer {
-  background-color: var(--solicitor-primary-contrast, var(--primary-contrast));
+  background-color: var(--primary-contrast, var(--primary-contrast));
   text-align: center;
   width: 100%;
 }
@@ -623,12 +623,12 @@ section.modal-box {
 }
 
 .sellers svg path {
-  stroke: var(--solicitor-primary, var(--primary-solid));
+  stroke: var(--primary, var(--primary-solid));
   fill: none;
 }
 
 .sellers .current svg path {
-  fill: var(--solicitor-primary, var(--primary-solid));
+  fill: var(--primary, var(--primary-solid));
 }
 
 .span-grid,
@@ -638,7 +638,7 @@ section.modal-box {
 }
 
 .pali-hint {
-  color: var(--solicitor-primary, var(--primary-solid));
+  color: var(--primary, var(--primary-solid));
 }
 
 form.user {
@@ -674,7 +674,7 @@ form.user {
 }
 
 .loading.loaded {
-  background-color: var(--solicitor-primary, var(--primary-solid));
+  background-color: var(--primary, var(--primary-solid));
 }
 
 .loading main {
@@ -697,7 +697,7 @@ form.user {
   color: var(--white);
   font-family: var(--body-font);
   height: 20vh;
-  background-color: var(--solicitor-primary, var(--primary-solid));
+  background-color: var(--primary, var(--primary-solid));
   transition: background-color 1.5s ease-in;
 }
 
@@ -724,9 +724,9 @@ form.user {
   height: 80px;
   margin: 8px;
   border-radius: 50%;
-  border: 10px solid var(--solicitor-primary, var(--primary-solid));
-  border-color: var(--solicitor-primary, var(--primary-solid)) transparent
-    var(--solicitor-primary, var(--primary-solid)) transparent;
+  border: 10px solid var(--primary, var(--primary-solid));
+  border-color: var(--primary, var(--primary-solid)) transparent
+    var(--primary, var(--primary-solid)) transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
 

@@ -4,9 +4,9 @@
   "url": "https://www.def-456-solicitors.com",
   "colours": {
     "primary": "0000ff",
-    "primaryOpposite": "000000",
+    "primary-contrast": "000000",
     "secondary": "f0f0f0",
-    "secondaryOpposite": "0f0f0f"
+    "secondary-contrast": "0f0f0f"
   },
   "logos": {
     "whiteSvg": "def-456-logo-white.svg",
