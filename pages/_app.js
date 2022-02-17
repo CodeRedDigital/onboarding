@@ -755,14 +755,6 @@ function OnboardingApp({ Component, pageProps }) {
     if (state.app.firmData === "success") {
       const root = document.documentElement;
       root.style.cssText = `
-        --primary: #${state.firm.colours.primary};
-        --primary-contrast: #${state.firm.colours.primaryContrast};
-        --secondary: #${state.firm.colours.secondary};
-        --secondary-contrast: #${state.firm.colours.secondaryContrast};
-        --tertiary: #${state.firm.colours.tertiary};
-        --tertiary-contrast: #${state.firm.colours.tertiaryContrast};
-      `;
-      root.style.cssText = `
         --white: #${state.firm.colours.white};
         --black: #${state.firm.colours.black};
         --primary-100: #${state.firm.colours.primary};
