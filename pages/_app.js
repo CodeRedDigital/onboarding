@@ -58,42 +58,7 @@ function OnboardingApp({ Component, pageProps }) {
         }
       }
     },
-    firm: {
-      id: "",
-      name: "",
-      url: "",
-      colours: {
-        primary: "",
-        primaryContrast: "",
-        secondary: "",
-        secondaryContrast: "",
-        tertiary: "",
-        tertiaryContrast: "",
-        warning: "",
-        warningContrast: "",
-        success: "",
-        successContrast: "",
-        notice: "",
-        noticeContrast: "",
-        white: "",
-        lightGrey: "",
-        lightGreyContrast: "",
-        grey: "",
-        greyContrast: "",
-        darkGrey: "",
-        darkGreyContrast: "",
-        black: ""
-      },
-      logos: {
-        whiteSvg: "",
-        whitePng: "",
-        colourSvg: "",
-        colourPng: ""
-      },
-      solicitors: [],
-      modalContent: {},
-      delay: 2000
-    },
+    firm: {},
     quote: {
       id: "",
       associatedUsers: [],
@@ -192,11 +157,10 @@ function OnboardingApp({ Component, pageProps }) {
         return;
       // save the firm data to state
       case "firmDownloaded":
+        console.log(action.firm)
         draft.firm = action.firm;
         draft.app.firmData = "success";
-        if (!action.firm.delay) {
-          draft.firm.delay = 2000;
-        }
+        // draft.firm.delay = (action.firm.delay ? action.firm.delay : 2000)
         draft.app.dataCount++;
         draft.app.firmUpdated = true;
         draft.app.appUpdated = true;
@@ -335,6 +299,7 @@ function OnboardingApp({ Component, pageProps }) {
         draft.app.appUpdated = true;
         return;
       case "saveThirdfortTransaction":
+        console.log(action.index)
         draft.users[action.index].AML.thirdfort = action.value;
         if (draft.users[action.index].id === draft.user.id) {
           draft.user.AML.thirdfort = action.value;
@@ -345,6 +310,9 @@ function OnboardingApp({ Component, pageProps }) {
         draft.app.usersUpdated = true;
         draft.app.quoteUpdated = true;
         draft.app.appUpdated = true;
+        return;
+      case "temporaryFlash":
+        draft.flashMessages.push(action.value);
         return;
       // CREDAS dispatches
       case "saveCredasRegTypes":
@@ -529,6 +497,7 @@ function OnboardingApp({ Component, pageProps }) {
             type: "firmDownloaded",
             firm: fetchFirm.data
           });
+          console.log(state.firm)
         }
       } catch (error) {
         if (error.response.status == "404") {
@@ -725,6 +694,7 @@ function OnboardingApp({ Component, pageProps }) {
       dispatch({ type: "appFinished" });
     }
     if (state.app.firmUpdated) {
+      console.log("Writing firm to LS")
       localStorage.setItem("firm", JSON.stringify(state.firm));
       dispatch({ type: "firmFinished" });
       if (document.querySelector(".loading")) {
@@ -917,7 +887,7 @@ function OnboardingApp({ Component, pageProps }) {
         }
         dispatch({ type: "updateAssociatedUsers", users: newUsers }); // add the new array into state
         // set the primaryUser
-        router.push(`/users/${state.user.id}`);
+        // router.push(`/users/${state.user.id}`);
       } else {
         // if there are no associated users display a flash message
         dispatch({

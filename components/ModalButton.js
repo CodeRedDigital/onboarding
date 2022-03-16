@@ -24,7 +24,7 @@ function ModalButton(props) {
             <button className="btn warning" data-modal-close-btn>Cancel</button>
             <button
               id={props.name + "AcceptButton"}
-              className="btn primary"
+              className="btn success"
               data-accept=""
               disabled
             >

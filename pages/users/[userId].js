@@ -112,9 +112,6 @@ export default function User(props) {
           draft.userIsLoading = false;
         }
         return;
-      case "loadingComplete":
-        draft.userIsLoading = false;
-        return
       case "titleUpdate":
         draft.title.value = action.value;
         draft.userUpdated = true;
@@ -214,6 +211,8 @@ export default function User(props) {
         `/data/test/user/${userId}-user.json`
       );
       if (response.data) {
+        console.log("response data of user")
+        console.log(response.data)
         appDispatch({ type: "pushUser", user: response.data }); // push the missing user into the users Array
         dispatch({
           type: "userDownloaded",
@@ -258,6 +257,7 @@ export default function User(props) {
       method: "POST"
     })
     const result = await response.json();
+    console.log(result)
     if (result.data.error) {
       appDispatch({
         type: "flashMessage",
@@ -267,6 +267,8 @@ export default function User(props) {
     } else {
       const credasObj = result.data
       credasObj.paliQuoteId = appState.quote.id
+      console.log("result.index")
+      console.log(result.index)
       appDispatch({
         type: "saveCredasRegistration",
         value: credasObj,
@@ -323,6 +325,10 @@ export default function User(props) {
       "User-Id": stubUserId
     };
     async function thirdfort(config, body, indexOfUser, indexOfQuoteUser) {
+      console.log("body")
+      console.log(body)
+      console.log("config")
+      console.log(config)
       const response = await fetch("/api/thirdfort/transactions", {
         body: JSON.stringify({
           config,
@@ -346,7 +352,13 @@ export default function User(props) {
           type: "saveThirdfortTransaction",
           value: result.data,
           index: result.index,
-          indexOfQuoteUser: indexOfQuoteUser
+          indexOfQuoteUser: indexOfQuoteUser,
+          quote: appState.quote.id
+        });
+        appDispatch({
+          type: "flashMessage",
+          value:
+            "Thank you for submitting, please check your phone for a text from Thirdfort. If you have not received a message then check you Telephone number is correct"
         });
       }
     }
@@ -477,7 +489,7 @@ export default function User(props) {
   }, [router.query]);
   useEffect(() => {
     if (appState.app.indexOfPrimaryUser !== null && !state.userIsLoading){
-      dispatch({ type: "loadingComplete" })
+      dispatch({ type: "endLoading" })
     }
   },[appState.app.indexOfPrimaryUser])
   useEffect(() => {

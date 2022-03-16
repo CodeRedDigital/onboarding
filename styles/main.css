@@ -142,6 +142,57 @@ select {
   --dark-grey: #474747;
   --black: #000000;
 
+  --white: #ffffff;
+  --lightGrey: #eaeaea;
+  --lightGrey-100: #eaeaea;
+  --lightGrey-75: #eaeaeabf;
+  --lightGrey-50: #eaeaea80;
+  --lightGrey-25: #eaeaea40;
+  --lightGreyContrast: var(--black);
+  --grey: #c2c2c2;
+  --grey-100: #c2c2c2;
+  --grey-75: #c2c2c2bf;
+  --grey-50: #c2c2c280;
+  --grey-25: #c2c2c240;
+  --greyContrast: var(--black);
+  --darkGrey: #474747;
+  --darkGrey-100: #474747;
+  --darkGrey-75: #474747bf;
+  --darkGrey-50: #47474780;
+  --darkGrey-25: #47474740;
+  --darkGreyContrast: var(--white);
+  --black: #000000;
+  --primary-100: #176fd3;
+  --primary-75: #176fd3bf;
+  --primary-50: #176fd380;
+  --primary-25: #176fd340;
+  --primaryContrast: var(--white);
+  --secondary-100: #42cb91;
+  --secondary-75: #42cb91bf;
+  --secondary-50: #42cb9180;
+  --secondary-25: #42cb9140;
+  --secondaryContrast: var(--black);
+  --tertiary-100: #ecc30b;
+  --tertiary-75: #ecc30bbf;
+  --tertiary-50: #ecc30b80;
+  --tertiary-25: #ecc30b40;
+  --tertiaryContrast: var(--black);
+  --warning-100: #f03c3c;
+  --warning-75: #f03c3cbf;
+  --warning-50: #f03c3c80;
+  --warning-25: #f03c3c40;
+  --warningContrast: var(--white);
+  --success-100: #34c471;
+  --success-75: #34c471bf;
+  --success-50: #34c47180;
+  --success-25: #34c47140;
+  --successContrast: var(--white);
+  --notice-100: #ffa500;
+  --notice-75: #ffa500bf;
+  --notice-50: #ffa50080;
+  --notice-25: #ffa50040;
+  --noticeContrast: var(--black);
+
   /* Font Weights */
   --x-light: 100;
   --light: 200;
@@ -182,23 +233,28 @@ select {
 }
 
 .btn.primary {
-  background-color: var(--primary, var(--primary-solid));
+  background-color: var(--primary-100, var(--primary-solid));
   color: var(--primary-contrast, var(--primary-contrast));
 }
 
 .btn.secondary {
-  background-color: var(--secondary, var(--secondary-solid));
+  background-color: var(--secondary-100, var(--secondary-solid));
   color: var(--secondary-contrast, var(--secondary-contrast));
 }
 
 .btn.tertiary {
-  background-color: var(--tertiary, var(--tertiary-solid));
+  background-color: var(--tertiary-100, var(--tertiary-solid));
   color: var(--tertiary-contrast, var(--tertiary-contrast));
 }
 
 .btn.warning {
-  background-color: var(--warning-solid);
+  background-color: var(--warning-100);
   color: var(--warning-contrast);
+}
+
+.btn.success {
+  background-color: var(--success-100);
+  color: var(--success-contrast);
 }
 
 /* form styles */
@@ -592,7 +648,7 @@ section.modal-box {
   flex-grow: 1;
   padding: 0.5rem 1rem;
   height: 100%;
-  width: 60ch;
+  max-width: 60ch;
 }
 
 .modal-box footer {
