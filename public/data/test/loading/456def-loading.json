@@ -24,6 +24,7 @@
     "darkGreyContrast": "white",
     "black": "000000"
   },
+  "delay": 2000,
   "logos": {
     "whiteSvg": "def-456-logo-white.svg",
     "whitePng": "def-456-logo-white.png",

@@ -51,7 +51,11 @@
       "id": "987xyz",
       "AML": {
         "thirdfort": {},
-        "CREDAS": {}
+        "CREDAS": {
+          "webJourneyUrl": null,
+          "id": "45f908fa-28f7-4939-9797-8273788dccae",
+          "regCode": "2NG9KJ62"
+        }
       }
     },
     {

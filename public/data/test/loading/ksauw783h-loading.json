@@ -8,8 +8,8 @@
   "validated": true,
   "token": true,
   "agreed": {
-    "gdpr": true,
-    "tAndC": true,
-    "all": true
+    "gdpr": false,
+    "tAndC": false,
+    "all": false
   }
 }

@@ -24,6 +24,7 @@
     "darkGreyContrast": "white",
     "black": "040302"
   },
+  "delay": 2000,
   "logos": {
     "whiteSvg": "ghi-789-logo-white.svg",
     "whitePng": "ghi-789-logo-white.png",
@@ -100,7 +101,7 @@
           },
           "id": "558565988"
         }
-      }``
+      }
     },
     {
       "id": "789ghi-00003",

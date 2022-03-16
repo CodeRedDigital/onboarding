@@ -1,0 +1,28 @@
+{
+  "id": "392nsj",
+  "associatedUsers": [
+    {
+      "id": "sdjhf73jdj2",
+      "primary": true,
+      "updated": 1630057276474
+    }
+  ],
+  "associatedFirmId": "123abc",
+  "associatedSolicitorId": "123abc-00001",
+  "AML": {
+    "provider": "CREDAS",
+    "thirdfort": {},
+    "credas": {}
+  },
+  "type": "purchase",
+  "associatedAddresses": [
+    {
+      "address1": "4 Tavistock Court",
+      "address2": "Exmoor Road",
+      "town": "Scunthorpe",
+      "county": "North Lincolnshire",
+      "postCode": "DN17 1UL",
+      "type": "purchase"
+    }
+  ]
+}

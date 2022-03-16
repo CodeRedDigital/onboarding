@@ -1,0 +1,14 @@
+{
+  "id": "sdjhf73jdj2",
+  "title": "Mr",
+  "firstName": "David",
+  "surname": "Letorey",
+  "email": "dave@code-red.uk",
+  "validated": true,
+  "token": true,
+  "agreed": {
+    "gdpr": false,
+    "tAndC": false,
+    "all": false
+  }
+}
