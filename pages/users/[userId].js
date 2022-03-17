@@ -834,7 +834,7 @@ export default function User(props) {
           Send {appState.quote.AML.provider} Link for {state.firstName.value}
         </button>
         {appState.user.id === state.userId &&
-          state.primaryUser.id === state.userId && (
+          state.primaryUser.id === state.userId &&  appState.users.length > 1 && (
             <button
               onClick={handleClick}
               className="btn primary"
