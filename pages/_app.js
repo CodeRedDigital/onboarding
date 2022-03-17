@@ -300,9 +300,9 @@ function OnboardingApp({ Component, pageProps }) {
         return;
       case "saveThirdfortTransaction":
         console.log(action.index)
-        draft.users[action.index].AML.thirdfort = action.value;
+        draft.users[action.index].cases[action.indexOfCase].AML.thirdfort = action.value;
         if (draft.users[action.index].id === draft.user.id) {
-          draft.user.AML.thirdfort = action.value;
+          draft.user.cases[action.indexOfCase].AML.thirdfort = action.value;
           draft.app.userUpdated = true;
         }
         draft.quote.associatedUsers[action.indexOfQuoteUser].thirdfort =
@@ -326,9 +326,9 @@ function OnboardingApp({ Component, pageProps }) {
         draft.app.appUpdated = true;
         return;
       case "saveCredasRegistration":
-        draft.users[action.index].AML.CREDAS = action.value;
+        draft.users[action.index].cases[action.indexOfCase].AML.CREDAS = action.value;
         if (draft.users[action.index].id === draft.user.id) {
-          draft.user.AML.CREDAS = action.value;
+          draft.user.cases[action.indexOfCase].AML.CREDAS = action.value;
           draft.app.userUpdated = true;
         }
         draft.quote.associatedUsers[action.indexOfQuoteUser].credas =

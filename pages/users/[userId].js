@@ -243,7 +243,8 @@ export default function User(props) {
     }
   }
   // CREDAS AML check
-  async function credas(user, indexOfUser, indexOfQuoteUser) {
+  async function credas(user, indexOfUser, indexOfQuoteUser, indexOfCase) {
+    console.log(`User: ${JSON.stringify(user)}, indexOfUser: ${indexOfUser}, indexOfQuoteUser: ${indexOfQuoteUser}`)
     const response = await fetch("/api/credas/registrations", {
       body: JSON.stringify({
         amlCode: appState.quote.AML.credas.enhancedAMLCode,
@@ -273,7 +274,8 @@ export default function User(props) {
         type: "saveCredasRegistration",
         value: credasObj,
         index: result.index,
-        indexOfQuoteUser: indexOfQuoteUser
+        indexOfQuoteUser: indexOfQuoteUser,
+        indexOfCase: indexOfCase
       });
     }
   }
@@ -285,7 +287,10 @@ export default function User(props) {
       const indexOfQuoteUser = appState.quote.associatedUsers.findIndex(
         user => user.id === sendingUser.id
       );
-      credas(sendingUser, indexOfUser, indexOfQuoteUser)
+      const indexOfCase = appState.users[indexOfUser].cases.findIndex(
+        currentCase => currentCase.id === appState.quote.id
+      );
+      credas(sendingUser, indexOfUser, indexOfQuoteUser, indexOfCase)
     })
     dispatch({ type: "endLoading" });
   }
@@ -324,7 +329,8 @@ export default function User(props) {
       "Content-Type": "application/json",
       "User-Id": stubUserId
     };
-    async function thirdfort(config, body, indexOfUser, indexOfQuoteUser) {
+    async function thirdfort(config, body, indexOfUser, indexOfQuoteUser, indexOfCase) {
+      console.log(`User: ${JSON.stringify(user)}, indexOfUser: ${indexOfUser}, indexOfQuoteUser: ${indexOfQuoteUser}`)
       console.log("body")
       console.log(body)
       console.log("config")
@@ -333,7 +339,8 @@ export default function User(props) {
         body: JSON.stringify({
           config,
           body,
-          index: indexOfUser
+          index: indexOfUser,
+          indexOfCase: indexOfCase
         }),
         headers: {
           "Content-Type": "application/json"
@@ -353,7 +360,8 @@ export default function User(props) {
           value: result.data,
           index: result.index,
           indexOfQuoteUser: indexOfQuoteUser,
-          quote: appState.quote.id
+          quote: appState.quote.id,
+          indexOfCase: indexOfCase
         });
         appDispatch({
           type: "flashMessage",
@@ -369,6 +377,9 @@ export default function User(props) {
       const indexOfQuoteUser = appState.quote.associatedUsers.findIndex(
         user => user.id === sendingUser.id
       ); // this is used to dispatch the response to the correct quote user
+      const indexOfCase = appState.users[indexOfUser].cases.findIndex(
+        currentCase => currentCase.id === appState.quote.id
+      );
       let telephone = "";
       if (sendingUser.contact.tel) {
         telephone = sendingUser.telephone;
@@ -445,7 +456,7 @@ export default function User(props) {
           metadata: {}
         };
       }
-      thirdfort(transactionConfig, transactionBody, indexOfUser, indexOfQuoteUser);
+      thirdfort(transactionConfig, transactionBody, indexOfUser, indexOfQuoteUser, indexOfCase);
     });
     dispatch({ type: "endLoading" });
   }
