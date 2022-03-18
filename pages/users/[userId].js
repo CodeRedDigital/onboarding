@@ -29,6 +29,7 @@ export default function User(props) {
   const { userId } = router.query;
   const initialCurrentUserState = {
     userIsLoading: true,
+    fetching: false,
     userId: userId,
     currentUserIndex: -1,
     isDisabled: false,
@@ -162,6 +163,12 @@ export default function User(props) {
       case "endLoading":
         draft.userIsLoading = false;
         return;
+      case "startFetching":
+        draft.fetching = true;
+        return;
+      case "endFetching":
+        draft.fetching = false;
+        return;
       case "userFinished":
         draft.userUpdated = false;
         return;
@@ -192,15 +199,12 @@ export default function User(props) {
   async function handleClick(event) {
     event.preventDefault()
     const buttonClicked = event.target
-    console.log(buttonClicked)
     if (buttonClicked.getAttribute("data-send") === "all") {
-      console.log("button clicked is ALL")
       sendAmlToUsers(appState.users);
     } else {
       const indexOfSingleUser = appState.users.findIndex(
         user => user.id === userId
       );
-      console.log("button clicked is Individual")
       sendAmlToUsers([appState.users[indexOfSingleUser]]);
     }
   }
@@ -211,8 +215,6 @@ export default function User(props) {
         `/data/test/user/${userId}-user.json`
       );
       if (response.data) {
-        console.log("response data of user")
-        console.log(response.data)
         appDispatch({ type: "pushUser", user: response.data }); // push the missing user into the users Array
         dispatch({
           type: "userDownloaded",
@@ -228,7 +230,8 @@ export default function User(props) {
   // Start AML functions
   // Decide which AML Provider to use
   async function sendAmlToUsers(users) {
-    dispatch({ type: "startLoading" });
+    dispatch({ type: "startFetching" });
+    window.scrollTo(0,0)
     if (appState.quote.AML.provider == "CREDAS") {
       sendCredas(users);
     } else if (appState.quote.AML.provider == "Thirdfort") {
@@ -239,18 +242,40 @@ export default function User(props) {
         value:
           "There is no AML Provider associated with this quote, please contact your Solicitor."
       });
-      dispatch({ type: "endLoading" });
+      dispatch({ type: "endFetching" });
     }
   }
   // CREDAS AML check
   async function credas(user, indexOfUser, indexOfQuoteUser, indexOfCase) {
-    console.log(`User: ${JSON.stringify(user)}, indexOfUser: ${indexOfUser}, indexOfQuoteUser: ${indexOfQuoteUser}`)
+    let sendSms = false
+    let sendEmail = false
+    let dialCode = ""
+    let telephone = ""
+    let email = ""
+    if (user.contact.primary) {
+      sendSms = appState.users[appState.app.indexOfPrimaryUser].contact.tel
+      sendEmail = appState.users[appState.app.indexOfPrimaryUser].contact.email
+      dialCode = appState.users[appState.app.indexOfPrimaryUser].dialCode
+      telephone = appState.users[appState.app.indexOfPrimaryUser].telNoDialCode
+      email = appState.users[appState.app.indexOfPrimaryUser].email
+    } else {
+      sendSms = user.contact.tel
+      sendEmail = user.contact.email
+      dialCode = user.dialCode
+      telephone = user.telNoDialCode
+      email = user.email
+    }
     const response = await fetch("/api/credas/registrations", {
       body: JSON.stringify({
         amlCode: appState.quote.AML.credas.enhancedAMLCode,
         user,
         firm: appState.firm,
-        index: indexOfUser
+        index: indexOfUser,
+        sendSms,
+        sendEmail,
+        dialCode,
+        telephone,
+        email
       }),
       headers: {
         "Content-Type": "application/json"
@@ -258,18 +283,16 @@ export default function User(props) {
       method: "POST"
     })
     const result = await response.json();
-    console.log(result)
     if (result.data.error) {
       appDispatch({
         type: "flashMessage",
         value:
           "There has been an issue please try again, if this persists contact the Solicitor."
       });
+      dispatch({ type: "endFetching" });
     } else {
       const credasObj = result.data
       credasObj.paliQuoteId = appState.quote.id
-      console.log("result.index")
-      console.log(result.index)
       appDispatch({
         type: "saveCredasRegistration",
         value: credasObj,
@@ -277,6 +300,11 @@ export default function User(props) {
         indexOfQuoteUser: indexOfQuoteUser,
         indexOfCase: indexOfCase
       });
+      appDispatch({
+        type: "flashMessage",
+        value: `Thank you for submitting. ${sendSms ? "A text message" : "An email"} has been sent to ${user.contact.primary ? appState.users[appState.app.indexOfPrimaryUser].firstName : "you"}, from CREDAS.`
+      });
+      dispatch({ type: "endFetching" });
     }
   }
   async function sendCredas(userArray) {
@@ -292,7 +320,6 @@ export default function User(props) {
       );
       credas(sendingUser, indexOfUser, indexOfQuoteUser, indexOfCase)
     })
-    dispatch({ type: "endLoading" });
   }
   // thirdfort AML check
   async function sendThirdfort(userArray) {
@@ -330,11 +357,6 @@ export default function User(props) {
       "User-Id": stubUserId
     };
     async function thirdfort(config, body, indexOfUser, indexOfQuoteUser, indexOfCase) {
-      console.log(`User: ${JSON.stringify(user)}, indexOfUser: ${indexOfUser}, indexOfQuoteUser: ${indexOfQuoteUser}`)
-      console.log("body")
-      console.log(body)
-      console.log("config")
-      console.log(config)
       const response = await fetch("/api/thirdfort/transactions", {
         body: JSON.stringify({
           config,
@@ -354,6 +376,7 @@ export default function User(props) {
           value:
             "There has been an issue please try again, if this persists contact the Solicitor."
         });
+        dispatch({ type: "endFetching" });
       } else {
         appDispatch({
           type: "saveThirdfortTransaction",
@@ -368,6 +391,7 @@ export default function User(props) {
           value:
             "Thank you for submitting, please check your phone for a text from Thirdfort. If you have not received a message then check you Telephone number is correct"
         });
+        dispatch({ type: "endFetching" });
       }
     }
     userArray.map(sendingUser => {
@@ -458,7 +482,6 @@ export default function User(props) {
       }
       thirdfort(transactionConfig, transactionBody, indexOfUser, indexOfQuoteUser, indexOfCase);
     });
-    dispatch({ type: "endLoading" });
   }
   // End AML functions
   // Page functions end here
@@ -593,7 +616,7 @@ export default function User(props) {
   }, [state.userUpdated]);
   // useEffects end here
 
-  return (state.userIsLoading ? <Main title="loading"><LoadingSpinner /></Main> :
+  return (state.userIsLoading || state.fetching ? <Main title="loading"><LoadingSpinner /></Main> :
     <Main title={state.name}>
       <div className="seller-info">
         <div className="sellers">
