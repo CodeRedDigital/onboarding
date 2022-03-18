@@ -522,7 +522,7 @@ export default function User(props) {
     dispatch({ type: "updateUserId", id: userId });
   }, [router.query]);
   useEffect(() => {
-    if (appState.app.indexOfPrimaryUser !== null && !state.userIsLoading){
+    if (appState.app.indexOfPrimaryUser !== null && state.userIsLoading){
       dispatch({ type: "endLoading" })
     }
   },[appState.app.indexOfPrimaryUser])
