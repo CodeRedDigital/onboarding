@@ -356,7 +356,7 @@ export default function User(props) {
       "Content-Type": "application/json",
       "User-Id": stubUserId
     };
-    async function thirdfort(config, body, indexOfUser, indexOfQuoteUser, indexOfCase) {
+    async function thirdfort(user, config, body, indexOfUser, indexOfQuoteUser, indexOfCase) {
       const response = await fetch("/api/thirdfort/transactions", {
         body: JSON.stringify({
           config,
@@ -480,7 +480,7 @@ export default function User(props) {
           metadata: {}
         };
       }
-      thirdfort(transactionConfig, transactionBody, indexOfUser, indexOfQuoteUser, indexOfCase);
+      thirdfort(sendingUser, transactionConfig, transactionBody, indexOfUser, indexOfQuoteUser, indexOfCase);
     });
   }
   // End AML functions
