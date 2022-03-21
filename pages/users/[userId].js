@@ -389,7 +389,7 @@ export default function User(props) {
         appDispatch({
           type: "flashMessage",
           value:
-            "Thank you for submitting, please check your phone for a text from Thirdfort. If you have not received a message then check you Telephone number is correct"
+            `Thank you for submitting, a text message has been sent from Thirdfort, to ${user.contact.primary ? appState.users[appState.app.indexOfPrimaryUser].firstName : "you"}. If you have not received a message then check you Telephone number is correct`
         });
         dispatch({ type: "endFetching" });
       }
