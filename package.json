@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "export NODE_OPTIONS=--openssl-legacy-provider; next dev",
     "build": "export NODE_OPTIONS=--openssl-legacy-provider; next build",
-    "start": "export NODE_OPTIONS=--openssl-legacy-provider; next start",
+    "start": "export NODE_OPTIONS=--openssl-legacy-provider; next start -p 4653",
     "lint": "export NODE_OPTIONS=--openssl-legacy-provider; next lint"
   },
   "dependencies": {
