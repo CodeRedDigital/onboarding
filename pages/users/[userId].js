@@ -16,7 +16,6 @@ const itiUtils = require("intl-tel-input/build/js/utils.js")
 import Main from "../../components/Main";
 import UserIcon from "../../components/UserIcon";
 import LoadingSpinner from "../../components/LoadingSpinner";
-import ModalLink from "../../components/ModalLink";
 
 // states
 import StateContext from "../../states/StateContext";
@@ -618,6 +617,7 @@ export default function User(props) {
 
   return (state.userIsLoading || state.fetching ? <Main title="loading"><LoadingSpinner /></Main> :
     <Main title={state.name}>
+      {appState.users.length > 1 ? (
       <div className="seller-info">
         <div className="sellers">
           {appState.quote.associatedUsers.map((user, index) => {
@@ -632,6 +632,7 @@ export default function User(props) {
           })}
         </div>
       </div>
+          ) : ""}
       <h1>{state.name}</h1>
       <div id="instructions">
         <p>
@@ -641,21 +642,7 @@ export default function User(props) {
         <p>
           Once all of these fields have been completed we will pass them over to
           our trust partner{" "}
-          <ModalLink
-            name={appState.quote.AML.provider}
-            href="#amlButton"
-            className=""
-            data-modal-open={appState.quote.AML.provider + "Modal"}
-            data-button={appState.quote.AML.provider + "Button"}
-            data-name={appState.quote.AML.provider}
-            modalLinkContent={parse(
-              unescape(
-                state.thirdfort
-                  ? appState.firm.modalContent.thirdfort
-                  : appState.firm.modalContent.credas
-              )
-            )}
-          />
+          {state.thirdfort ? (<Link href="/thirdfort">Thirdfort</Link>) : (<Link href="/credas">CREDAS</Link>)}
           , to do Identity and Financial checks.
         </p>
       </div>
@@ -767,9 +754,11 @@ export default function User(props) {
               Invalid phone number.
             </div>
           </div>
+          {appState.users.length > 1 ? (
           <label htmlFor="contact" className="span-grid">
             Send Identity Check
           </label>
+          ) : ""}
           {!state.thirdfortAndPrimary && (
             <>
               <div id="identity-hint" className="pali-hint">
