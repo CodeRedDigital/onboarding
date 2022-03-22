@@ -902,7 +902,7 @@ function OnboardingApp({ Component, pageProps }) {
       // fetch users
       getAllAssociatedUsers();
     }
-    if (state.app.usersData === "success") {
+    if (state.app.usersData === "success" && state.app.firmData === "success") {
       // set index of current and index of primary
       // set index of Primary user
       const primaryUser = state.quote.associatedUsers.find(
