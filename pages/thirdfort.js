@@ -8,21 +8,17 @@ import Main from "../components/Main"
 
 // states
 import StateContext from "../states/StateContext";
-import DispatchContext from "../states/DispatchContext";
 
 export default function Thirdfort() {
   const appState = useContext(StateContext);
-  const appDispatch = useContext(DispatchContext);
   const router = useRouter();
-  const thirdfortContent = parse(decode(appState.firm.modalContent.thirdfort))
-  useEffect(() => {
-    
-  },[])
   return (
     <Main title="Thirdfort">
       <button className="btn primary" onClick={() => router.back()}>Back</button>
       <h1>About Thirdfort</h1>
-      {thirdfortContent}
+      {appState.app.firmData === "success" &&
+        parse(decode(appState.firm.modalContent.thirdfort))
+      }
     </Main>
   )
 }
