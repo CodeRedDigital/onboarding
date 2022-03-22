@@ -722,6 +722,12 @@ form.user {
   }
 }
 
+@media screen and (min-width: 1300px) {
+  main {
+    margin: 1vw auto;
+  }
+}
+
 /* Loading Styles */
 
 .loading {
