@@ -125,13 +125,10 @@ select {
   --monospace: "Lucida Console", monospace;
 
   /* defining the colours to be used */
-  --primary-solid: #176fd3;
   --primary-contrast: #ffffff;
   --primary-washed: #6ca9ef;
-  --secondary-solid: #42cb91;
   --secondary-contrast: #474747;
   --secondary-washed: #9fe5c8;
-  --tertiary-solid: #ecc30b;
   --tertiary-contrast: #474747;
   --tertiary-washed: #f9e58a;
   --warning-solid: #f03c3c;
@@ -233,17 +230,17 @@ select {
 }
 
 .btn.primary {
-  background-color: var(--primary-100, var(--primary-solid));
+  background-color: var(--primary-100);
   color: var(--primary-contrast, var(--primary-contrast));
 }
 
 .btn.secondary {
-  background-color: var(--secondary-100, var(--secondary-solid));
+  background-color: var(--secondary-100);
   color: var(--secondary-contrast, var(--secondary-contrast));
 }
 
 .btn.tertiary {
-  background-color: var(--tertiary-100, var(--tertiary-solid));
+  background-color: var(--tertiary-100);
   color: var(--tertiary-contrast, var(--tertiary-contrast));
 }
 
@@ -268,13 +265,13 @@ label,
 .radios-group__label {
   font-family: var(--heading-font);
   font-size: 1.3em;
-  color: var(--primary, var(--primary-solid));
+  color: var(--primary-100);
   font-weight: var(--heavy);
 }
 
 input {
   margin-bottom: 1rem;
-  border-color: var(--primary, var(--primary-solid));
+  border-color: var(--primary-100);
 }
 
 .alert {
@@ -307,7 +304,7 @@ input:invalid ~ .alert-danger,
   line-height: 1.25;
   display: block;
   margin-bottom: 5px;
-  color: var(--primary, var(--primary-solid));
+  color: var(--primary-100);
 }
 @media (min-width: 40.0625em) {
   .pali-hint {
@@ -384,7 +381,7 @@ input:invalid ~ .alert-danger,
   padding-left: 15px;
 }
 .pali-radios__input:focus + .pali-radios__label:before {
-  outline: 4px dotted var(--secondary, var(--secondary-solid));
+  outline: 4px dotted var(--secondary-100);
 }
 .pali-radios__input:checked + .pali-radios__label:after {
   opacity: 1;
@@ -455,13 +452,13 @@ h6 {
 h1,
 h3,
 h5 {
-  color: var(--secondary, var(--secondary-solid));
+  color: var(--secondary-100);
 }
 
 h2,
 h4,
 h6 {
-  color: var(--primary, var(--primary-solid));
+  color: var(--primary-100);
 }
 
 h1 {
@@ -496,7 +493,7 @@ body,
 header {
   height: 7vh;
   width: 100vw;
-  background-color: var(--primary, var(--primary-solid));
+  background-color: var(--primary-100);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -530,7 +527,7 @@ p {
 }
 
 a {
-  color: var(--primary, var(--primary-solid));
+  color: var(--primary-100);
   text-decoration: underline;
   cursor: pointer;
 }
@@ -604,7 +601,7 @@ footer ul {
 /* modal styles */
 section.modal-box {
   background-color: white;
-  border: solid 2px var(--primary, var(--primary-solid));
+  border: solid 2px var(--primary-100);
   border-radius: 2px;
   height: 90vh;
   width: 90vw;
@@ -634,12 +631,12 @@ section.modal-box {
 
 .modal-box h2 {
   color: var(--primary-contrast, var(--primary-contrast));
-  background-color: var(--primary, var(--primary-solid));
+  background-color: var(--primary-100);
 }
 
 .modal-box h3 {
   color: var(--primary-contrast, var(--primary-contrast));
-  background-color: var(--primary, var(--primary-solid));
+  background-color: var(--primary-100);
 }
 
 .modal-box .modal-content {
@@ -679,12 +676,12 @@ section.modal-box {
 }
 
 .sellers svg path {
-  stroke: var(--primary, var(--primary-solid));
+  stroke: var(--primary-100);
   fill: none;
 }
 
 .sellers .current svg path {
-  fill: var(--primary, var(--primary-solid));
+  fill: var(--primary-100);
 }
 
 .span-grid,
@@ -694,7 +691,7 @@ section.modal-box {
 }
 
 .pali-hint {
-  color: var(--primary, var(--primary-solid));
+  color: var(--primary-100);
 }
 
 form.user {
@@ -736,7 +733,7 @@ form.user {
 }
 
 .loading.loaded {
-  background-color: var(--primary, var(--primary-solid));
+  background-color: var(--primary-100);
 }
 
 .loading main {
@@ -759,7 +756,7 @@ form.user {
   color: var(--white);
   font-family: var(--body-font);
   height: 20vh;
-  background-color: var(--primary, var(--primary-solid));
+  background-color: var(--primary-100);
   transition: background-color 1.5s ease-in;
 }
 
@@ -786,9 +783,9 @@ form.user {
   height: 80px;
   margin: 8px;
   border-radius: 50%;
-  border: 10px solid var(--primary, var(--primary-solid));
-  border-color: var(--primary, var(--primary-solid)) transparent
-    var(--primary, var(--primary-solid)) transparent;
+  border: 10px solid var(--primary-100);
+  border-color: var(--primary-100) transparent
+    var(--primary-100) transparent;
   animation: lds-dual-ring 1.2s linear infinite;
 }
 
