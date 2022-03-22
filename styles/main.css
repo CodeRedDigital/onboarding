@@ -125,20 +125,6 @@ select {
   --monospace: "Lucida Console", monospace;
 
   /* defining the colours to be used */
-  --primary-contrast: #ffffff;
-  --primary-washed: #6ca9ef;
-  --secondary-contrast: #474747;
-  --secondary-washed: #9fe5c8;
-  --tertiary-contrast: #474747;
-  --tertiary-washed: #f9e58a;
-  --warning-solid: #f03c3c;
-  --warning-contrast: #ffffff;
-  --warning-washed: #f57a7a;
-  --white: #ffffff;
-  --light-grey: #c2c2c2;
-  --dark-grey: #474747;
-  --black: #000000;
-
   --white: #ffffff;
   --lightGrey: #eaeaea;
   --lightGrey-100: #eaeaea;
@@ -231,27 +217,27 @@ select {
 
 .btn.primary {
   background-color: var(--primary-100);
-  color: var(--primary-contrast, var(--primary-contrast));
+  color: var(--primaryContrast);
 }
 
 .btn.secondary {
   background-color: var(--secondary-100);
-  color: var(--secondary-contrast, var(--secondary-contrast));
+  color: var(--secondaryContrast);
 }
 
 .btn.tertiary {
   background-color: var(--tertiary-100);
-  color: var(--tertiary-contrast, var(--tertiary-contrast));
+  color: var(--tertiaryContrast);
 }
 
 .btn.warning {
   background-color: var(--warning-100);
-  color: var(--warning-contrast);
+  color: var(--warningContrast);
 }
 
 .btn.success {
   background-color: var(--success-100);
-  color: var(--success-contrast);
+  color: var(--successContrast);
 }
 
 /* form styles */
@@ -291,7 +277,7 @@ input {
 
 input:invalid ~ .alert-danger,
 .show-warning {
-  color: var(--warning-contrast);
+  color: var(--warningContrast);
   background-color: var(--warning-solid);
   visibility: visible;
   transition: all 0.5s ease;
@@ -630,12 +616,12 @@ section.modal-box {
 }
 
 .modal-box h2 {
-  color: var(--primary-contrast, var(--primary-contrast));
+  color: var(--primaryContrast);
   background-color: var(--primary-100);
 }
 
 .modal-box h3 {
-  color: var(--primary-contrast, var(--primary-contrast));
+  color: var(--primaryContrast);
   background-color: var(--primary-100);
 }
 
@@ -649,7 +635,7 @@ section.modal-box {
 }
 
 .modal-box footer {
-  background-color: var(--primary-contrast, var(--primary-contrast));
+  background-color: var(--primaryContrast);
   text-align: center;
   width: 100%;
 }
