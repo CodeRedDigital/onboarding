@@ -530,7 +530,7 @@ footer {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: var(--light-grey);
+  background-color: var(--lightGrey-100);
   font-size: 0.7rem;
 }
 
