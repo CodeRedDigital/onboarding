@@ -27,10 +27,37 @@ function checkButtons() {
     } // if all the buttons are checked enable next button
   }
 }
-const modalContents = document.querySelectorAll(".modal-content"); // find all modal content blocks
-for (content of modalContents) {
-  content.addEventListener("scroll", handleScroll);
-} // add scroll event to all content blocks
+// find all the modals
+const modalSections = document.querySelectorAll("[data-modal]")
+// tell observer what to watch for
+const watch = { 
+  attributes: true,
+  attributeFilter: ["hidden"]
+}
+// create an observer that will check if the modal content is long enough for scroll
+const observer = new MutationObserver(function (modalUpdating) {
+  const modalArea = modalUpdating[0].target
+  const modalContent = modalArea.querySelector(".modal-content")
+  const matchingButton = document.querySelector(
+    `[data-modal-open="${modalArea.id}"]`
+  );
+  if (modalContent.clientHeight === modalContent.scrollHeight) {
+    const acceptButton = modalArea.querySelector("[data-accept]")
+    acceptButton.addEventListener("click", () => {
+      // add click event to the accept button
+      matchingButton.setAttribute("data-checked", true); // update data check attribute of associated button
+      ARIAmodal.closeModal(); // close the modal
+      checkButtons(); // run checkButtons function to update the buttons on the page
+    });
+    acceptButton.removeAttribute("disabled")
+  } else {
+    modalContent.addEventListener("scroll", handleScroll);
+  }
+})
+// loop through each modal and add observer to it
+for (let i = 0; i < modalSections.length; i++) {
+  observer.observe(modalSections[i], watch)
+}
 // handle the scroll of the modal content
 function handleScroll() {
   if (this.clientHeight + this.scrollTop >= this.scrollHeight) {
