@@ -903,18 +903,22 @@ function OnboardingApp({ Component, pageProps }) {
       getAllAssociatedUsers();
     }
     if (state.app.usersData === "success" && state.app.firmData === "success") {
-      // set index of current and index of primary
-      // set index of Primary user
-      const primaryUser = state.quote.associatedUsers.find(
-        ({ primary }) => primary === true
-      );
-      const primaryIndex = state.users.findIndex(
-        user => user.id === primaryUser.id
-      );
-      // set index of current user
-      const currentIndex = state.users.findIndex(
-        user => user.id === state.user.id
-      );
+      const primaryIndex = 0
+      const currentIndex = 0
+      if (state.quote.associatedUsers.length > 1){
+        // set index of current and index of primary
+        // set index of Primary user
+        const primaryUser = state.quote.associatedUsers.find(
+          ({ primary }) => primary === true
+        );
+        primaryIndex = state.users.findIndex(
+          user => user.id === primaryUser.id
+        );
+        // set index of current user
+        currentIndex = state.users.findIndex(
+          user => user.id === state.user.id
+        );
+      }
       // set index of associated solicitor
       const solicitor = state.quote.associatedSolicitorId;
       const solicitorIndex = state.firm.solicitors.findIndex(
