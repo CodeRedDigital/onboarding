@@ -403,6 +403,8 @@ export default function User(props) {
       const indexOfCase = appState.users[indexOfUser].cases.findIndex(
         currentCase => currentCase.id === appState.quote.id
       );
+      const transactionId = `${appState.quote.id}-${sendingUser.id}`
+      const hmac_key = btoa(transactionId)
       let telephone = "";
       if (sendingUser.contact.tel) {
         telephone = sendingUser.telephone;
@@ -445,7 +447,16 @@ export default function User(props) {
               }
             ]
           },
-          metadata: {}
+          metadata: {
+            notify: {
+              type: "http",
+              data: {
+                hmac_key: hmac_key,
+                method: "POST",
+                uri: "https://www.paliltd.com/sys/sol/solicitor-portal/api/thirdfort/notification"
+              }
+            }
+          }
         };
       } else {
         const address = appState.quote.associatedAddresses.find(address => address.type === "purchase")
