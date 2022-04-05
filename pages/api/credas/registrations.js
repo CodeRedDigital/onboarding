@@ -37,7 +37,10 @@ export default async function getRegTypes(req, res) {
             key: "SolicitorID",
             value: firm.id
           }
-        ]
+        ],
+        "returnUrls": {
+          "returnUrl": "https://www.paliltd.com/sys/sol/solicitor-portal/api/credas/notification"
+        }
       }),
       method: 'POST'
     })
