@@ -453,7 +453,7 @@ export default function User(props) {
               data: {
                 hmac_key: hmac_key,
                 method: "POST",
-                uri: "https://www.paliltd.com/sys/sol/solicitor-portal/api/thirdfort/notification"
+                uri: process.env.NEXT_PUBLIC_THIRDFORT_ENDPOINT_URL
               }
             }
           }
@@ -487,7 +487,16 @@ export default function User(props) {
               }
             ]
           },
-          metadata: {}
+          metadata: {
+            notify: {
+              type: "http",
+              data: {
+                hmac_key: hmac_key,
+                method: "POST",
+                uri: process.env.NEXT_PUBLIC_THIRDFORT_ENDPOINT_URL
+              }
+            }
+          }
         };
       }
       thirdfort(sendingUser, transactionConfig, transactionBody, indexOfUser, indexOfQuoteUser, indexOfCase);
