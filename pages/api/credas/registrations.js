@@ -1,5 +1,6 @@
 export default async function getRegTypes(req, res) {
   if (req.method === 'POST') {
+    console.log(`push url ${req.body.endpoint}`)
     const amlCode = req.body.amlCode
     const user = req.body.user
     const firm = req.body.firm
@@ -9,6 +10,7 @@ export default async function getRegTypes(req, res) {
     const telephone =  req.body.telephone
     const email =  req.body.email
     const index = req.body.index
+    const endpoint = req.body.endpoint
     const response = await fetch(`${process.env.CREDAS_URL}/registrations`, {
       headers: {
         'Content-Type': 'application/json',
@@ -37,10 +39,7 @@ export default async function getRegTypes(req, res) {
             key: "SolicitorID",
             value: firm.id
           }
-        ],
-        "returnUrls": {
-          "returnUrl": "https://www.paliltd.com/sys/sol/solicitor-portal/api/credas/notification"
-        }
+        ]
       }),
       method: 'POST'
     })
