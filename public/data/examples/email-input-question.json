@@ -1,0 +1,24 @@
+{
+  "explanation": "This is a email input question and will give the user a normal text input keyboard, with @ symbol making it easier to entry emails, it should be used for things like First name",
+  "codepenExampleUrl": "https://codepen.io/CodeRedDigital/pen/bGaXZZw",
+  "questionId": "q0001",
+  "label": "email Address",
+  "name": "email",
+  "type": "input",
+  "inputType": "email",
+  "placeholder": "john@example.com",
+  "value": "",
+  "required": true,
+  "helpText": "This is your email address we can use to communicate with you, for example john@example.com",
+  "errors": [
+    {
+      "validation": "notEmpty",
+      "message": "This is a required field and must be filled in"
+    },
+    {
+      "validation": "validEmail",
+      "message": "You must enter a valid email address, there is something wrong with what you have entered"
+    }
+  ],
+  "options": []
+}

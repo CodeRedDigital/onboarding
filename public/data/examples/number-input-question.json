@@ -1,0 +1,31 @@
+{
+  "explanation": "This is a number input question and will give the user a number input keyboard, it should be used for entering numbers that may contain decimal places, if you just what the user to enter whole number then use a Telephone input",
+  "codepenExampleUrl": "https://codepen.io/CodeRedDigital/pen/ExoMEpj",
+  "questionId": "q0001",
+  "label": "First Name",
+  "name": "first-name",
+  "type": "input",
+  "inputType": "number",
+  "placeholder": "0-25",
+  "value": "",
+  "required": true,
+  "decimal": true,
+  "min": "0",
+  "max": "25",
+  "step": "",
+  "default": "0",
+  "pattern": "",
+  "inputmode": "numeric",
+  "helpText": "This is your first name, e.g. John",
+  "errors": [
+    {
+      "validation": "notEmpty",
+      "message": "This is a required field and must be filled in"
+    },
+    {
+      "validation": "illegalCharacters",
+      "message": "You can only have entered characters that are not valid, you may only input 0-9 and a decimal point"
+    }
+  ],
+  "options": []
+}

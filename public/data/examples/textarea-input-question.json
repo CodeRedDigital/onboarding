@@ -1,0 +1,24 @@
+{
+  "explanation": "This is a text input question and will give the user a normal text input keyboard, it should be used for long answers as it has multiple lines",
+  "codepenExampleUrl": "https://codepen.io/CodeRedDigital/pen/vYpPRQJ",
+  "questionId": "q0001",
+  "label": "Brief Description",
+  "name": "brief-description",
+  "type": "textarea",
+  "inputType": null,
+  "placeholder": null,
+  "value": "",
+  "required": true,
+  "minlength": "",
+  "maxlength": "250",
+  "rows": "7",
+  "pattern": "",
+  "helpText": "Give a brief description of the property including, number of rooms, bedrooms, bathrooms, floors, etc",
+  "errors": [
+    {
+      "validation": "notEmpty",
+      "message": "This is a required field and must be filled in"
+    }
+  ],
+  "options": []
+}

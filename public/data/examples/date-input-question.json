@@ -1,0 +1,35 @@
+{
+  "explanation": "This is a date input question and will give the user a date picker, it should be used for dates",
+  "codepenExampleUrl": "https://codepen.io/CodeRedDigital/pen/WNdVmao",
+  "questionId": "q0001",
+  "label": "Date of Birth",
+  "name": "date-of-birth",
+  "type": "input",
+  "inputType": "date",
+  "placeholder": "dd/mm/yyyy",
+  "required": false,
+  "min": {
+    "set": true,
+    "past-future": "past",
+    "until": "years",
+    "value": "90"
+  },
+  "max": {
+    "set": true,
+    "past-future": "today",
+    "until": "",
+    "value": ""
+  },
+  "helpText": "Please select or enter your date of birth, we need this for this reason xyz.",
+  "errors": [
+    {
+      "validation": "notEmpty",
+      "message": "This is a required field and must be filled in"
+    },
+    {
+      "validation": "lettersOnly",
+      "message": "You can only have letters in your name"
+    }
+  ],
+  "options": []
+}

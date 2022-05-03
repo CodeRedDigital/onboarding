@@ -1,0 +1,27 @@
+{
+  "explanation": "This is a text input question and will give the user a normal text input keyboard, it should be used for things like First name",
+  "codepenExampleUrl": "https://codepen.io/CodeRedDigital/pen/ExoMEpj",
+  "questionId": "q0001",
+  "label": "First Name",
+  "name": "first-name",
+  "type": "input",
+  "inputType": "text",
+  "placeholder": "John/Joan",
+  "value": "",
+  "required": true,
+  "minlength": "",
+  "maxlength": "",
+  "pattern": "",
+  "helpText": "This is your first name, e.g. John",
+  "errors": [
+    {
+      "validation": "notEmpty",
+      "message": "This is a required field and must be filled in"
+    },
+    {
+      "validation": "lettersOnly",
+      "message": "You can only have letters in your name"
+    }
+  ],
+  "options": []
+}
