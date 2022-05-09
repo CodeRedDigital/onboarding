@@ -21,7 +21,7 @@
       "message": "This is a required field and must be filled in"
     }
   ],
-  "groups" [
+  "groups": [
     {
       "groupName": "Birds",
       "options": [
@@ -95,4 +95,5 @@
       "formId": "SOL01",
       "formQuestion": "002"
     }
+  ]
 }
