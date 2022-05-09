@@ -5,28 +5,281 @@
       "formLabel": "Property Information Form",
       "formOwner": "Law Society",
       "formEdition": "4th",
-      "formYear": "2021"
+      "formYear": "2021",
+      "formSections": [
+        {
+          "sectionId": "0",
+          "sectionName": "Introduction",
+          "subSections": []
+        },
+        {
+          "sectionId": "1",
+          "sectionName": "Boundaries",
+          "subSections": []
+        },
+        {
+          "sectionId": "2",
+          "sectionName": "Disputes and complaints",
+          "subSections": []
+        },
+        {
+          "sectionId": "3",
+          "sectionName": "Notices and proposals",
+          "subSections": []
+        },
+        {
+          "sectionId": "4",
+          "sectionName": "Alterations, planning and building control",
+          "subSections": []
+        },
+        {
+          "sectionId": "5",
+          "sectionName": "Guarantees and warranties",
+          "subSections": []
+        },
+        {
+          "sectionId": "6",
+          "sectionName": "Insurance",
+          "subSections": []
+        },
+        {
+          "sectionId": "7",
+          "sectionName": "Environmental matters",
+          "subSections": [
+            {
+              "subSectionName": "Flooding",
+              "subSectionDescription": "Flooding may take a variety of forms: it may be seasonal or irregular or simply a one-off occurrence. The property does not need to be near a sea or river for flooding to occur."
+            },
+            {
+              "subSectionName": "Radon",
+              "subSectionDescription": "Radon is a naturally occurring inert radioactive gas found in the ground. Some parts of England and Wales are more adversely affected by it than others. Remedial action is advised for properties with a test result above the ‘recommended action level'."
+            },
+            {
+              "subSectionName": "Energy efficiency",
+              "subSectionDescription": "An Energy Performance Certificate (EPC) is a document that gives information about a property’s energy usage."
+            },
+            {
+              "subSectionName": "Japanese knotweed",
+              "subSectionDescription": "Japanese knotweed is an invasive non-native plant that can cause damage to property if left untreated. The plant consists of visible above ground growth and an invisible rhizome (root) below ground in the soil. It can take several years to control and manage through a management and treatment plan and rhizomes may remain alive below the soil even after treatment"
+            }
+          ]
+        },
+        {
+          "sectionId": "8",
+          "sectionName": "Rights and informal arrangements",
+          "subSections": [
+            {
+              "subSectionName": "Services crossing the property or neighbouring property",
+              "subSectionDescription": ""
+            }
+          ]
+        },
+        {
+          "sectionId": "9",
+          "sectionName": "Parking",
+          "subSections": []
+        },
+        {
+          "sectionId": "10",
+          "sectionName": "Other charges",
+          "subSections": []
+        },
+        {
+          "sectionId": "11",
+          "sectionName": "Occupiers",
+          "subSections": []
+        },
+        {
+          "sectionId": "12",
+          "sectionName": "Services",
+          "subSections": [
+            {
+              "subSectionName": "Electricity",
+              "subSectionDescription": ""
+            },
+            {
+              "subSectionName": "Central heating",
+              "subSectionDescription": ""
+            },
+            {
+              "subSectionName": "Drainage and sewerage",
+              "subSectionDescription": ""
+            }
+          ]
+        },
+        {
+          "sectionId": "13",
+          "sectionName": "Connection to utilities and services",
+          "subSections": []
+        },
+        {
+          "sectionId": "14",
+          "sectionName": "Transaction information",
+          "subSections": []
+        }
+      ]
     },
     {
       "formId": "TA7",
       "formLabel": "Leasehold Information Form",
       "formOwner": "Law Society",
       "formEdition": "2nd",
-      "formYear": "2009"
+      "formYear": "2009",
+      "formSections": [
+        {
+          "sectionId": "0",
+          "sectionName": "Introduction",
+          "subSections": []
+        },
+        {
+          "sectionId": "1",
+          "sectionName": "The property",
+          "subSections": []
+        },
+        {
+          "sectionId": "2",
+          "sectionName": "Relevant documents",
+          "subSections": []
+        },
+        {
+          "sectionId": "3",
+          "sectionName": "Management of the building",
+          "subSections": []
+        },
+        {
+          "sectionId": "4",
+          "sectionName": "Contact details",
+          "subSections": []
+        },
+        {
+          "sectionId": "5",
+          "sectionName": "Maintenance and service charges",
+          "subSections": []
+        },
+        {
+          "sectionId": "6",
+          "sectionName": "Notices",
+          "subSections": []
+        },
+        {
+          "sectionId": "7",
+          "sectionName": "Consents",
+          "subSections": []
+        },
+        {
+          "sectionId": "8",
+          "sectionName": "Complaints",
+          "subSections": []
+        },
+        {
+          "sectionId": "9",
+          "sectionName": "Alterations",
+          "subSections": []
+        },
+        {
+          "sectionId": "10",
+          "sectionName": "Enfranchisement",
+          "subSections": []
+        }
+      ]
     },
     {
       "formId": "TA8",
       "formLabel": "New home information form",
       "formOwner": "Law Society",
       "formEdition": "1st",
-      "formYear": "2007"
+      "formYear": "2007",
+      "formSections": [
+        {
+          "sectionId": "0",
+          "sectionName": "Introduction",
+          "subSections": []
+        },
+        {
+          "sectionId": "1",
+          "sectionName": "For all properties",
+          "subSections": []
+        },
+        {
+          "sectionId": "2",
+          "sectionName": "Leasehold",
+          "subSections": []
+        },
+        {
+          "sectionId": "3",
+          "sectionName": "Commonhold",
+          "subSections": []
+        }
+      ]
     },
     {
       "formId": "TA10",
       "formLabel": "Fittings and Contents Form",
       "formOwner": "Law Society",
       "formEdition": "3rd",
-      "formYear": "2013"
+      "formYear": "2013",
+      "formSections": [
+        {
+          "sectionId": "0",
+          "sectionName": "Introduction",
+          "subSections": []
+        },
+        {
+          "sectionId": "1",
+          "sectionName": "Basic fittings",
+          "subSections": []
+        },
+        {
+          "sectionId": "2",
+          "sectionName": "Kitchen",
+          "subSections": []
+        },
+        {
+          "sectionId": "3",
+          "sectionName": "Bathroom",
+          "subSections": []
+        },
+        {
+          "sectionId": "4",
+          "sectionName": "Carpets",
+          "subSections": []
+        },
+        {
+          "sectionId": "5",
+          "sectionName": "Curtains and curtain rails",
+          "subSections": []
+        },
+        {
+          "sectionId": "6",
+          "sectionName": "Light fittings",
+          "subSections": []
+        },
+        {
+          "sectionId": "7",
+          "sectionName": "Fitted units",
+          "subSections": []
+        },
+        {
+          "sectionId": "8",
+          "sectionName": "Outdoor area",
+          "subSections": []
+        },
+        {
+          "sectionId": "9",
+          "sectionName": "Television and telephone",
+          "subSections": []
+        },
+        {
+          "sectionId": "10",
+          "sectionName": "Stock of fuel",
+          "subSections": []
+        },
+        {
+          "sectionId": "11",
+          "sectionName": "Other items",
+          "subSections": []
+        }
+      ]
     },
     {
       "formId": "SOL01",

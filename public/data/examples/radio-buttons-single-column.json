@@ -42,15 +42,11 @@
   "associatedForm": [
     {
       "formId": "TA6",
-      "formSection": "4",
-      "formName": "Alterations, planning and building control",
-      "formQuestion": "4.1"
+      "formQuestion": "001"
     },
     {
       "formId": "SOL01",
-      "formSection": "1",
-      "formName": "",
-      "formQuestion": "1.1"
+      "formQuestion": "002"
     }
   ]
 }
