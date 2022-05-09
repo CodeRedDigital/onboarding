@@ -21,7 +21,24 @@
       "message": "This is a required field and must be filled in"
     }
   ],
-  "options": [],
+  "options": [
+    {
+      "value": "one",
+      "name": "One"
+    },
+    {
+      "value": "two",
+      "name": "Two"
+    },
+    {
+      "value": "multiple-words",
+      "name": "Multiple Words"
+    },
+    {
+      "value": "four",
+      "name": "Four"
+    }
+  ],
   "associatedForm": [
     {
       "formId": "TA6",

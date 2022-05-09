@@ -1,0 +1,98 @@
+{
+  "explanation": "This is a dropdown select field where the user gets to choose an answer from pre-defined set of answers",
+  "codepenExampleUrl": "https://codepen.io/CodeRedDigital/pen/xxpBzvN?editors=1111",
+  "questionId": "q0001",
+  "label": "Choose a Pet",
+  "name": "select-pet",
+  "type": "select",
+  "inputType": null,
+  "placeholder": null,
+  "value": "",
+  "required": true,
+  "category": "01",
+  "minlength": "",
+  "maxlength": "250",
+  "rows": "7",
+  "pattern": "",
+  "helpText": "Give a brief description of the property including, number of rooms, bedrooms, bathrooms, floors, etc",
+  "errors": [
+    {
+      "validation": "notEmpty",
+      "message": "This is a required field and must be filled in"
+    }
+  ],
+  "groups" [
+    {
+      "groupName": "Birds",
+      "options": [
+        {
+          "value": "eagle",
+          "name": "Eagle"
+        },
+        {
+          "value": "robin",
+          "name": "Robin"
+        },
+        {
+          "value": "kestrel",
+          "name": "Kestrel"
+        },
+        {
+          "value": "penguin",
+          "name": "Penguin"
+        }
+      ]
+    },
+    {
+      "groupName": "Cats",
+      "options": [
+        {
+          "value": "lion",
+          "name": "Lion"
+        },
+        {
+          "value": "tabby",
+          "name": "Tabby"
+        },
+        {
+          "value": "tiger",
+          "name": "tiger"
+        },
+        {
+          "value": "panther",
+          "name": "Panther"
+        }
+      ]
+    },
+    {
+      "groupName": "Fish",
+      "options": [
+        {
+          "value": "cod",
+          "name": "Cod"
+        },
+        {
+          "value": "haddock",
+          "name": "Haddock"
+        },
+        {
+          "value": "trout",
+          "name": "Trout"
+        },
+        {
+          "value": "salmon",
+          "name": "Salmon"
+        }
+      ]
+    }
+  ],
+  "associatedForm": [
+    {
+      "formId": "TA6",
+      "formQuestion": "001"
+    },
+    {
+      "formId": "SOL01",
+      "formQuestion": "002"
+    }
+}
