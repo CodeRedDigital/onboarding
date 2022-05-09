@@ -1,0 +1,39 @@
+{
+  "forms":[
+    {
+      "formId": "TA6",
+      "formLabel": "Property Information Form",
+      "formOwner": "Law Society",
+      "formEdition": "4th",
+      "formYear": "2021"
+    },
+    {
+      "formId": "TA7",
+      "formLabel": "Leasehold Information Form",
+      "formOwner": "Law Society",
+      "formEdition": "2nd",
+      "formYear": "2009"
+    },
+    {
+      "formId": "TA8",
+      "formLabel": "New home information form",
+      "formOwner": "Law Society",
+      "formEdition": "1st",
+      "formYear": "2007"
+    },
+    {
+      "formId": "TA10",
+      "formLabel": "Fittings and Contents Form",
+      "formOwner": "Law Society",
+      "formEdition": "3rd",
+      "formYear": "2013"
+    },
+    {
+      "formId": "SOL01",
+      "formLabel": "Solicitor Specific Questions",
+      "formOwner": "PALI",
+      "formEdition": "1.0",
+      "formYear": "2022"
+    }
+  ]
+}
