@@ -9,6 +9,7 @@
   "placeholder": null,
   "value": "",
   "required": true,
+  "category": "01",
   "minlength": "",
   "maxlength": "250",
   "rows": "7",

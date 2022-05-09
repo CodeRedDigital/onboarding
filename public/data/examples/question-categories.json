@@ -1,0 +1,24 @@
+{
+  "categories":[
+    {
+      "catId": "01",
+      "catLabel": "About Person"
+    },
+    {
+      "catId": "02",
+      "catLabel": "About Sale Property"
+    },
+    {
+      "catId": "03",
+      "catLabel": "About Purchase Property"
+    },
+    {
+      "catId": "04",
+      "catLabel": "Miscellaneous"
+    },
+    {
+      "catId": "05",
+      "catLabel": "Solicitor SPecific"
+    }
+  ]
+}

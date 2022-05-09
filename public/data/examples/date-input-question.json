@@ -8,6 +8,7 @@
   "inputType": "date",
   "placeholder": "dd/mm/yyyy",
   "required": false,
+  "category": "01",
   "min": {
     "set": true,
     "past-future": "past",

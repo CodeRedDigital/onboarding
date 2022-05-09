@@ -9,6 +9,7 @@
   "placeholder": "0-25",
   "value": "",
   "required": true,
+  "category": "01",
   "decimal": true,
   "min": "0",
   "max": "25",
