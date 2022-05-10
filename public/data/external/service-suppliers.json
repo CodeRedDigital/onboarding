@@ -1,0 +1,527 @@
+{
+  "gas-suppliers": [
+    {
+      "fullName": "AvantiGas On Limited",
+      "friendlyName": "AvantiGas"
+    },
+    {
+      "fullName": "British Gas Trading Limited",
+      "friendlyName": "British Gas"
+    },
+    {
+      "fullName": "Brook Green Trading Limited",
+      "friendlyName": "Brook Green"
+    },
+    {
+      "fullName": "Bulb Energy Ltd",
+      "friendlyName": "Bulb Energy"
+    },
+    {
+      "fullName": "Business Power and Gas Limited",
+      "friendlyName": "Business Power and Gas"
+    },
+    {
+      "fullName": "Cilleni Energy Supply Limited",
+      "friendlyName": "Cilleni Energy Supply"
+    },
+    {
+      "fullName": "Corona Energy Retail 4 Limited",
+      "friendlyName": "Corona Energy"
+    },
+    {
+      "fullName": "Crown Gas and Power Limited",
+      "friendlyName": "Crown Gas and Power"
+    },
+    {
+      "fullName": "Crown Oil Limited",
+      "friendlyName": "Crown Oil"
+    },
+    {
+      "fullName": "Delta Gas and Power Limited",
+      "friendlyName": "Delta Gas and Power"
+    },
+    {
+      "fullName": "E (Gas and Electricity) Limited",
+      "friendlyName": "E (Gas and Electricity)"
+    },
+    {
+      "fullName": "E.ON Energy Gas (Eastern) Limited",
+      "friendlyName": "E.ON Energy Gas (Eastern)"
+    },
+    {
+      "fullName": "E.ON Energy Solutions Limited",
+      "friendlyName": "E.ON Energy Solutions"
+    },
+    {
+      "fullName": "E.ON Next Energy Limited",
+      "friendlyName": "E.ON Next Energy"
+    },
+    {
+      "fullName": "E.ON UK Industrial Shipping Limited",
+      "friendlyName": "E.ON UK Industrial"
+    },
+    {
+      "fullName": "Ecotricity Limited",
+      "friendlyName": "Ecotricity"
+    },
+    {
+      "fullName": "EDF Energy Customers Limited",
+      "friendlyName": "EDF Energy"
+    },
+    {
+      "fullName": "ENGIE Power Limited",
+      "friendlyName": "ENGIE Power"
+    },
+    {
+      "fullName": "ESB Energy limited",
+      "friendlyName": "ESB Energy"
+    },
+    {
+      "fullName": "Flow Energy Limited",
+      "friendlyName": "Flow Energy"
+    },
+    {
+      "fullName": "Foxglove Energy Supply Limited",
+      "friendlyName": "Foxglove Energy Supply"
+    },
+    {
+      "fullName": "Gas Plus Supply Limited",
+      "friendlyName": "Gas Plus Supply"
+    },
+    {
+      "fullName": "Good Energy Gas Limited",
+      "friendlyName": "Good Energy Gas"
+    },
+    {
+      "fullName": "Green Energy (UK) plc",
+      "friendlyName": "Green Energy (UK)"
+    },
+    {
+      "fullName": "Home Energy Trading Ltd",
+      "friendlyName": "Home Energy"
+    },
+    {
+      "fullName": "Maxen Power Supply Limited",
+      "friendlyName": "Maxen Power Supply"
+    },
+    {
+      "fullName": "Npower Gas Limited",
+      "friendlyName": "Npower Gas"
+    },
+    {
+      "fullName": "Npower Northern Limited",
+      "friendlyName": "Npower Northern"
+    },
+    {
+      "fullName": "Npower Yorkshire Limited",
+      "friendlyName": "Npower Yorkshire"
+    },
+    {
+      "fullName": "Octopus Energy Limited",
+      "friendlyName": "Octopus Energy"
+    },
+    {
+      "fullName": "Opal Gas Limited",
+      "friendlyName": "Opal Gas"
+    },
+    {
+      "fullName": "Opus Energy Limited",
+      "friendlyName": "Opus Energy"
+    },
+    {
+      "fullName": "Opus Gas Supply Limited",
+      "friendlyName": "Opus Gas"
+    },
+    {
+      "fullName": "OSSO Gas Limited",
+      "friendlyName": "OSSO Gas"
+    },
+    {
+      "fullName": "Ovo Gas Limited",
+      "friendlyName": "Ovo Gas"
+    },
+    {
+      "fullName": "Ovo (S) Gas Limited",
+      "friendlyName": "Ovo (S) Gas"
+    },
+    {
+      "fullName": "Pozitive Energy Ltd",
+      "friendlyName": "Pozitive Energy"
+    },
+    {
+      "fullName": "Scottish Power Energy Retail Limited",
+      "friendlyName": "Scottish Power Energy"
+    },
+    {
+      "fullName": "Shell Energy Retail Limited",
+      "friendlyName": "Shell Energy Retail"
+    },
+    {
+      "fullName": "Shell Energy UK Limited",
+      "friendlyName": "Shell Energy UK"
+    },
+    {
+      "fullName": "SmartestEnergy Business Limited",
+      "friendlyName": "SmartestEnergy"
+    },
+    {
+      "fullName": "So Energy Trading Limited",
+      "friendlyName": "So Energy"
+    },
+    {
+      "fullName": "SQUARE1 ENERGY LIMITED",
+      "friendlyName": "SQUARE1 ENERGY"
+    },
+    {
+      "fullName": "Switch Business Gas and Power Ltd ",
+      "friendlyName": "Switch Business Gas and Power "
+    },
+    {
+      "fullName": "Totalenergies Gas & Power Limited",
+      "friendlyName": "Totalenergies Gas & Power"
+    },
+    {
+      "fullName": "Tru Energy Limited",
+      "friendlyName": "Tru Energy"
+    },
+    {
+      "fullName": "UK Energy Incubator Hub Limited",
+      "friendlyName": "UK Energy Incubator Hub"
+    },
+    {
+      "fullName": "UK Gas Supply Ltd",
+      "friendlyName": "UK Gas Supply"
+    },
+    {
+      "fullName": "UK Healthcare Corporation Limited",
+      "friendlyName": "UK Healthcare"
+    },
+    {
+      "fullName": "UK National Gas Ltd",
+      "friendlyName": "UK National Gas"
+    },
+    {
+      "fullName": "Unify Energy Limited",
+      "friendlyName": "Unify Energy"
+    },
+    {
+      "fullName": "Utilita Energy Limited",
+      "friendlyName": "Utilita Energy"
+    },
+    {
+      "fullName": "Utilita Gas Limited",
+      "friendlyName": "Utilita Gas"
+    },
+    {
+      "fullName": "Valda Energy Limited",
+      "friendlyName": "Valda Energy"
+    },
+    {
+      "fullName": "Yu Energy Retail Limited",
+      "friendlyName": "Yu Energy"
+    }
+  ],
+  "electricity-suppliers":[
+    {
+      "fullName": "Affect Energy Ltd",
+      "friendlyName": "Affect Energy"
+    },
+    {
+      "fullName": "Arto.Energy Limited",
+      "friendlyName": "Arto.Energy"
+    },
+    {
+      "fullName": "AXPO UK Limited",
+      "friendlyName": "AXPO UK"
+    },
+    {
+      "fullName": "Barbican Power Limited",
+      "friendlyName": "Barbican Power"
+    },
+    {
+      "fullName": "British Gas Trading Limited",
+      "friendlyName": "British Gas"
+    },
+    {
+      "fullName": "Brook Green Trading Limited",
+      "friendlyName": "Brook Green"
+    },
+    {
+      "fullName": "Bryt Energy Limited",
+      "friendlyName": "Bryt Energy"
+    },
+    {
+      "fullName": "Bulb Energy Ltd",
+      "friendlyName": "Bulb Energy"
+    },
+    {
+      "fullName": "Business Power and Gas Limited",
+      "friendlyName": "Business Power and Gas"
+    },
+    {
+      "fullName": "Cilleni Energy Supply Limited",
+      "friendlyName": "Cilleni Energy Supply"
+    },
+    {
+      "fullName": "Constellation Generation Limited",
+      "friendlyName": "Constellation Generation"
+    },
+    {
+      "fullName": "Co-Operative Energy Limited",
+      "friendlyName": "Co-Operative Energy"
+    },
+    {
+      "fullName": "Corona Energy Retail 4 Limited",
+      "friendlyName": "Corona Energy"
+    },
+    {
+      "fullName": "Coulomb Energy Supply Limited",
+      "friendlyName": "Coulomb Energy"
+    },
+    {
+      "fullName": "Delta Gas and Power Limited",
+      "friendlyName": "Delta Gas and Power"
+    },
+    {
+      "fullName": "D-Energi Trading Limited",
+      "friendlyName": "D-Energi"
+    },
+    {
+      "fullName": "Drax Energy Solutions Limited",
+      "friendlyName": "Drax Energy"
+    },
+    {
+      "fullName": "Ecotricity Limited",
+      "friendlyName": "Ecotricity"
+    },
+    {
+      "fullName": "EDF Energy Customers Limited",
+      "friendlyName": "EDF Energy"
+    },
+    {
+      "fullName": "E (Gas and Electricity) Limited",
+      "friendlyName": "E (Gas and Electricity)"
+    },
+    {
+      "fullName": "Electricity Plus Supply Limited",
+      "friendlyName": "Electricity Plus"
+    },
+    {
+      "fullName": "Electroroute Energy Limited",
+      "friendlyName": "Electroroute Energy"
+    },
+    {
+      "fullName": "Eneco Energy Trade BV",
+      "friendlyName": "Eneco Energy"
+    },
+    {
+      "fullName": "Energise Britain Gas & Electric Ltd",
+      "friendlyName": "Energise Britain Gas & Electric"
+    },
+    {
+      "fullName": "ENGIE Power Limited",
+      "friendlyName": "ENGIE Power"
+    },
+    {
+      "fullName": "E.ON Energy Solutions Limited",
+      "friendlyName": "E.ON Energy Solutions"
+    },
+    {
+      "fullName": "E.ON Next Energy Limited",
+      "friendlyName": "E.ON Next Energy"
+    },
+    {
+      "fullName": "ESB Energy limited",
+      "friendlyName": "ESB Energy"
+    },
+    {
+      "fullName": "Farmoor Energy Limited",
+      "friendlyName": "Farmoor Energy"
+    },
+    {
+      "fullName": "Foxglove Energy Supply Limited",
+      "friendlyName": "Foxglove Energy"
+    },
+    {
+      "fullName": "Good Energy Limited",
+      "friendlyName": "Good Energy"
+    },
+    {
+      "fullName": "Green Energy (UK) plc",
+      "friendlyName": "Green Energy (UK)"
+    },
+    {
+      "fullName": "Hartree Partners Supply (UK) Limited",
+      "friendlyName": "Hartree Partners Supply (UK)"
+    },
+    {
+      "fullName": "Holborn Energy Limited",
+      "friendlyName": "Holborn Energy"
+    },
+    {
+      "fullName": "Home Energy Trading Ltd",
+      "friendlyName": "Home Energy"
+    },
+    {
+      "fullName": "Limejump Energy Limited",
+      "friendlyName": "Limejump Energy"
+    },
+    {
+      "fullName": "Logicor Energy Limited",
+      "friendlyName": "Logicor Energy"
+    },
+    {
+      "fullName": "Marble Power Limited",
+      "friendlyName": "Marble Power"
+    },
+    {
+      "fullName": "Maxen Power Supply Limited",
+      "friendlyName": "Maxen Power"
+    },
+    {
+      "fullName": "Mississippi Energy Limited",
+      "friendlyName": "Mississippi Energy"
+    },
+    {
+      "fullName": "MVV Environment Services Limited",
+      "friendlyName": "MVV Environment Services"
+    },
+    {
+      "fullName": "Neas Energy Limited",
+      "friendlyName": "Neas Energy"
+    },
+    {
+      "fullName": "Npower Commercial Gas Limited",
+      "friendlyName": "Npower Commercial Gas"
+    },
+    {
+      "fullName": "Npower Limited",
+      "friendlyName": "Npower Limited"
+    },
+    {
+      "fullName": "Npower Northern Limited",
+      "friendlyName": "Npower Northern"
+    },
+    {
+      "fullName": "Npower Northern Supply Limited",
+      "friendlyName": "Npower Northern Supply"
+    },
+    {
+      "fullName": "Npower Yorkshire Limited",
+      "friendlyName": "Npower Yorkshire"
+    },
+    {
+      "fullName": "Npower Yorkshire Supply Limited",
+      "friendlyName": "Npower Yorkshire Supply"
+    },
+    {
+      "fullName": "Octopus Energy Limited",
+      "friendlyName": "Octopus Energy"
+    },
+    {
+      "fullName": "Opus Energy (Corporate) Limited",
+      "friendlyName": "Opus Energy (Corporate)"
+    },
+    {
+      "fullName": "Opus Energy Limited",
+      "friendlyName": "Opus Energy"
+    },
+    {
+      "fullName": "Opus Energy Renewables Limited",
+      "friendlyName": "Opus Energy Renewables"
+    },
+    {
+      "fullName": "Orsted Power Sales (UK) Limited",
+      "friendlyName": "Orsted Power"
+    },
+    {
+      "fullName": "OVO Electricity Limited",
+      "friendlyName": "OVO Electricity"
+    },
+    {
+      "fullName": "Paddington Power Limited",
+      "friendlyName": "Paddington Power"
+    },
+    {
+      "fullName": "Planet 9 Energy Limited",
+      "friendlyName": "Planet 9 Energy"
+    },
+    {
+      "fullName": "Pozitive Energy Ltd",
+      "friendlyName": "Pozitive Energy"
+    },
+    {
+      "fullName": "Scottish Power Energy Retail Limited",
+      "friendlyName": "Scottish Power Energy"
+    },
+    {
+      "fullName": "Shell Energy Retail Limited",
+      "friendlyName": "Shell Energy Retail"
+    },
+    {
+      "fullName": "Shell Energy UK Limited",
+      "friendlyName": "Shell Energy UK"
+    },
+    {
+      "fullName": "Sinq Power Limited",
+      "friendlyName": "Sinq Power"
+    },
+    {
+      "fullName": "SmartestEnergy Business Limited",
+      "friendlyName": "SmartestEnergy"
+    },
+    {
+      "fullName": "So Energy Trading Limited",
+      "friendlyName": "So Energy"
+    },
+    {
+      "fullName": "SQUARE1 ENERGY LIMITED",
+      "friendlyName": "SQUARE1 ENERGY"
+    },
+    {
+      "fullName": "Squeaky Clean Energy Limited",
+      "friendlyName": "Squeaky Clean Energy"
+    },
+    {
+      "fullName": "Switch Business Gas and Power Ltd",
+      "friendlyName": "Switch Business Gas and Power"
+    },
+    {
+      "fullName": "Toucan Energy Limited",
+      "friendlyName": "Toucan Energy"
+    },
+    {
+      "fullName": "Tru Energy Limited",
+      "friendlyName": "Tru Energy"
+    },
+    {
+      "fullName": "UK Energy Incubator Hub Limited",
+      "friendlyName": "UK Energy Incubator Hub"
+    },
+    {
+      "fullName": "Unify Energy Limited",
+      "friendlyName": "Unify Energy"
+    },
+    {
+      "fullName": "United Gas & Power Trading Ltd",
+      "friendlyName": "United Gas & Power"
+    },
+    {
+      "fullName": "Utilita Energy Limited",
+      "friendlyName": "Utilita Energy"
+    },
+    {
+      "fullName": "Valda Energy Limited",
+      "friendlyName": "Valda Energy"
+    },
+    {
+      "fullName": "Yu Energy Retail Limited",
+      "friendlyName": "Yu Energy"
+    }
+  ],
+  "water-suppliers": [],
+  "sewage-suppliers": [],
+  "telephone-suppliers": [],
+  "cable-suppliers": [],
+  "broadband-suppliers": []
+}
