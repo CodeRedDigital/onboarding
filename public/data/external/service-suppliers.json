@@ -671,7 +671,103 @@
       "name": "Yorkshire Water"
     }
   ],
-  "telephone-suppliers": [],
-  "cable-suppliers": [],
-  "broadband-suppliers": []
+  "telephone-suppliers": [
+    {
+      "name": "BT"
+    },
+    {
+      "name": "Direct Save Telecom"
+    },
+    {
+      "name": "EE"
+    },
+    {
+      "name": "Hyperoptic"
+    },
+    {
+      "name": "italk"
+    },
+    {
+      "name": "KCOM"
+    },
+    {
+      "name": "Plusnet"
+    },
+    {
+      "name": "Shell Energy Broadband"
+    },
+    {
+      "name": "Sky"
+    },
+    {
+      "name": "TalkTalk"
+    },
+    {
+      "name": "Virgin Media"
+    },
+    {
+      "name": "Vodafone"
+    }
+  ],
+  "cable-suppliers": [
+    {
+      "name": "BT"
+    },
+    {
+      "name": "EE"
+    },
+    {
+      "name": "Now"
+    },
+    {
+      "name": "Sky"
+    },
+    {
+      "name": "TalkTalk"
+    }
+  ],
+  "broadband-suppliers": [
+    {
+      "name": "BT"
+    },
+    {
+      "name": "Direct Save Telecom"
+    },
+    {
+      "name": "Community Fibre"
+    },
+    {
+      "name": "EE"
+    },
+    {
+      "name": "Hyperoptic"
+    },
+    {
+      "name": "italk"
+    },
+    {
+      "name": "KCOM"
+    },
+    {
+      "name": "Now"
+    },
+    {
+      "name": "Plusnet"
+    },
+    {
+      "name": "Shell Energy Broadband"
+    },
+    {
+      "name": "Sky"
+    },
+    {
+      "name": "TalkTalk"
+    },
+    {
+      "name": "Virgin Media"
+    },
+    {
+      "name": "Vodafone"
+    }
+  ]
 }
