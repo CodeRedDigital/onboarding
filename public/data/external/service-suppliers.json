@@ -519,10 +519,10 @@
       "friendlyName": "Yu Energy"
     }
   ],
-  "water-suppliers": [
-    {
-      "url": "http://www.anglianwater.co.uk/",
-      "name": "Anglian Water"
+  "sewage-suppliers": [
+  {
+    "url": "http://www.anglianwater.co.uk/",
+    "name": "Anglian Water"
     },
     {
       "url": "http://www.dwrcymru.com/",
@@ -565,7 +565,112 @@
       "name": "Yorkshire Water"
     }
   ],
-  "sewage-suppliers": [],
+  "water-suppliers": [
+    {
+      "url": "http://www.affinitywater.co.uk/",
+      "name": "Affinity Water"
+    },
+    {
+      "url": "https://www.albionwater.co.uk/",
+      "name": "Albion Water"
+    },
+    {
+      "url": "http://www.anglianwater.co.uk/",
+      "name": "Anglian Water"
+    },
+    {
+      "url": "http://www.bournemouthwater.co.uk/",
+      "name": "Bournemouth Water (South West Water)"
+    },
+    {
+      "url": "https://www.bristolwater.co.uk/",
+      "name": "Bristol Water"
+    },
+    {
+      "url": "https://www.cambridge-water.co.uk/",
+      "name": "Cambridge Water (South Staffs)"
+    },
+    {
+      "url": "http://www.dwrcymru.com/",
+      "name": "Dŵr Cymru - Welsh Water"
+    },
+    {
+      "url": "https://www.eswater.co.uk/",
+      "name": "Essex &amp; Suffolk Water (Northumbrian)"
+    },
+    {
+      "url": "https://www.hdcymru.co.uk/",
+      "name": "Hafren Dyfrdwy"
+    },
+    {
+      "url": "http://www.icosawater.co.uk/",
+      "name": "Icosa Water"
+    },
+    {
+      "url": "https://www.iwnl.co.uk/",
+      "name": "Independent Water Networks"
+    },
+    {
+      "url": "http://www.nwl.co.uk/",
+      "name": "Northumbrian Water"
+    },
+    {
+      "url": "http://www.peelutilities.co.uk/water/default.aspx",
+      "name": "Leep Utilities"
+    },
+    {
+      "url": "http://www.portsmouthwater.co.uk/",
+      "name": "Portsmouth Water"
+    },
+    {
+      "url": "http://www.stwater.co.uk/",
+      "name": "Severn Trent Water"
+    },
+    {
+      "url": "http://www.southernwater.co.uk/",
+      "name": "Southern Water"
+    },
+    {
+      "url": "http://www.southeastwater.co.uk/",
+      "name": "South East Water"
+    },
+    {
+      "url": "http://www.southwestwater.co.uk/",
+      "name": "South West Water"
+    },
+    {
+      "url": "http://www.south-staffs-water.co.uk/",
+      "name": "South Staffs Water"
+    },
+    {
+      "url": "http://www.stservices.co.uk/",
+      "name": "Severn Trent Services"
+    },
+    {
+      "url": "https://www.thameswater.co.uk/",
+      "name": "Thames Water"
+    },
+    {
+      "url": "http://www.unitedutilities.com/",
+      "name": "United Utilities"
+    },
+    {
+      "url": "http://www.veolia.co.uk/our-services/our-services/water-services",
+      "name": "Veolia Water"
+    },
+    {
+      "url": "http://www.waterplc.com/",
+      "name": "SES Water"
+    },
+    {
+      "url": "https://www.wessexwater.co.uk/",
+      "name": "Wessex Water"
+    },
+    {
+      "url": "https://www.yorkshirewater.com/",
+      "name": "Yorkshire Water"
+    }
+  ],
   "telephone-suppliers": [],
   "cable-suppliers": [],
   "broadband-suppliers": []
