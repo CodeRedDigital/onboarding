@@ -519,7 +519,52 @@
       "friendlyName": "Yu Energy"
     }
   ],
-  "water-suppliers": [],
+  "water-suppliers": [
+    {
+      "url": "http://www.anglianwater.co.uk/",
+      "name": "Anglian Water"
+    },
+    {
+      "url": "http://www.dwrcymru.com/",
+      "name": "Dŵr Cymru - Welsh Water"
+    },
+    {
+      "url": "https://www.hdcymru.co.uk/",
+      "name": "Hafren Dyfrdwy"
+    },
+    {
+      "url": "http://www.nwl.co.uk/",
+      "name": "Northumbrian Water"
+    },
+    {
+      "url": "http://www.stwater.co.uk/",
+      "name": "Severn Trent Water"
+    },
+    {
+      "url": "http://www.southwestwater.co.uk/",
+      "name": South "West Water"
+    },
+    {
+      "url": "http://www.southernwater.co.uk/",
+      "name": "Southern Water"
+    },
+    {
+      "url": "https://www.thameswater.co.uk/",
+      "name": "Thames Water"
+    },
+    {
+      "url": "http://www.unitedutilities.com/",
+      "name": "United Utilities"
+    },
+    {
+      "url": "https://www.wessexwater.co.uk/",
+      "name": "Wessex Water"
+    },
+    {
+      "url": "https://www.yorkshirewater.com/",
+      "name": "Yorkshire Water"
+    }
+  ],
   "sewage-suppliers": [],
   "telephone-suppliers": [],
   "cable-suppliers": [],
