@@ -19,11 +19,14 @@ import { AxiosPali } from "../src/AxiosRequests";
 
 function OnboardingApp({ Component, pageProps }) {
   const router = useRouter();
+  const { asPath, pathname } = useRouter();
   const initialState = {
     flashMessages: [],
     app: {
       loggedIn: false,
       loading: true,
+      storedURL: false,
+      startURL: "/",
       loadingError: false,
       loadingErrorMsg: "",
       urlDataFetched: false,
@@ -80,6 +83,10 @@ function OnboardingApp({ Component, pageProps }) {
     switch (action.type) {
       case "resetApp":
         draft = initialState;
+        return;
+      case "storeURL":
+        draft.app.startURL = action.value;
+        draft.app.storedURL = true;
         return;
       // login and out cases
       case "login":
@@ -365,6 +372,15 @@ function OnboardingApp({ Component, pageProps }) {
     }
   }
   // end of functions
+  useEffect(() => {
+    if (router.isReady && !state.app.storedURL) {
+      const url = router.asPath;
+      dispatch({
+        type: "storeURL",
+        value: url
+      });
+    }
+  }, [router.isReady]);
   useEffect(() => {
     if (state.app.quoteData && state.quote.AML.provider === "CREDAS") {
       if (!state.quote.AML.credas.regTypes) {
