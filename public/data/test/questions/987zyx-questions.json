@@ -1,6 +1,6 @@
 [
   {
-    "id":"002",
+    "id":"001",
     "label": "Title",
     "name": "title",
     "type": "select",
@@ -119,16 +119,18 @@
   },
   {
     "id":"004",
-    "label": "",
-    "name": "",
-    "type": "",
-    "inputType": "",
-    "placeholder": "",
+    "label": "Long Answer",
+    "name": "long-answer",
+    "type": "textarea",
+    "inputType": null,
+    "placeholder": "Add a long description of a thing",
     "required": false,
-    "category": "01",
+    "category": "02",
     "min": {},
     "max": {},
-    "helpText": "",
+    "minlength": "",
+    "maxlength": "400",
+    "helpText": "This is where you can add more text than usual although you are limited to 400 characters",
     "errors": [
       {
         "validation": "",
@@ -149,15 +151,17 @@
   },
   {
     "id":"005",
-    "label": "",
-    "name": "",
-    "type": "",
-    "inputType": "",
-    "placeholder": "",
+    "label": "Number of Bedrooms",
+    "name": "number-of-bedrooms",
+    "type": "input",
+    "inputType": "number",
+    "decimal": true,
+    "placeholder": "0-20",
     "required": false,
-    "category": "01",
-    "min": {},
-    "max": {},
+    "category": "02",
+    "min": "0",
+    "max": "20",
+    "step": "1",
     "helpText": "",
     "errors": [
       {
@@ -170,54 +174,31 @@
       {
         "formId": "TA6",
         "formQuestion": "001"
-      },
-      {
-        "formId": "SOL01",
-        "formQuestion": "002"
-      }
-    ]
-  },{
-    "id":"",
-    "label": "",
-    "name": "",
-    "type": "",
-    "inputType": "",
-    "placeholder": "",
-    "required": false,
-    "category": "01",
-    "min": {},
-    "max": {},
-    "helpText": "",
-    "errors": [
-      {
-        "validation": "",
-        "message": ""
-      }
-    ],
-    "options": [],
-    "associatedForm": [
-      {
-        "formId": "TA6",
-        "formQuestion": "001"
-      },
-      {
-        "formId": "SOL01",
-        "formQuestion": "002"
       }
     ]
   },
   {
     "id":"006",
-    "label": "",
-    "name": "",
-    "type": "",
-    "inputType": "",
-    "placeholder": "",
+    "label": "Date of Birth",
+    "name": "date-of-birth",
+    "type": "input",
+    "inputType": "date",
+    "placeholder": "dd/mm/yyyy",
     "required": false,
     "category": "01",
-    "min": {},
-    "max": {},
-    "helpText": "",
+    "min": {
+      "set": true,
+      "past-future": "past",
+      "until": "years",
+      "value": "90"
+    },
+    "max": {
+      "set": true,
+      "past-future": "today",
+      "until": "",
+      "value": ""
+    },
+    "helpText": "Please select or enter your date of birth, we need this for this reason xyz.",
     "errors": [
       {
         "validation": "",
@@ -226,10 +207,6 @@
     ],
     "options": [],
     "associatedForm": [
-      {
-        "formId": "TA6",
-        "formQuestion": "001"
-      },
       {
         "formId": "SOL01",
         "formQuestion": "002"
@@ -238,16 +215,16 @@
   },
   {
     "id":"007",
-    "label": "",
-    "name": "",
-    "type": "",
-    "inputType": "",
-    "placeholder": "",
+    "label": "email address",
+    "name": "email-address",
+    "type": "input",
+    "inputType": "email",
+    "placeholder": "john@example.com",
     "required": false,
     "category": "01",
     "min": {},
     "max": {},
-    "helpText": "",
+    "helpText": "Your email address so that we can send you updates and documents",
     "errors": [
       {
         "validation": "",
@@ -256,10 +233,6 @@
     ],
     "options": [],
     "associatedForm": [
-      {
-        "formId": "TA6",
-        "formQuestion": "001"
-      },
       {
         "formId": "SOL01",
         "formQuestion": "002"
@@ -268,11 +241,11 @@
   },
   {
     "id":"008",
-    "label": "",
-    "name": "",
-    "type": "",
-    "inputType": "",
-    "placeholder": "",
+    "label": "Select Group",
+    "name": "select-group",
+    "type": "select",
+    "inputType": null,
+    "placeholder": null,
     "required": false,
     "category": "01",
     "min": {},
@@ -284,36 +257,116 @@
         "message": ""
       }
     ],
-    "options": [],
-    "associatedForm": [
+    "groups": [
       {
-        "formId": "TA6",
-        "formQuestion": "001"
+        "groupName": "Birds",
+        "options": [
+          {
+            "value": "eagle",
+            "name": "Eagle"
+          },
+          {
+            "value": "robin",
+            "name": "Robin"
+          },
+          {
+            "value": "kestrel",
+            "name": "Kestrel"
+          },
+          {
+            "value": "penguin",
+            "name": "Penguin"
+          }
+        ]
       },
+      {
+        "groupName": "Cats",
+        "options": [
+          {
+            "value": "lion",
+            "name": "Lion"
+          },
+          {
+            "value": "tabby",
+            "name": "Tabby"
+          },
+          {
+            "value": "tiger",
+            "name": "tiger"
+          },
+          {
+            "value": "panther",
+            "name": "Panther"
+          }
+        ]
+      },
+      {
+        "groupName": "Fish",
+        "options": [
+          {
+            "value": "cod",
+            "name": "Cod"
+          },
+          {
+            "value": "haddock",
+            "name": "Haddock"
+          },
+          {
+            "value": "trout",
+            "name": "Trout"
+          },
+          {
+            "value": "salmon",
+            "name": "Salmon"
+          }
+        ]
+      }
+    ],
+    "associatedForm": [
       {
         "formId": "SOL01",
         "formQuestion": "002"
       }
     ]
-  },{
+  },
+  {
     "id":"009",
-    "label": "",
-    "name": "",
-    "type": "",
-    "inputType": "",
+    "label": "Radio Single Column",
+    "name": "radio-single-column",
+    "type": "input",
+    "inputType": "radio",
     "placeholder": "",
     "required": false,
-    "category": "01",
+    "followup": false,
+    "category": "03",
+    "single-column": true,
     "min": {},
     "max": {},
-    "helpText": "",
+    "helpText": "Chose one of the options",
     "errors": [
       {
         "validation": "",
         "message": ""
       }
     ],
-    "options": [],
+    "options": [
+      {
+        "value": "one",
+        "name": "One"
+      },
+      {
+        "value": "two",
+        "name": "Two"
+      },
+      {
+        "value": "multiple-words",
+        "name": "Multiple Words"
+      },
+      {
+        "value": "four",
+        "name": "Four"
+      }
+    ],
     "associatedForm": [
       {
         "formId": "TA6",
@@ -327,13 +380,14 @@
   },
   {
     "id":"010",
-    "label": "",
-    "name": "",
-    "type": "",
-    "inputType": "",
+    "label": "Have you added a conservatory?",
+    "name": "have-you-added-a-conservatory",
+    "type": "input",
+    "inputType": "radio",
     "placeholder": "",
     "required": false,
-    "category": "01",
+    "followup": false,
+    "category": "04",
     "min": {},
     "max": {},
     "helpText": "",
@@ -343,7 +397,31 @@
         "message": ""
       }
     ],
-    "options": [],
+    "options": [
+      {
+        "value": "yes",
+        "name": "Yes",
+        "followup": {
+          "id": "10.1",
+          "label": "What year did you add it?",
+          "name": "what-year-did-you-add-it",
+          "type": "input",
+          "inputType": "tel",
+          "placeholder": "yyyy",
+          "required": true,
+          "errors": [
+            {
+              "validation": "is a valid year",
+              "message": "You need to enter a valid year with 4 numbers"
+            }
+          ]
+        }
+      },
+      {
+        "value": "no",
+        "name": "No"
+      }
+    ],
     "associatedForm": [
       {
         "formId": "TA6",
@@ -357,23 +435,42 @@
   },
   {
     "id":"011",
-    "label": "",
-    "name": "",
-    "type": "",
-    "inputType": "",
-    "placeholder": "",
+    "label": "Choose option(s)",
+    "name": "choose-options",
+    "type": "input",
+    "inputType": "checkbox",
+    "placeholder": null,
     "required": false,
-    "category": "01",
+    "followup": false,
+    "category": "04",
+    "single-column": true,
     "min": {},
     "max": {},
-    "helpText": "",
+    "helpText": "Choose all the option that apply",
     "errors": [
       {
         "validation": "",
         "message": ""
       }
     ],
-    "options": [],
+    "options": [
+      {
+        "value": "one",
+        "name": "One"
+      },
+      {
+        "value": "two",
+        "name": "Two"
+      },
+      {
+        "value": "three",
+        "name": "Three"
+      },
+      {
+        "value": "four",
+        "name": "Four"
+      }
+    ],
     "associatedForm": [
       {
         "formId": "TA6",
@@ -404,6 +501,227 @@
       }
     ],
     "options": [],
+    "associatedForm": [
+      {
+        "formId": "TA6",
+        "formQuestion": "001"
+      },
+      {
+        "formId": "SOL01",
+        "formQuestion": "002"
+      }
+    ]
+  },
+  {
+    "id":"013",
+    "label": "Radio Single Column",
+    "name": "radio-single-column",
+    "type": "input",
+    "inputType": "radio",
+    "placeholder": "",
+    "required": false,
+    "followup": false,
+    "category": "03",
+    "single-column": false,
+    "min": {},
+    "max": {},
+    "helpText": "Chose one of the options",
+    "errors": [
+      {
+        "validation": "",
+        "message": ""
+      }
+    ],
+    "options": [
+      {
+        "value": "one",
+        "name": "One"
+      },
+      {
+        "value": "two",
+        "name": "Two"
+      },
+      {
+        "value": "multiple-words",
+        "name": "Multiple Words"
+      },
+      {
+        "value": "four",
+        "name": "Four"
+      },
+      {
+        "value": "five",
+        "name": "Five"
+      },
+      {
+        "value": "six",
+        "name": "Six"
+      }
+    ],
+    "associatedForm": [
+      {
+        "formId": "TA6",
+        "formQuestion": "001"
+      },
+      {
+        "formId": "SOL01",
+        "formQuestion": "002"
+      }
+    ]
+  },
+  {
+    "id":"014",
+    "label": "Choose option(s)",
+    "name": "choose-options",
+    "type": "input",
+    "inputType": "checkbox",
+    "placeholder": null,
+    "required": false,
+    "followup": false,
+    "category": "04",
+    "single-column": false,
+    "min": {},
+    "max": {},
+    "helpText": "Choose all the option that apply",
+    "errors": [
+      {
+        "validation": "",
+        "message": ""
+      }
+    ],
+    "options": [
+      {
+        "value": "one",
+        "name": "One"
+      },
+      {
+        "value": "two",
+        "name": "Two"
+      },
+      {
+        "value": "three",
+        "name": "Three"
+      },
+      {
+        "value": "four",
+        "name": "Four"
+      }
+    ],
+    "associatedForm": [
+      {
+        "formId": "TA6",
+        "formQuestion": "001"
+      },
+      {
+        "formId": "SOL01",
+        "formQuestion": "002"
+      }
+    ]
+  },
+  {
+    "id":"015",
+    "label": "Do you know the date the house was purchased?",
+    "name": "choose-options",
+    "type": "input",
+    "inputType": "checkbox",
+    "placeholder": null,
+    "required": false,
+    "followup": true,
+    "category": "04",
+    "single-column": false,
+    "min": {},
+    "max": {},
+    "helpText": "Choose all the option that apply",
+    "errors": [
+      {
+        "validation": "",
+        "message": ""
+      }
+    ],
+    "options": [
+      {
+        "value": "month",
+        "name": "Month",
+        "followup":{
+          "id": "015.1",
+          "label": "Month",
+          "name": "month",
+          "type": "select",
+          "inputType": null,
+          "placeholder": "",
+          "required": false,
+          "errors": [],
+          "options": [
+            {
+              "value": "",
+              "name": "-- Month --"
+            },
+            {
+              "value": "01",
+              "name": "January"
+            },
+            {
+              "value": "02",
+              "name": "February"
+            },
+            {
+              "value": "03",
+              "name": "March"
+            },
+            {
+              "value": "04",
+              "name": "April"
+            },
+            {
+              "value": "05",
+              "name": "May"
+            },
+            {
+              "value": "06",
+              "name": "June"
+            },
+            {
+              "value": "07",
+              "name": "July"
+            },
+            {
+              "value": "08",
+              "name": "August"
+            },
+            {
+              "value": "09",
+              "name": "September"
+            },
+            {
+              "value": "10",
+              "name": "October"
+            },
+            {
+              "value": "11",
+              "name": "November"
+            },
+            {
+              "value": "12",
+              "name": "December"
+            }
+          ]
+        }
+      },
+      {
+        "value": "year",
+        "name": "Year",
+        "followup":{
+          "id": "015.2",
+          "label": "Year",
+          "name": "year",
+          "type": "input",
+          "inputType": "tel",
+          "placeholder": "YYYY",
+          "required": false,
+          "errors": []
+        }
+      }
+    ],
     "associatedForm": [
       {
         "formId": "TA6",
