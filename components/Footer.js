@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Link from 'next/link'
 
 export default function Footer() {
   return (
@@ -14,13 +15,13 @@ export default function Footer() {
           </p>
           <ul>
             <li>
-              <a href="one">Link 1</a>
+            <Link href={`/permissions`} >Permissions</Link>
             </li>
             <li>
-              <a href="two">Link 2</a>
+            <Link href={`/users/`} >Users</Link>
             </li>
             <li>
-              <a href="three">Link 3</a>
+            <Link href={`/questions`} >Questions</Link>
             </li>
           </ul>
         </div>
