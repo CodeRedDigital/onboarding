@@ -77,7 +77,9 @@ function OnboardingApp({ Component, pageProps }) {
       addresses: []
     },
     users: [],
-    user: {}
+    user: {},
+    sections: [],
+    questions: []
   };
   function ourReducer(draft, action) {
     switch (action.type) {
