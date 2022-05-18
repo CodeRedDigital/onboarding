@@ -166,7 +166,6 @@ function OnboardingApp({ Component, pageProps }) {
         return;
       // save the firm data to state
       case "firmDownloaded":
-        console.log(action.firm)
         draft.firm = action.firm;
         draft.app.firmData = "success";
         // draft.firm.delay = (action.firm.delay ? action.firm.delay : 2000)
@@ -174,6 +173,12 @@ function OnboardingApp({ Component, pageProps }) {
         draft.app.firmUpdated = true;
         draft.app.appUpdated = true;
         return;
+      case "sectionDownloaded":
+        draft.sections = action.section
+        return
+      case "questionsDownloaded":
+        draft.questions = action.questions
+        return
       // save the users to state
       case "updateAssociatedUsers":
         draft.users = action.users;
@@ -308,7 +313,6 @@ function OnboardingApp({ Component, pageProps }) {
         draft.app.appUpdated = true;
         return;
       case "saveThirdfortTransaction":
-        console.log(action.index)
         draft.users[action.index].cases[action.indexOfCase].AML.thirdfort = action.value;
         if (draft.users[action.index].id === draft.user.id) {
           draft.user.cases[action.indexOfCase].AML.thirdfort = action.value;
@@ -403,10 +407,8 @@ function OnboardingApp({ Component, pageProps }) {
       const now = Math.floor(Date.now() / 1000);
       let token = "";
       if (now < state.quote.AML.thirdfort.jwtExpiry) {
-        console.log("the current token in state is OK");
         token = state.quote.AML.thirdfort.jwt;
       } else {
-        console.log("the current token in state is too old");
         const jwtToken = async () => {
           const res = await fetch("/api/thirdfort/createJWT", {
             headers: {
@@ -515,7 +517,6 @@ function OnboardingApp({ Component, pageProps }) {
             type: "firmDownloaded",
             firm: fetchFirm.data
           });
-          console.log(state.firm)
         }
       } catch (error) {
         if (error.response.status == "404") {
@@ -712,7 +713,6 @@ function OnboardingApp({ Component, pageProps }) {
       dispatch({ type: "appFinished" });
     }
     if (state.app.firmUpdated) {
-      console.log("Writing firm to LS")
       localStorage.setItem("firm", JSON.stringify(state.firm));
       dispatch({ type: "firmFinished" });
       if (document.querySelector(".loading")) {
@@ -793,6 +793,48 @@ function OnboardingApp({ Component, pageProps }) {
       `;
     }
   }, [state.app.firmData]);
+  async function getSection() {
+    try {
+      const fetchSection = await AxiosPali.get(
+        `/data/examples/question-sections.json`
+      );
+      if (fetchSection.data) {
+        dispatch({
+          type: "sectionDownloaded",
+          section: fetchSection.data
+        });
+      }
+    } catch (error) {
+      if (error.response.status == "404") {
+        dispatch({
+          type: "flashMessage",
+          value:
+            "There was an issue getting the sections for questions, either it does not exist or there was a bad connection. Contact the solicitor who sent you this link if the problem continues"
+        });
+      }
+    }
+  }
+  async function getQuestions() {
+    try {
+      const fetchQuestions = await AxiosPali.get(
+        `/data/test/questions/987zyx-questions.json`
+      );
+      if (fetchQuestions.data) {
+        dispatch({
+          type: "questionsDownloaded",
+          questions: fetchQuestions.data
+        });
+      }
+    } catch (error) {
+      if (error.response.status == "404") {
+        dispatch({
+          type: "flashMessage",
+          value:
+            "There was an issue getting the questions, either it does not exist or there was a bad connection. Contact the solicitor who sent you this link if the problem continues"
+        });
+      }
+    }
+  }
   // start useEffect to handle the redirection
   useEffect(() => {
     if (state.app.unknownUser) {
@@ -836,6 +878,10 @@ function OnboardingApp({ Component, pageProps }) {
         router.push(`/users/${state.user.id}`);
       }
       dispatch({ type: "loaded" });
+    }
+    if (state.app.quoteData === "success") {
+      getSection()
+      getQuestions()
     }
   }, [
     state.app.unknownUser,
