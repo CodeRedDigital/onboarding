@@ -4,6 +4,8 @@ import { useContext, useEffect } from "react"
 // components
 import LoadingSpinner from "../../components/LoadingSpinner"
 import Main from "../../components/Main"
+import Progress from "../../components/questions/progress"
+import Section from "../../components/questions/section"
 
 // states
 import StateContext from "../../states/StateContext";
@@ -22,10 +24,13 @@ function QuestionsHome() {
   })
   return (appState.questions.length === 0 || appState.sections.length === 0 ? <Main title="loading"><LoadingSpinner /></Main> :
     <Main title="questions">
-      <h1>Questions</h1>
-      <p>Below are list of sections which contain questions that will help progress your {appState.quote.type}.</p>
-      <p>questions: {appState.questions.length}<br />
-      sections: {appState.sections.length}</p>
+      <div className="home-wrapper">
+        <h1>Questions</h1>
+        <p>Below are list of sections which contain questions that will help progress your {appState.quote.type}.</p>
+        <p>questions: {appState.questions.length}<br />
+        sections: {appState.sections.length}</p>
+        <Progress></Progress>
+      </div>
     </Main>
   )
 }

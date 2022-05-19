@@ -874,3 +874,135 @@ form.user {
     transform: translateX(-50%) scale(1.2);
   }
 }
+
+/* Questions */
+
+/* Form/Home Wrapper */
+
+.form-wrapper, .home-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--s6);
+  text-align: center;
+}
+
+.home-wrapper {
+  padding-top: var(--s0);
+}
+
+.form-wrapper label,
+.form-wrapper legend,
+.home-wrapper h2 {
+  text-align: center;
+  color: var(--primary-100);
+  font-size: var(--s4);
+}
+
+.form-wrapper legend {
+  width: 100%;
+}
+
+.form-wrapper input{
+  font-family: var(--sans-serif);
+  color: var(--black);
+  font-size: var(--s4);
+  border: var(--primary-100) solid 2px;
+}
+
+.form-wrapper label {
+  text-align: center;
+  color: var(--primary-100);
+  font-size: var(--s4);
+}
+
+.form-wrapper input, 
+.form-wrapper textarea,
+.form-wrapper select {
+  font-family: var(--sans-serif);
+  color: var(--black);
+  background-color: var(--white);
+  font-size: var(--s4);
+  border: var(--primary-100) solid 2px;
+}
+
+.form-wrapper select optgroup{
+  background-color: var(--secondary-100);
+  color: var(--secondary-contrast);
+  font-style:normal;
+  font-weight:normal;
+}
+
+.input-error {
+  background-color: var(--warning-100);
+  color: var(--warning-contrast);
+  display: none;
+}
+
+input:invalid ~ .input-error {
+  display: block;
+}
+
+/* radio buttons */
+
+[type="radio"] {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+.form-wrapper fieldset {
+  border: none;
+}
+
+progress {
+  border-radius: 0;
+  height: var(--s0);
+  width: 100%;
+}
+progress::-webkit-progress-bar,
+progress::-webkit-progress-value,
+progress::-moz-progress-bar {
+  background-color: var(--secondary-100);
+  border-radius: 0;
+}
+
+.home-wrapper summary {
+  text-align: center;
+}
+
+.home-wrapper label {
+  text-align: center;
+  color: var(--primary-100);
+  font-size: var(--s0);
+}
+
+.home-wrapper summary > h3 {
+  display: inline-block;
+}
+span[data-complete="true"]:after {
+  content: " ✓";
+}
+
+span[data-complete="false"]:after {
+  content: " ✗";
+}
+
+.home-wrapper details {
+  display: flex;
+  flex-direction: column;
+  padding: var(--s1);
+}
+
+.home-wrapper details summary {
+  background-color: var(--secondary-100);
+  color: var(--secondary-contrast);
+}
+
+.home-wrapper details progress {
+  margin-top: var(--s0);
+}
