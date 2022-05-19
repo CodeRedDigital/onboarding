@@ -1,31 +1,31 @@
 [
   {
-    "catId": "01",
-    "catLabel": "About Person",
+    "sectionId": "01",
+    "sectionLabel": "About Person",
     "users": true,
     "questions": []
   },
   {
-    "catId": "02",
-    "catLabel": "About Sale Property",
+    "sectionId": "02",
+    "sectionLabel": "About Sale Property",
     "users": false,
     "questions": []
   },
   {
-    "catId": "03",
-    "catLabel": "About Purchase Property",
+    "sectionId": "03",
+    "sectionLabel": "About Purchase Property",
     "users": false,
     "questions": []
   },
   {
-    "catId": "04",
-    "catLabel": "Miscellaneous",
+    "sectionId": "04",
+    "sectionLabel": "Miscellaneous",
     "users": false,
     "questions": []
   },
   {
-    "catId": "05",
-    "catLabel": "Solicitor Specific",
+    "sectionId": "05",
+    "sectionLabel": "Solicitor Specific",
     "users": false,
     "questions": []
   }
