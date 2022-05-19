@@ -21,6 +21,7 @@
   },
   "type": "purchase",
   "questions": "987zyx-questions.json",
+  "answers": [],
   "associatedAddresses": [
     {
       "address1": "456 London Road",

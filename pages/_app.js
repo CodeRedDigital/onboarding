@@ -17,6 +17,9 @@ import DispatchContext from "../states/DispatchContext";
 // modules
 import { AxiosPali } from "../src/AxiosRequests";
 
+// helpers
+import { getObjectIndexFromKey } from "../helpers/ArrayFunctions"
+
 function OnboardingApp({ Component, pageProps }) {
   const router = useRouter();
   const { asPath, pathname } = useRouter();
@@ -82,7 +85,8 @@ function OnboardingApp({ Component, pageProps }) {
     user: {},
     sections: [],
     questions: [],
-    answers:[]
+    answers:[],
+    sortedQuestions: []
   };
   function ourReducer(draft, action) {
     switch (action.type) {
@@ -185,6 +189,10 @@ function OnboardingApp({ Component, pageProps }) {
         draft.questions = action.questions
         draft.app.questionsData = "success";
         draft.app.appUpdated = true;
+        return
+      case "addSortedQuestions":
+        console.log("saving sortedQuestions to state")
+        draft.sortedQuestions = action.sortedQuestions
         return
       // save the users to state
       case "updateAssociatedUsers":
@@ -1007,13 +1015,13 @@ function OnboardingApp({ Component, pageProps }) {
   // end when user is logged in
   // start build answers array
   useEffect(() => {
-    if (state.app.sectionsData === "success" && state.app.questionsData === "success") {
+    if (state.app.sectionsData === "success" && state.app.questionsData === "success" && state.app.usersData === "success") {
       console.log("building the answers array")
       const users = state.users
       const sections = state.sections
       const questions = state.questions
-      const answers = []
-      // build the sections and add them to the answers array
+      const sortedQuestions = []
+      // build the sections and add them to the sortedQuestions array
       sections.forEach(section => {
         if (section.users) {
           console.log("adding user section")
@@ -1025,7 +1033,7 @@ function OnboardingApp({ Component, pageProps }) {
               "questions": [],
               "user": true
             }
-            answers.push(userSection)
+            sortedQuestions.push(userSection)
           })
         } else {
           console.log("adding normal section")
@@ -1035,18 +1043,40 @@ function OnboardingApp({ Component, pageProps }) {
             "questions": [],
             "user": false
           }
-          answers.push(normalSection)
+          sortedQuestions.push(normalSection)
         }
       }) 
+      // add the questions into the sections
+      questions.forEach(question => {
+        if (question.category === "01") {
+          console.log("this is a user question")
+          users.forEach(user => {
+            const userIndex = getObjectIndexFromKey(sortedQuestions, "sectionId", user.id)
+            console.log(userIndex)
+            sortedQuestions[userIndex].questions.push(question)
+          })
+        } else {
+          console.log("this is a normal question")
+          const sectionIndex = getObjectIndexFromKey(sortedQuestions, "sectionId", question.category)
+            console.log(sectionIndex)
+            sortedQuestions[sectionIndex].questions.push(question)
+        }
+      })
       console.log("users")
       console.log(users)
       console.log(sections)
       console.log(questions)
-      console.log(answers)
+      console.log("sortedQuestions")
+      console.log(sortedQuestions)
+      dispatch({
+        type: "addSortedQuestions",
+        sortedQuestions
+      })
     }
   },[
     state.app.sectionsData,
-    state.app.questionsData
+    state.app.questionsData,
+    state.app.usersData
   ])
   // end build answers array
   return (
