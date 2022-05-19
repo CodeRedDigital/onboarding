@@ -37,6 +37,8 @@ function OnboardingApp({ Component, pageProps }) {
       quoteData: null,
       userData: null,
       usersData: null,
+      sectionsData: null,
+      questionsData: null,
       dataCount: 0,
       appUpdated: false,
       firmUpdated: false,
@@ -79,7 +81,8 @@ function OnboardingApp({ Component, pageProps }) {
     users: [],
     user: {},
     sections: [],
-    questions: []
+    questions: [],
+    answers:[]
   };
   function ourReducer(draft, action) {
     switch (action.type) {
@@ -175,9 +178,13 @@ function OnboardingApp({ Component, pageProps }) {
         return;
       case "sectionDownloaded":
         draft.sections = action.section
+        draft.app.sectionsData = "success";
+        draft.app.appUpdated = true;
         return
       case "questionsDownloaded":
         draft.questions = action.questions
+        draft.app.questionsData = "success";
+        draft.app.appUpdated = true;
         return
       // save the users to state
       case "updateAssociatedUsers":
@@ -998,6 +1005,50 @@ function OnboardingApp({ Component, pageProps }) {
     }
   }, [state.app.loggedIn, state.app.usersData]);
   // end when user is logged in
+  // start build answers array
+  useEffect(() => {
+    if (state.app.sectionsData === "success" && state.app.questionsData === "success") {
+      console.log("building the answers array")
+      const users = state.users
+      const sections = state.sections
+      const questions = state.questions
+      const answers = []
+      // build the sections and add them to the answers array
+      sections.forEach(section => {
+        if (section.users) {
+          console.log("adding user section")
+          users.forEach(user => {
+            console.log(user.id)
+            const userSection = {
+              "sectionId": user.id,
+              "sectionLabel": `About ${user.firstName} ${user.surname}`,
+              "questions": [],
+              "user": true
+            }
+            answers.push(userSection)
+          })
+        } else {
+          console.log("adding normal section")
+          const normalSection = {
+            "sectionId": section.sectionId,
+            "sectionLabel": section.sectionLabel,
+            "questions": [],
+            "user": false
+          }
+          answers.push(normalSection)
+        }
+      }) 
+      console.log("users")
+      console.log(users)
+      console.log(sections)
+      console.log(questions)
+      console.log(answers)
+    }
+  },[
+    state.app.sectionsData,
+    state.app.questionsData
+  ])
+  // end build answers array
   return (
     <StateContext.Provider value={state}>
       <DispatchContext.Provider value={dispatch}>
