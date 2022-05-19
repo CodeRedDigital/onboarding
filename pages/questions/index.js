@@ -13,7 +13,8 @@ import StateContext from "../../states/StateContext";
 function QuestionsHome() {
   const appState = useContext(StateContext)
   const router = useRouter()
-  const sectionName = router.query.section
+  const sections = appState.sortedQuestions
+  console.log(sections)
   useEffect(() => {
     if(appState.questions.length === 0) {
       console.log("fetch questions")
@@ -30,6 +31,9 @@ function QuestionsHome() {
         <p>questions: {appState.questions.length}<br />
         sections: {appState.sections.length}</p>
         <Progress></Progress>
+        {sections.map((section, index) => {
+          return (<Section key={index} />)
+        })}
       </div>
     </Main>
   )

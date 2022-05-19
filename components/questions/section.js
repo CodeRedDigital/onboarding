@@ -1,5 +1,5 @@
 // components
-import Progess from "./progress"
+import Progress from "./progress"
 
 function Section() {
   return (
