@@ -32,7 +32,7 @@ function QuestionsHome() {
         sections: {appState.sections.length}</p>
         <Progress></Progress>
         {sections.map((section, index) => {
-          return (<Section key={index} />)
+          return (section.questions.length !== 0 ? (<Section section={section} key={index} />): "")
         })}
       </div>
     </Main>

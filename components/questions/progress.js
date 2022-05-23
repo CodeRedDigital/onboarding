@@ -1,8 +1,10 @@
-function Progress() {
+function Progress(props) {
+  console.log("props.answered")
+  console.log(props.answered)
   return (
     <>
-      <progress id="about-dave" max="5" value="2">2/5</progress>
-      <label htmlFor="about-dave">2/5</label>
+      <progress id={props.sectionId} max={props.questions} value={props.answered}>{props.answered}/{props.questions}</progress>
+      <label htmlFor={props.sectionId}>{props.answered}/{props.questions}</label>
     </>
   )
 }

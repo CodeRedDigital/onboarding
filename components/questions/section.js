@@ -1,19 +1,20 @@
 // components
 import Progress from "./progress"
 
-function Section() {
+function Section(props) {
+  const section = props.section
+  const answered = Math.floor((Math.random() * section.questions.length) + 1)
+  console.log(section)
   return (
     <details>
       <summary>
-        <h3>About Dave <span className="progress">2/5</span></h3>
+        <h3>{section.sectionLabel} <span className="progress">{answered}/{section.questions.length}</span></h3>
       </summary>
-      <Progress></Progress>
+      <Progress sectionId={section.sectionId} questions={section.questions.length} answered={answered}></Progress>
       <ul>
-        <li><a href="#dave-title">Title <span data-complete="true"></span></a></li>
-        <li><a href="#dave-first-name">First Name <span data-complete="true"></span></a></li>
-        <li><a href="#dave-surname">Surname <span data-complete="false"></span></a></li>
-        <li><a href="#dave-telephone">Telephone <span data-complete="false"></span></a></li>
-        <li><a href="#dave-email">email <span data-complete="false"></span></a></li>
+        {section.questions.map((question, index) => {
+          return (<li key={index}><a href={`/questions/${section.sectionId}/${question.name}`}>{question.label} <span data-complete="true"></span></a></li>)
+        })}
       </ul>
     </details>
   )

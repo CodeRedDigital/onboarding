@@ -1003,6 +1003,10 @@ span[data-complete="false"]:after {
   color: var(--secondary-contrast);
 }
 
+.home-wrapper details summary h3 {
+  color: var(--secondary-contrast)
+}
+
 .home-wrapper details progress {
   margin-top: var(--s0);
 }
