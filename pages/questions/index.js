@@ -14,6 +14,7 @@ function QuestionsHome() {
   const appState = useContext(StateContext)
   const router = useRouter()
   const sections = appState.sortedQuestions
+  const answered = Math.floor((Math.random() * appState.questions.length) + 1)
   console.log(sections)
   useEffect(() => {
     if(appState.questions.length === 0) {
@@ -30,7 +31,7 @@ function QuestionsHome() {
         <p>Below are list of sections which contain questions that will help progress your {appState.quote.type}.</p>
         <p>questions: {appState.questions.length}<br />
         sections: {appState.sections.length}</p>
-        <Progress></Progress>
+        <Progress sectionId="question-progress" questions={appState.questions.length} answered={answered}></Progress>
         {sections.map((section, index) => {
           return (section.questions.length !== 0 ? (<Section section={section} key={index} />): "")
         })}
