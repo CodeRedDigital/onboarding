@@ -42,12 +42,14 @@ function OnboardingApp({ Component, pageProps }) {
       usersData: null,
       sectionsData: null,
       questionsData: null,
+      answersData: null,
       dataCount: 0,
       appUpdated: false,
       firmUpdated: false,
       quoteUpdated: false,
       userUpdated: false,
       usersUpdated: false,
+      answersUpdated: false,
       userFullData: false,
       unknownUser: false,
       indexOfAssociatedSolicitor: null,
@@ -190,9 +192,20 @@ function OnboardingApp({ Component, pageProps }) {
         draft.app.questionsData = "success";
         draft.app.appUpdated = true;
         return
+      case "answersDownloaded":
+        draft.answers = action.answers
+        draft.app.answersData = "success";
+        draft.app.appUpdated = true;
+        return
       case "addSortedQuestions":
         console.log("saving sortedQuestions to state")
         draft.sortedQuestions = action.sortedQuestions
+        return
+      case "addSortedAnswers":
+        console.log("saving the answers to state")
+        draft.answers = action.answers
+        draft.app.answersUpdated = true;
+        draft.app.appUpdated = true;
         return
       // save the users to state
       case "updateAssociatedUsers":
@@ -296,6 +309,9 @@ function OnboardingApp({ Component, pageProps }) {
         return;
       case "usersFinished":
         draft.app.usersUpdated = false;
+        return;
+      case "answersFinished":
+        draft.app.answersUpdated = false;
         return;
       // Permissions page dispatches
       case "agreements":
@@ -746,11 +762,16 @@ function OnboardingApp({ Component, pageProps }) {
       localStorage.setItem("users", JSON.stringify(state.users));
       dispatch({ type: "usersFinished" });
     }
+    if (state.app.answersUpdated) {
+      localStorage.setItem("answers", JSON.stringify(state.answers));
+      dispatch({ type: "answersFinished" });
+    }
   }, [
     state.app.appUpdated,
     state.app.firmUpdated,
     state.app.quoteUpdated,
     state.app.userUpdated,
+    state.app.answersUpdated,
     state.app.usersUpdated
   ]);
   // start useEffect to handle when firmData has successfully loaded
@@ -850,6 +871,27 @@ function OnboardingApp({ Component, pageProps }) {
       }
     }
   }
+  async function getAnswers() {
+    try {
+      const fetchAnswers = await AxiosPali.get(
+        `/data/test/answers/987zyx-answers.json`
+      );
+      if (fetchAnswers.data) {
+        dispatch({
+          type: "answersDownloaded",
+          answers: fetchAnswers.data
+        });
+      }
+    } catch (error) {
+      if (error.response.status == "404") {
+        dispatch({
+          type: "flashMessage",
+          value:
+            "There was an issue getting the answers, either it does not exist or there was a bad connection. Contact the solicitor who sent you this link if the problem continues"
+        });
+      }
+    }
+  }
   // start useEffect to handle the redirection
   useEffect(() => {
     if (state.app.unknownUser) {
@@ -897,6 +939,7 @@ function OnboardingApp({ Component, pageProps }) {
     if (state.app.quoteData === "success") {
       getSection()
       getQuestions()
+      getAnswers()
     }
   }, [
     state.app.unknownUser,
@@ -1015,7 +1058,7 @@ function OnboardingApp({ Component, pageProps }) {
   // end when user is logged in
   // start build answers array
   useEffect(() => {
-    if (state.app.sectionsData === "success" && state.app.questionsData === "success" && state.app.usersData === "success") {
+    if (state.app.sectionsData === "success" && state.app.questionsData === "success" && state.app.usersData === "success" && state.app.answersData === "success") {
       console.log("building the answers array")
       const users = state.users
       const sections = state.sections
@@ -1049,33 +1092,47 @@ function OnboardingApp({ Component, pageProps }) {
       // add the questions into the sections
       questions.forEach(question => {
         if (question.category === "01") {
-          console.log("this is a user question")
           users.forEach(user => {
             const userIndex = getObjectIndexFromKey(sortedQuestions, "sectionId", user.id)
-            console.log(userIndex)
             sortedQuestions[userIndex].questions.push(question)
           })
         } else {
-          console.log("this is a normal question")
           const sectionIndex = getObjectIndexFromKey(sortedQuestions, "sectionId", question.category)
-            console.log(sectionIndex)
-            sortedQuestions[sectionIndex].questions.push(question)
+          sortedQuestions[sectionIndex].questions.push(question)
         }
       })
-      console.log("users")
-      console.log(users)
-      console.log(sections)
-      console.log(questions)
-      console.log("sortedQuestions")
-      console.log(sortedQuestions)
       dispatch({
         type: "addSortedQuestions",
         sortedQuestions
       })
+      if(state.answers.length === 0) {
+        console.log("need to build the answers array")
+        const sortedAnswers = []
+        questions.forEach(question => {
+          const answer = {}
+          if (question.category === "01") {
+            users.forEach(user => {
+              const userId = user.id
+              const questionId = question.id
+              answer.id = `${userId}-${questionId}`
+              answer.name = question.name
+              answer.value = ""
+              sortedAnswers.push(answer)
+            })
+          } else {
+            answer.id = question.id
+            answer.name = question.name
+            answer.value = ""
+            sortedAnswers.push(answer)
+          }
+        })
+        dispatch({type: "addSortedAnswers", answers: sortedAnswers})
+      }
     }
   },[
     state.app.sectionsData,
     state.app.questionsData,
+    state.app.answersData,
     state.app.usersData
   ])
   // end build answers array
