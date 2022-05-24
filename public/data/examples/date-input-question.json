@@ -3,7 +3,7 @@
   "codepenExampleUrl": "https://codepen.io/CodeRedDigital/pen/WNdVmao",
   "questionId": "q0001",
   "label": "Date of Birth",
-  "name": "date-of-birth",
+  "name": "dateOfBirth",
   "type": "input",
   "inputType": "date",
   "placeholder": "dd/mm/yyyy",

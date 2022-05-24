@@ -1,6 +1,6 @@
 [
   {
-    "id":"001",
+    "id": "001",
     "label": "Title",
     "name": "title",
     "type": "select",
@@ -58,9 +58,9 @@
     ]
   },
   {
-    "id":"002",
+    "id": "002",
     "label": "First name",
-    "name": "first-name",
+    "name": "firstName",
     "type": "input",
     "inputType": "text",
     "placeholder": "Joan",
@@ -88,7 +88,7 @@
     ]
   },
   {
-    "id":"003",
+    "id": "003",
     "label": "Surname",
     "name": "surname",
     "type": "input",
@@ -118,9 +118,9 @@
     ]
   },
   {
-    "id":"004",
+    "id": "004",
     "label": "Long Answer",
-    "name": "long-answer",
+    "name": "longAnswer",
     "type": "textarea",
     "inputType": null,
     "placeholder": "Add a long description of a thing",
@@ -150,9 +150,9 @@
     ]
   },
   {
-    "id":"005",
+    "id": "005",
     "label": "Number of Bedrooms",
-    "name": "number-of-bedrooms",
+    "name": "numberOfBedrooms",
     "type": "input",
     "inputType": "number",
     "decimal": true,
@@ -178,9 +178,9 @@
     ]
   },
   {
-    "id":"006",
+    "id": "006",
     "label": "Date of Birth",
-    "name": "date-of-birth",
+    "name": "dateOfBirth",
     "type": "input",
     "inputType": "date",
     "placeholder": "dd/mm/yyyy",
@@ -214,9 +214,9 @@
     ]
   },
   {
-    "id":"007",
-    "label": "email address",
-    "name": "email-address",
+    "id": "007",
+    "label": "email",
+    "name": "email",
     "type": "input",
     "inputType": "email",
     "placeholder": "john@example.com",
@@ -240,9 +240,9 @@
     ]
   },
   {
-    "id":"008",
+    "id": "008",
     "label": "Select Group",
-    "name": "select-group",
+    "name": "selectGroup",
     "type": "select",
     "inputType": null,
     "placeholder": null,
@@ -330,9 +330,9 @@
     ]
   },
   {
-    "id":"009",
+    "id": "009",
     "label": "Radio Single Column",
-    "name": "radio-single-column",
+    "name": "radioSingleColumn",
     "type": "input",
     "inputType": "radio",
     "placeholder": "",
@@ -359,7 +359,7 @@
         "name": "Two"
       },
       {
-        "value": "multiple-words",
+        "value": "multipleWords",
         "name": "Multiple Words"
       },
       {
@@ -379,9 +379,9 @@
     ]
   },
   {
-    "id":"010",
+    "id": "010",
     "label": "Have you added a conservatory?",
-    "name": "have-you-added-a-conservatory",
+    "name": "haveYouAddedAConservatory",
     "type": "input",
     "inputType": "radio",
     "placeholder": "",
@@ -404,7 +404,7 @@
         "followup": {
           "id": "10.1",
           "label": "What year did you add it?",
-          "name": "what-year-did-you-add-it",
+          "name": "whatYearDidYouAddIt",
           "type": "input",
           "inputType": "tel",
           "placeholder": "yyyy",
@@ -434,9 +434,9 @@
     ]
   },
   {
-    "id":"011",
+    "id": "011",
     "label": "Choose option(s)",
-    "name": "choose-options",
+    "name": "chooseOptions",
     "type": "input",
     "inputType": "checkbox",
     "placeholder": null,
@@ -483,7 +483,7 @@
     ]
   },
   {
-    "id":"012",
+    "id": "012",
     "label": "Telephone",
     "name": "telephone",
     "type": "input",
@@ -513,9 +513,9 @@
     ]
   },
   {
-    "id":"013",
+    "id": "013",
     "label": "Radio Single Column",
-    "name": "radio-single-column",
+    "name": "radioSingleColumn",
     "type": "input",
     "inputType": "radio",
     "placeholder": "",
@@ -542,7 +542,7 @@
         "name": "Two"
       },
       {
-        "value": "multiple-words",
+        "value": "multipleWords",
         "name": "Multiple Words"
       },
       {
@@ -570,9 +570,9 @@
     ]
   },
   {
-    "id":"014",
+    "id": "014",
     "label": "Choose option(s)",
-    "name": "choose-options",
+    "name": "chooseOptions",
     "type": "input",
     "inputType": "checkbox",
     "placeholder": null,
@@ -619,9 +619,9 @@
     ]
   },
   {
-    "id":"015",
+    "id": "015",
     "label": "Do you know the date the house was purchased?",
-    "name": "choose-options",
+    "name": "chooseOptions",
     "type": "input",
     "inputType": "checkbox",
     "placeholder": null,
@@ -642,7 +642,7 @@
       {
         "value": "month",
         "name": "Month",
-        "followup":{
+        "followup": {
           "id": "015.1",
           "label": "Month",
           "name": "month",
@@ -710,7 +710,7 @@
       {
         "value": "year",
         "name": "Year",
-        "followup":{
+        "followup": {
           "id": "015.2",
           "label": "Year",
           "name": "year",

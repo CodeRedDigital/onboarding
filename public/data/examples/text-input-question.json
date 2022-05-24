@@ -3,7 +3,7 @@
   "codepenExampleUrl": "https://codepen.io/CodeRedDigital/pen/ExoMEpj",
   "questionId": "q0001",
   "label": "First Name",
-  "name": "first-name",
+  "name": "firstName",
   "type": "input",
   "inputType": "text",
   "placeholder": "John/Joan",
@@ -34,4 +34,4 @@
       "formId": "SOL01",
       "formQuestion": "002"
     }
-}
+  }

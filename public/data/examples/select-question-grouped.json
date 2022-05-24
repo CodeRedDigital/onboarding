@@ -3,7 +3,7 @@
   "codepenExampleUrl": "https://codepen.io/CodeRedDigital/pen/xxpBzvN?editors=1111",
   "questionId": "q0001",
   "label": "Choose a Pet",
-  "name": "select-pet",
+  "name": "chooseAPet",
   "type": "select",
   "inputType": null,
   "placeholder": null,

@@ -2,7 +2,7 @@
   "explanation": "This is a email input question and will give the user a normal text input keyboard, with @ symbol making it easier to entry emails, it should be used for things like First name",
   "codepenExampleUrl": "https://codepen.io/CodeRedDigital/pen/bGaXZZw",
   "questionId": "q0001",
-  "label": "email Address",
+  "label": "email",
   "name": "email",
   "type": "input",
   "inputType": "email",
