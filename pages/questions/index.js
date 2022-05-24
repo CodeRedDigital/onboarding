@@ -14,8 +14,20 @@ function QuestionsHome() {
   const appState = useContext(StateContext)
   const router = useRouter()
   const sections = appState.sortedQuestions
-  const answered = Math.floor((Math.random() * appState.questions.length) + 1)
-  console.log(sections)
+  const answers = appState.answers
+  let numOfSections = 0
+  const numOfQuestions = answers.length
+  let numOfAnswered = 0
+  sections.map(section => {
+    if (section.questions.length !== 0) {
+      numOfSections++
+    }
+  })
+  answers.map(answer => {
+    if (answer.value) {
+      numOfAnswered++
+    }
+  })
   useEffect(() => {
     if(appState.questions.length === 0) {
       console.log("fetch questions")
@@ -29,9 +41,9 @@ function QuestionsHome() {
       <div className="home-wrapper">
         <h1>Questions</h1>
         <p>Below are list of sections which contain questions that will help progress your {appState.quote.type}.</p>
-        <p>questions: {appState.questions.length}<br />
-        sections: {appState.sections.length}</p>
-        <Progress sectionId="question-progress" questions={appState.questions.length} answered={answered}></Progress>
+        <p>questions: {numOfQuestions}<br />
+        sections: {numOfSections}</p>
+        <Progress sectionId="question-progress" questions={numOfQuestions} answered={numOfAnswered}></Progress>
         {sections.map((section, index) => {
           return (section.questions.length !== 0 ? (<Section section={section} key={index} />): "")
         })}
