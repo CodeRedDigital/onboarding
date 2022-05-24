@@ -10,7 +10,7 @@ import { decode } from "he"; // used for decoding the encoded html for the modal
 import parse from "html-react-parser";
 import intlTelInput from "intl-tel-input";
 import "intl-tel-input/build/css/intlTelInput.css";
-const itiUtils = require("intl-tel-input/build/js/utils.js")
+const itiUtils = require("intl-tel-input/build/js/utils.js");
 
 // components
 import Main from "../../components/Main";
@@ -108,7 +108,7 @@ export default function User(props) {
           draft.isDisabled = true;
         }
         draft.telUpdated = false;
-        if (!appState.app.indexOfPrimaryUser){
+        if (!appState.app.indexOfPrimaryUser) {
           draft.userIsLoading = false;
         }
         return;
@@ -130,11 +130,11 @@ export default function User(props) {
         return;
       case "telephoneUpdate":
         draft.telephone.value = action.value;
-        if (action.dialCode){
-          draft.dialCode = action.dialCode
+        if (action.dialCode) {
+          draft.dialCode = action.dialCode;
         }
-        if (action.telNoDialCode){
-          draft.telNoDialCode = action.telNoDialCode
+        if (action.telNoDialCode) {
+          draft.telNoDialCode = action.telNoDialCode;
         }
         draft.userUpdated = true;
         return;
@@ -196,8 +196,8 @@ export default function User(props) {
   }
 
   async function handleClick(event) {
-    event.preventDefault()
-    const buttonClicked = event.target
+    event.preventDefault();
+    const buttonClicked = event.target;
     if (buttonClicked.getAttribute("data-send") === "all") {
       sendAmlToUsers(appState.users);
     } else {
@@ -230,7 +230,7 @@ export default function User(props) {
   // Decide which AML Provider to use
   async function sendAmlToUsers(users) {
     dispatch({ type: "startFetching" });
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
     if (appState.quote.AML.provider == "CREDAS") {
       sendCredas(users);
     } else if (appState.quote.AML.provider == "Thirdfort") {
@@ -246,23 +246,23 @@ export default function User(props) {
   }
   // CREDAS AML check
   async function credas(user, indexOfUser, indexOfQuoteUser, indexOfCase) {
-    let sendSms = false
-    let sendEmail = false
-    let dialCode = ""
-    let telephone = ""
-    let email = ""
+    let sendSms = false;
+    let sendEmail = false;
+    let dialCode = "";
+    let telephone = "";
+    let email = "";
     if (user.contact.primary) {
-      sendSms = appState.users[appState.app.indexOfPrimaryUser].contact.tel
-      sendEmail = appState.users[appState.app.indexOfPrimaryUser].contact.email
-      dialCode = appState.users[appState.app.indexOfPrimaryUser].dialCode
-      telephone = appState.users[appState.app.indexOfPrimaryUser].telNoDialCode
-      email = appState.users[appState.app.indexOfPrimaryUser].email
+      sendSms = appState.users[appState.app.indexOfPrimaryUser].contact.tel;
+      sendEmail = appState.users[appState.app.indexOfPrimaryUser].contact.email;
+      dialCode = appState.users[appState.app.indexOfPrimaryUser].dialCode;
+      telephone = appState.users[appState.app.indexOfPrimaryUser].telNoDialCode;
+      email = appState.users[appState.app.indexOfPrimaryUser].email;
     } else {
-      sendSms = user.contact.tel
-      sendEmail = user.contact.email
-      dialCode = user.dialCode
-      telephone = user.telNoDialCode
-      email = user.email
+      sendSms = user.contact.tel;
+      sendEmail = user.contact.email;
+      dialCode = user.dialCode;
+      telephone = user.telNoDialCode;
+      email = user.email;
     }
     const response = await fetch("/api/credas/registrations", {
       body: JSON.stringify({
@@ -280,7 +280,7 @@ export default function User(props) {
         "Content-Type": "application/json"
       },
       method: "POST"
-    })
+    });
     const result = await response.json();
     if (result.data.error) {
       appDispatch({
@@ -290,8 +290,8 @@ export default function User(props) {
       });
       dispatch({ type: "endFetching" });
     } else {
-      const credasObj = result.data
-      credasObj.paliQuoteId = appState.quote.id
+      const credasObj = result.data;
+      credasObj.paliQuoteId = appState.quote.id;
       appDispatch({
         type: "saveCredasRegistration",
         value: credasObj,
@@ -301,7 +301,13 @@ export default function User(props) {
       });
       appDispatch({
         type: "flashMessage",
-        value: `Thank you for submitting. ${sendSms ? "A text message" : "An email"} has been sent to ${user.contact.primary ? appState.users[appState.app.indexOfPrimaryUser].firstName : "you"}, from CREDAS.`
+        value: `Thank you for submitting. ${
+          sendSms ? "A text message" : "An email"
+        } has been sent to ${
+          user.contact.primary
+            ? appState.users[appState.app.indexOfPrimaryUser].firstName
+            : "you"
+        }, from CREDAS.`
       });
       dispatch({ type: "endFetching" });
     }
@@ -317,8 +323,8 @@ export default function User(props) {
       const indexOfCase = appState.users[indexOfUser].cases.findIndex(
         currentCase => currentCase.id === appState.quote.id
       );
-      credas(sendingUser, indexOfUser, indexOfQuoteUser, indexOfCase)
-    })
+      credas(sendingUser, indexOfUser, indexOfQuoteUser, indexOfCase);
+    });
   }
   // thirdfort AML check
   async function sendThirdfort(userArray) {
@@ -355,7 +361,14 @@ export default function User(props) {
       "Content-Type": "application/json",
       "User-Id": stubUserId
     };
-    async function thirdfort(user, config, body, indexOfUser, indexOfQuoteUser, indexOfCase) {
+    async function thirdfort(
+      user,
+      config,
+      body,
+      indexOfUser,
+      indexOfQuoteUser,
+      indexOfCase
+    ) {
       const response = await fetch("/api/thirdfort/transactions", {
         body: JSON.stringify({
           config,
@@ -387,8 +400,11 @@ export default function User(props) {
         });
         appDispatch({
           type: "flashMessage",
-          value:
-            `Thank you for submitting, a text message has been sent from Thirdfort, to ${user.contact.primary ? appState.users[appState.app.indexOfPrimaryUser].firstName : "you"}. If you have not received a message then check you Telephone number is correct`
+          value: `Thank you for submitting, a text message has been sent from Thirdfort, to ${
+            user.contact.primary
+              ? appState.users[appState.app.indexOfPrimaryUser].firstName
+              : "you"
+          }. If you have not received a message then check you Telephone number is correct`
         });
         dispatch({ type: "endFetching" });
       }
@@ -403,8 +419,8 @@ export default function User(props) {
       const indexOfCase = appState.users[indexOfUser].cases.findIndex(
         currentCase => currentCase.id === appState.quote.id
       );
-      const transactionId = `${appState.quote.id}-${sendingUser.id}`
-      const hmac_key = btoa(transactionId)
+      const transactionId = `${appState.quote.id}-${sendingUser.id}`;
+      const hmac_key = btoa(transactionId);
       let telephone = "";
       if (sendingUser.contact.tel) {
         telephone = sendingUser.telephone;
@@ -415,7 +431,9 @@ export default function User(props) {
       let transactionBody = {};
       if (appState.quote.type.toLowerCase().includes("sale")) {
         // find the address being sold
-        const address = appState.quote.associatedAddresses.find(address => address.type === "sale")
+        const address = appState.quote.associatedAddresses.find(
+          address => address.type === "sale"
+        );
         // Quote is purchase
         transactionBody = {
           type: "v2",
@@ -459,7 +477,9 @@ export default function User(props) {
           }
         };
       } else {
-        const address = appState.quote.associatedAddresses.find(address => address.type === "purchase")
+        const address = appState.quote.associatedAddresses.find(
+          address => address.type === "purchase"
+        );
         transactionBody = {
           type: "v2",
           ref: appState.quote.id,
@@ -499,7 +519,14 @@ export default function User(props) {
           }
         };
       }
-      thirdfort(sendingUser, transactionConfig, transactionBody, indexOfUser, indexOfQuoteUser, indexOfCase);
+      thirdfort(
+        sendingUser,
+        transactionConfig,
+        transactionBody,
+        indexOfUser,
+        indexOfQuoteUser,
+        indexOfCase
+      );
     });
   }
   // End AML functions
@@ -512,8 +539,11 @@ export default function User(props) {
   }, []);
   useEffect(() => {
     if (!state.telUpdated) {
-      const telDelay = setTimeout(() => dispatch({type: "updateTelAfterDelay"}), appState.firm.delay);
-      return () => clearTimeout(telDelay)
+      const telDelay = setTimeout(
+        () => dispatch({ type: "updateTelAfterDelay" }),
+        appState.firm.delay
+      );
+      return () => clearTimeout(telDelay);
     }
   }, [state.telephone.value, userId]);
   useEffect(() => {
@@ -541,10 +571,10 @@ export default function User(props) {
     dispatch({ type: "updateUserId", id: userId });
   }, [router.query]);
   useEffect(() => {
-    if (appState.app.indexOfPrimaryUser !== null && state.userIsLoading){
-      dispatch({ type: "endLoading" })
+    if (appState.app.indexOfPrimaryUser !== null && state.userIsLoading) {
+      dispatch({ type: "endLoading" });
     }
-  },[appState.app.indexOfPrimaryUser])
+  }, [appState.app.indexOfPrimaryUser]);
   useEffect(() => {
     if (document.querySelector("#telephone")) {
       const input = document.querySelector("#telephone");
@@ -557,7 +587,7 @@ export default function User(props) {
       });
       function splitTelephone() {
         if (input.value.trim()) {
-          const number = iti.getNumber()
+          const number = iti.getNumber();
           const dialCode = "+" + iti.getSelectedCountryData().dialCode;
           const telNoDialCode = number.slice(dialCode.length);
           dispatch({ type: "telephoneSplit", dialCode, telNoDialCode });
@@ -580,8 +610,8 @@ export default function User(props) {
     );
     dispatch({ type: "currentUserIndex", index: indexOfUser });
     if (!state.primaryUser) {
-      appDispatch({ type: "resetApp" })
-      router.push('/')
+      appDispatch({ type: "resetApp" });
+      router.push("/");
     }
     if (state.currentUserIndex !== -1) {
       // stuff to do when currentUserIndex has a value
@@ -635,24 +665,30 @@ export default function User(props) {
   }, [state.userUpdated]);
   // useEffects end here
 
-  return (state.userIsLoading || state.fetching ? <Main title="loading"><LoadingSpinner /></Main> :
+  return state.userIsLoading || state.fetching ? (
+    <Main title="loading">
+      <LoadingSpinner />
+    </Main>
+  ) : (
     <Main title={state.name}>
       {appState.users.length > 1 ? (
-      <div className="seller-info">
-        <div className="sellers">
-          {appState.quote.associatedUsers.map((user, index) => {
-            return (
-              <UserIcon
-                current={state.userId}
-                id={user.id}
-                key={user.id}
-                index={index}
-              />
-            );
-          })}
+        <div className="seller-info">
+          <div className="sellers">
+            {appState.quote.associatedUsers.map((user, index) => {
+              return (
+                <UserIcon
+                  current={state.userId}
+                  id={user.id}
+                  key={user.id}
+                  index={index}
+                />
+              );
+            })}
+          </div>
         </div>
-      </div>
-          ) : ""}
+      ) : (
+        ""
+      )}
       <h1>{state.name}</h1>
       <div id="instructions">
         <p>
@@ -662,7 +698,11 @@ export default function User(props) {
         <p>
           Once all of these fields have been completed we will pass them over to
           our trust partner{" "}
-          {state.thirdfort ? (<Link href="/thirdfort">Thirdfort</Link>) : (<Link href="/credas">CREDAS</Link>)}
+          {state.thirdfort ? (
+            <Link href="/thirdfort">Thirdfort</Link>
+          ) : (
+            <Link href="/credas">CREDAS</Link>
+          )}
           , to do Identity and Financial checks.
         </p>
       </div>
@@ -689,10 +729,10 @@ export default function User(props) {
               Please enter your Title.
             </div>
           </div>
-          <label htmlFor="first-name">First name</label>
+          <label htmlFor="firstName">First name</label>
           <div>
             <input
-              id="first-name"
+              id="firstName"
               type="text"
               value={state.firstName.value}
               disabled={state.isDisabled}
@@ -775,10 +815,12 @@ export default function User(props) {
             </div>
           </div>
           {appState.users.length > 1 ? (
-          <label htmlFor="contact" className="span-grid">
-            Send Identity Check
-          </label>
-          ) : ""}
+            <label htmlFor="contact" className="span-grid">
+              Send Identity Check
+            </label>
+          ) : (
+            ""
+          )}
           {!state.thirdfortAndPrimary && (
             <>
               <div id="identity-hint" className="pali-hint">
@@ -877,7 +919,8 @@ export default function User(props) {
           Send {appState.quote.AML.provider} Link for {state.firstName.value}
         </button>
         {appState.user.id === state.userId &&
-          state.primaryUser.id === state.userId &&  appState.users.length > 1 && (
+          state.primaryUser.id === state.userId &&
+          appState.users.length > 1 && (
             <button
               onClick={handleClick}
               className="btn primary"
