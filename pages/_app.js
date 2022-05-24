@@ -135,6 +135,9 @@ function OnboardingApp({ Component, pageProps }) {
         if (action.users) {
           draft.app.localData.users = action.users;
         }
+        if (action.answers) {
+          draft.answers = action.answers;
+        }
         draft.app.localDataFetched = true;
         draft.app.appUpdated = true;
         return;
@@ -477,7 +480,8 @@ function OnboardingApp({ Component, pageProps }) {
         quote: JSON.parse(localStorage.getItem("quote")),
         user: JSON.parse(localStorage.getItem("user")),
         firm: JSON.parse(localStorage.getItem("firm")),
-        users: JSON.parse(localStorage.getItem("users"))
+        users: JSON.parse(localStorage.getItem("users")),
+        answers: JSON.parse(localStorage.getItem("answers"))
       });
     }
     // get the quote from database
@@ -872,23 +876,25 @@ function OnboardingApp({ Component, pageProps }) {
     }
   }
   async function getAnswers() {
-    try {
-      const fetchAnswers = await AxiosPali.get(
-        `/data/test/answers/987zyx-answers.json`
-      );
-      if (fetchAnswers.data) {
-        dispatch({
-          type: "answersDownloaded",
-          answers: fetchAnswers.data
-        });
-      }
-    } catch (error) {
-      if (error.response.status == "404") {
-        dispatch({
-          type: "flashMessage",
-          value:
-            "There was an issue getting the answers, either it does not exist or there was a bad connection. Contact the solicitor who sent you this link if the problem continues"
-        });
+    if (state.answers.length === 0){
+      try {
+        const fetchAnswers = await AxiosPali.get(
+          `/data/test/answers/987zyx-answers.json`
+        );
+        if (fetchAnswers.data) {
+          dispatch({
+            type: "answersDownloaded",
+            answers: fetchAnswers.data
+          });
+        }
+      } catch (error) {
+        if (error.response.status == "404") {
+          dispatch({
+            type: "flashMessage",
+            value:
+              "There was an issue getting the answers, either it does not exist or there was a bad connection. Contact the solicitor who sent you this link if the problem continues"
+          });
+        }
       }
     }
   }
