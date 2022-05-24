@@ -1109,17 +1109,18 @@ function OnboardingApp({ Component, pageProps }) {
         console.log("need to build the answers array")
         const sortedAnswers = []
         questions.forEach(question => {
-          const answer = {}
           if (question.category === "01") {
             users.forEach(user => {
+              const answer = {}
               const userId = user.id
               const questionId = question.id
               answer.id = `${userId}-${questionId}`
               answer.name = question.name
-              answer.value = ""
+              answer.value = (user[question.name] ? user[question.name] : "")
               sortedAnswers.push(answer)
             })
           } else {
+            const answer = {}
             answer.id = question.id
             answer.name = question.name
             answer.value = ""
