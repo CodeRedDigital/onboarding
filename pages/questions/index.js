@@ -14,6 +14,8 @@ function QuestionsHome() {
   const appState = useContext(StateContext)
   const router = useRouter()
   const sections = appState.sortedQuestions
+  console.log(sections)
+  console.log(appState.sortedQuestions)
   const answers = appState.answers
   let numOfSections = 0
   const numOfQuestions = answers.length

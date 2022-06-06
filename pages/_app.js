@@ -49,6 +49,7 @@ function OnboardingApp({ Component, pageProps }) {
       quoteUpdated: false,
       userUpdated: false,
       usersUpdated: false,
+      questionsUpdated: false,
       answersUpdated: false,
       userFullData: false,
       unknownUser: false,
@@ -135,6 +136,9 @@ function OnboardingApp({ Component, pageProps }) {
         if (action.users) {
           draft.app.localData.users = action.users;
         }
+        if (action.questions) {
+          draft.sortedQuestions = action.questions;
+        }
         if (action.answers) {
           draft.answers = action.answers;
         }
@@ -203,6 +207,8 @@ function OnboardingApp({ Component, pageProps }) {
       case "addSortedQuestions":
         console.log("saving sortedQuestions to state")
         draft.sortedQuestions = action.sortedQuestions
+        draft.app.questionsUpdated = true;
+        draft.app.appUpdated = true;
         return
       case "addSortedAnswers":
         console.log("saving the answers to state")
@@ -481,6 +487,7 @@ function OnboardingApp({ Component, pageProps }) {
         user: JSON.parse(localStorage.getItem("user")),
         firm: JSON.parse(localStorage.getItem("firm")),
         users: JSON.parse(localStorage.getItem("users")),
+        questions: JSON.parse(localStorage.getItem("sortedQuestions")),
         answers: JSON.parse(localStorage.getItem("answers"))
       });
     }
@@ -766,6 +773,10 @@ function OnboardingApp({ Component, pageProps }) {
       localStorage.setItem("users", JSON.stringify(state.users));
       dispatch({ type: "usersFinished" });
     }
+    if (state.app.questionsUpdated) {
+      localStorage.setItem("sortedQuestions", JSON.stringify(state.sortedQuestions));
+      dispatch({ type: "questionsFinished" });
+    }
     if (state.app.answersUpdated) {
       localStorage.setItem("answers", JSON.stringify(state.answers));
       dispatch({ type: "answersFinished" });
@@ -775,6 +786,7 @@ function OnboardingApp({ Component, pageProps }) {
     state.app.firmUpdated,
     state.app.quoteUpdated,
     state.app.userUpdated,
+    state.app.questionsUpdated,
     state.app.answersUpdated,
     state.app.usersUpdated
   ]);
