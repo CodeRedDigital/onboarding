@@ -923,7 +923,7 @@ function OnboardingApp({ Component, pageProps }) {
           // check if current user has accepted all terms
           if (state.user.agreed.all) {
             // if yes redirect to router.push('/users/state.user.id')
-            router.push(`/users/${state.user.id}`);
+            router.push(state.app.startURL !== "/" ? state.app.startURL : `/users/${state.user.id}`);
           } else {
             // if no redirect to router.push('/permissions')
             router.push("/permissions");
@@ -938,7 +938,7 @@ function OnboardingApp({ Component, pageProps }) {
         router.push("/login");
       }
       if (state.user.agreed !== undefined && state.user.agreed.all) {
-        router.push(`/users/${state.user.id}`);
+        router.push(state.app.startURL !== "/" ? state.app.startURL : `/users/${state.user.id}`);
       }
       dispatch({ type: "loaded" });
     }
