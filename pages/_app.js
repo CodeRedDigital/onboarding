@@ -420,10 +420,10 @@ function OnboardingApp({ Component, pageProps }) {
   // end of functions
   useEffect(() => {
     if (router.isReady && !state.app.storedURL) {
-      const url = router.asPath;
+      const url = router.asPath.split("?");
       dispatch({
         type: "storeURL",
-        value: url
+        value: url[0]
       });
     }
   }, [router.isReady]);
