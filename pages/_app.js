@@ -915,7 +915,7 @@ function OnboardingApp({ Component, pageProps }) {
     if (state.app.unknownUser) {
       router.push("/login");
     }
-    if (state.app.dataCount >= 3) {
+    if (state.app.dataCount >= 3 && state.app.storedURL) {
       if (state.app.userData === "fail") {
         dispatch({ type: "unknownUser" });
       }
@@ -965,7 +965,8 @@ function OnboardingApp({ Component, pageProps }) {
     state.app.firmData,
     state.app.quoteData,
     state.user.validated,
-    state.user.agreed
+    state.user.agreed,
+    state.app.storedURL
   ]);
   // end useEffect to handle the redirection
   // start when user is logged in
