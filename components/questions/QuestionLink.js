@@ -28,6 +28,7 @@ function QuestionLink(props) {
       const indexOfAnswer = getObjectIndexFromKey(answers, "id", answerId)
       if (answers[indexOfAnswer].value) {
         setComplete(true)
+        props.incrementSectionCount()
       }
     }
   },[answerId])
