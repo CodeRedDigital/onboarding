@@ -21,7 +21,6 @@ function Section() {
   const [sectionCount, setSectionCount] = useState(0)
   const incrementSectionCount = () => {
     setSectionCount(c => c + 1)
-    console.log(sectionCount)
   }
   const [numOfQuestions, setNumOfQuestions] = useState(0)
   useEffect(() => {
