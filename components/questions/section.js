@@ -1,21 +1,27 @@
+import { useState } from 'react'
 import Link from 'next/link'
 
 // components
 import Progress from "./progress"
+import QuestionLink from "./QuestionLink"
 
 function Section(props) {
   const section = props.section
-  const answered = Math.floor((Math.random() * section.questions.length) + 1)
+  const numOfQuestions = section.questions.length
+  const [sectionCount, setSectionCount] = useState(0)
+  const incrementSectionCount = () => {
+    setSectionCount(c => c + 1)
+  }
   return (
     <details>
       <summary>
-        <h3>{section.sectionLabel} <span className="progress">{answered}/{section.questions.length}</span></h3>
+        <h3>{section.sectionLabel} <span className="progress">{sectionCount}/{numOfQuestions}</span></h3>
       </summary>
-      <Progress sectionId={section.sectionId} questions={section.questions.length} answered={answered}></Progress>
+      <Progress sectionId={section.sectionId} questions={section.questions.length} answered={sectionCount}></Progress>
       <Link href={`/questions/${section.sectionId}`}><a>View Section</a></Link>
       <ul>
         {section.questions.map((question, index) => {
-          return (<li key={index}><Link href={`/questions/${section.sectionId}/${question.name}`}><a>{question.label} <span data-complete="true"></span></a></Link></li>)
+          return (<QuestionLink key={index} section={section} question={question} incrementSectionCount={incrementSectionCount}></QuestionLink>)
         })}
       </ul>
     </details>
