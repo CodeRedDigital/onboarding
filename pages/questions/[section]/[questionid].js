@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { useRouter } from "next/router";
 
 // components
-import Main from '../../../components/Main'
+import QuestionsMain from '../../../components/QuestionsMain'
 import QuestionNav from '../../../components/questions/QuestionNav.js'
 
 // states
@@ -23,11 +23,13 @@ function Question() {
   const section = sortedQuestions[sectionIndex]
   console.log(section)
   return (
-    <Main title={questionName}>
-      <h1>This question is {questionName}</h1>
-      <h2>{sectionId}</h2>
+    <QuestionsMain title={questionName} question="true">
+      <div className="form-wrapper">
+        <h1>This question is {questionName}</h1>
+        <h2>{sectionId}</h2>
+      </div>
       <QuestionNav></QuestionNav>
-    </Main>
+    </QuestionsMain>
   )
 }
 

@@ -1010,3 +1010,77 @@ span[data-complete="false"]:after {
 .home-wrapper details progress {
   margin-top: var(--s0);
 }
+
+/* questions */
+
+/* main */
+
+main {
+  min-height: 78vh;
+  margin: 0;
+  padding: var(--s3);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: var(--sans-serif);
+}
+
+/* form-wrapper */
+
+.form-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding-top: var(--s6);
+}
+.form-wrapper label,
+.form-wrapper legend {
+  text-align: center;
+  color: var(--primary-100);
+  font-size: var(--s4);
+}
+
+.form-wrapper legend {
+  width: 100%;
+}
+
+.form-wrapper input{
+  font-family: var(--sans-serif);
+  color: var(--black);
+  font-size: var(--s4);
+  border: var(--primary-100) solid 2px;
+}
+
+.form-wrapper input, 
+.form-wrapper textarea,
+.form-wrapper select {
+  font-family: var(--sans-serif);
+  color: var(--black);
+  background-color: var(--white);
+  font-size: var(--s4);
+  border: var(--primary-100) solid 2px;
+}
+
+.form-wrapper select optgroup{
+  background-color: var(--secondary-100);
+  color: var(--secondary-contrast);
+  font-style:normal;
+  font-weight:normal;
+}
+
+.input-error {
+  background-color: var(--warning-100);
+  color: var(--warning-contrast);
+  display: none;
+}
+
+input:invalid ~ .input-error {
+  display: block;
+}
+
+/* navigation */
+nav#navigation {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
