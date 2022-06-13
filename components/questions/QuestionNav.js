@@ -1,9 +1,9 @@
 function QuestionNav() {
   return (
     <nav id="navigation">
-      <button class="btn secondary">back</button>
-      <button class="btn primary">home</button>
-      <button class="btn secondary">next</button>
+      <button className="btn secondary">back</button>
+      <button className="btn primary">home</button>
+      <button className="btn secondary">next</button>
     </nav>
   )
 }
