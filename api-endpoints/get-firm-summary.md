@@ -20,6 +20,10 @@ Returns json data about a firm before user is authenticated.
 
   None
 
+- **Authentication**
+
+  None
+
 - **Success Response:**
 
   - **Code:** 200 <br />
@@ -78,7 +82,6 @@ Returns json data about a firm before user is authenticated.
       dataType: "json",
       type : "GET",
       headers : {
-        'apikey': SECRET_API_KEY,
         "Content-Type": "application/json"
       };
     });
