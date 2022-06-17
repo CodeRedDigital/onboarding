@@ -27,9 +27,11 @@ function Question() {
   const section = sortedQuestions[sectionIndex]
   let questionIndex = null
   let question = null
+  console.log(`Prev ${prev}, Next ${next}, qName ${questionName}, sId ${sectionId}, sIndex ${sectionIndex}, qIndex ${questionIndex}`)
   useEffect(() => {
     if (section) {
       questionIndex = getObjectIndexFromKey(section.questions, "name", questionName)
+      console.log(questionIndex)
     }
     if (questionIndex) {
       question = section.questions[questionIndex]
