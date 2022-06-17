@@ -20,6 +20,10 @@ Returns json data about a quote after user is authenticated.
 
   None
 
+- **Authentication**
+
+  JWT
+
 - **Success Response:**
 
   - **Code:** 200 <br />

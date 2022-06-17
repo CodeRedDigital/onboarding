@@ -20,6 +20,10 @@ POSTs the user details to update the user in DB.
 
   None
 
+- **Authentication**
+
+  JWT
+
 - **Success Response:**
 
   - **Code:** 200 <br />
