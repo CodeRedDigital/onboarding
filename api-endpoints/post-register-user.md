@@ -27,8 +27,11 @@ This is sent to set a users password with they have not previously registered. T
 - **JSON Web Token**
 
   - **header:** `{"alg": "HS256","typ": "JWT"}` <br />
-  - **payload:** `{"user": "userId", "quote": "quoteId", "firm": "firmId", "solicitor": "solicitorId"}` <br />
-  - **payload:** `{user: userId, quote: quoteId, firm: firmId, solicitor: solicitorId}` 
+  - **payload:** `{"user": "userId", "quote": "quoteId", "firm": "firmId", "solicitor": "solicitorId", "exp": "token expiry time", "iat": "now,"}` <br />
+  - **signature:** `Secret JWT Key` 
+
+- **Example JWT**
+  - `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiY3N5YmZ5dXdiODciLCJxdW90ZSI6Ijk4N3p5eCIsImZpcm0iOiJhYmMxMjMiLCJzb2xpY2l0b3IiOiJhYmMxMjMtMDAxIiwiZXhwIjozODcyNzkyODc4NzMyLCJpYXQiOjM4NzI3OTAyODY3MzJ9.44JhpQZOgV5Kr2pXnZhQWCeWVx4yl3IdsFpCJ98GcFA`
 
 - **Success Response:**
 
