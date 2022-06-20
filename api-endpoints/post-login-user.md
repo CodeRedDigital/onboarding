@@ -32,6 +32,7 @@ This is sent to login a previously registered user who has a password. This will
 
 - **Example JWT**
   - `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoiY3N5YmZ5dXdiODciLCJxdW90ZSI6Ijk4N3p5eCIsImZpcm0iOiJhYmMxMjMiLCJzb2xpY2l0b3IiOiJhYmMxMjMtMDAxIiwiZXhwIjozODcyNzkyODc4NzMyLCJpYXQiOjM4NzI3OTAyODY3MzJ9.44JhpQZOgV5Kr2pXnZhQWCeWVx4yl3IdsFpCJ98GcFA`
+
 - **Success Response:**
 
   - **Code:** 200 <br />
