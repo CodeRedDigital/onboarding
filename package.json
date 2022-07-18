@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "export NODE_OPTIONS=--openssl-legacy-provider; next dev",
-    "build": "export NODE_OPTIONS=--openssl-legacy-provider; NODE_ENV=production next build",
-    "start": "export NODE_OPTIONS=--openssl-legacy-provider; next start -p 4653",
-    "lint": "export NODE_OPTIONS=--openssl-legacy-provider; next lint"
+    "dev": "next dev",
+    "build": "NODE_ENV=production next build",
+    "start": "next start -p 4653",
+    "lint": "next lint"
   },
   "dependencies": {
     "aria-modal-dialog": "^3.3.3",
