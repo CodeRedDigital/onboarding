@@ -10,18 +10,35 @@ import DispatchContext from '../states/DispatchContext'
 export default function Home() {
   const appState = useContext(StateContext)
   const appDispatch = useContext(DispatchContext)
+  // register function
+  const register = async (pwd) => {
+    const res = await fetch("/api/pali/register", {
+      body: JSON.stringify({
+        config: {
+          apiKey: "fwuyb478trw7c4y7bytvn783c74vt7-v4nyct7n9",
+          url: "https://onboarding.paliltd.com"
+        },
+        userId: appState.user.id,
+        userEmail: appState.user.email,
+        password: pwd
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "POST"
+    });
+    const result = await res.json();
+    console.log(result)
+    console.log(result.status)
+    if (!result.error) {
+      appDispatch({type: "flashMessage", value: "Your password has been saved. Please login to continue."})
+      appDispatch({ type: "validate" })
+    }
+  };
   async function handleSubmit(event) {
     event.preventDefault()
-    // here we will stored the data in local storage
-    appDispatch({type: "flashMessage", value: "Your password has been saved."})
-    appDispatch({ type: "validate" })
-    // here we will speak to the database and set the users password
-    // send password and get token at the same time
-    // try {
-    //   await AxiosPali.post('https://pali.database/register', userData)
-    // } catch (error) {
-    //   console.log("there was an error")
-    // }
+    const password = event.target.querySelector("#password").value
+    register(password)
   }
   return (
     <Main title="Welcome">
