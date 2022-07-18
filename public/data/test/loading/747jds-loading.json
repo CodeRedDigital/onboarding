@@ -1,0 +1,33 @@
+{
+  "id": "987zyx",
+  "associatedUsers": [
+    {
+      "id": "f4e4hfhf93",
+      "primary": true,
+      "updated": 1630057276474
+    },
+    {
+      "id": "sur8hfr4hf",
+      "primary": false,
+      "updated": 1630057276474
+    }
+  ],
+  "associatedFirmId": "123abc",
+  "associatedSolicitorId": "123abc-00003",
+  "AML": {
+    "provider": "Thirdfort",
+    "thirdfort": {},
+    "credas": {}
+  },
+  "type": "purchase",
+  "associatedAddresses": [
+    {
+      "address1": "456 London Road",
+      "address2": "",
+      "town": "London",
+      "county": "Greater London",
+      "postCode": "E8 1AA",
+      "type": "purchase"
+    }
+  ]
+}

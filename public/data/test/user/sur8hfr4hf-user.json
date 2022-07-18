@@ -1,0 +1,42 @@
+{
+  "id": "sur8hfr4hf",
+  "title": "Mrs",
+  "firstName": "Susie",
+  "surname": "Field",
+  "email": "susie.field@example.com",
+  "telephone": "+447860595913",
+  "dialCode": "+44",
+  "telNoDialCode": "7860595913",
+  "contact": {
+    "primary": true,
+    "email": false,
+    "tel": false
+  },
+  "validated": false,
+  "token": false,
+  "agreed": {
+    "gdpr": false,
+    "tAndC": false,
+    "all": false
+  },
+  "addresses": [
+    {
+      "type": "Primary",
+      "firstLine": "56 Red Lane",
+      "secondLine": "",
+      "townCity": "EPPING GREEN",
+      "county": "Essex",
+      "postCode": "CM16 2NL"
+    }
+  ],
+  "cases": [
+    {
+      "firm": "123abc",
+      "id": "747jds",
+      "AML": {
+        "thirdfort": {},
+        "CREDAS": {}
+      }
+    }
+  ]
+}
