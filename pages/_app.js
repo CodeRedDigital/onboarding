@@ -903,12 +903,12 @@ function OnboardingApp({ Component, pageProps }) {
       getAllAssociatedUsers();
     }
     if (state.app.usersData === "success" && state.app.firmData === "success") {
-      const primaryIndex = 0
-      const currentIndex = 0
+      let primaryIndex = 0
+      let currentIndex = 0
       if (state.quote.associatedUsers.length > 1){
         // set index of current and index of primary
         // set index of Primary user
-        const primaryUser = state.quote.associatedUsers.find(
+        let primaryUser = state.quote.associatedUsers.find(
           ({ primary }) => primary === true
         );
         primaryIndex = state.users.findIndex(
@@ -920,8 +920,8 @@ function OnboardingApp({ Component, pageProps }) {
         );
       }
       // set index of associated solicitor
-      const solicitor = state.quote.associatedSolicitorId;
-      const solicitorIndex = state.firm.solicitors.findIndex(
+      let solicitor = state.quote.associatedSolicitorId;
+      let solicitorIndex = state.firm.solicitors.findIndex(
         sol => sol.id === solicitor
       );
       // update app state with these values
