@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 // components
 import Main from '../components/Main'
@@ -10,8 +10,35 @@ import DispatchContext from '../states/DispatchContext'
 
 export default function Home() {
   const appState = useContext(StateContext);
+  const appDispatch = useContext(DispatchContext);
+  const [email, setEmail] = useState(appState.user.email)
+  const [password, setPassword] = useState()
+  const login = async (email,password) => {
+    const res = await fetch("/api/pali/login", {
+      body: JSON.stringify({
+        config: {
+          accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        userEmail: email,
+        password: password
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      },
+      method: "POST"
+    });
+    const result = await res.json();
+    console.log(result)
+    console.log(result.status)
+    if (!result.error) {
+      appDispatch({type: "flashMessage", value: "Login Successful."})
+      console.log("Set the users JWT")
+    }
+  };
   function handleSubmit(event){
     event.preventDefault()
+    login(email,password)
     // send the details off to the backend
     // create user
     // get token on return
@@ -19,8 +46,9 @@ export default function Home() {
   }
   return (
     <Main title="login">
-      <h1>{appState.user.firstName} Login</h1>
-      <p>If you don&apos;t have an account <Link href="/create">Create One here</Link>.</p>
+      <h1>Welcome back {appState.user.firstName}</h1>
+      <h2>Please login</h2>
+      {/* <p>If you don&apos;t have an account <Link href="/create">Create One here</Link>.</p> */}
       <div className="column-row">
         <form onSubmit={handleSubmit}  className="form-grid">
           <label htmlFor="email">email</label>
@@ -29,7 +57,7 @@ export default function Home() {
               onChange={e => setEmail(e.target.value)}
               id="email"
               type="email"
-              value={appState.user.email} // add the email into the value
+              value={email} // add the email into the value
             />
             <div className="alert alert-danger small"></div>
           </div>
