@@ -26,7 +26,7 @@ export default function Home() {
           <label htmlFor="email">email</label>
           <div>
             <input
-              onChange={e => setPassword(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               id="email"
               type="email"
               value={appState.user.email} // add the email into the value
