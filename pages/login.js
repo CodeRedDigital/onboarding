@@ -29,11 +29,19 @@ export default function Home() {
       method: "POST"
     });
     const result = await res.json();
-    console.log(result)
+    console.log(result.data)
     console.log(result.status)
     if (!result.error) {
+      const jwt = result.data.jwt
+      const jwtExpiry = result.data.expires
+      appDispatch({
+        type: "setUsersJWT",
+        jwt: jwt,
+        expires: jwtExpiry,
+        userType: "client",
+        userId: appState.user.id
+      })
       appDispatch({type: "flashMessage", value: "Login Successful."})
-      console.log("Set the users JWT")
     }
   };
   function handleSubmit(event){

@@ -34,12 +34,14 @@ function OnboardingApp({ Component, pageProps }) {
       quoteData: null,
       userData: null,
       usersData: null,
+      authData: null,
       dataCount: 0,
       appUpdated: false,
       firmUpdated: false,
       quoteUpdated: false,
       userUpdated: false,
       usersUpdated: false,
+      authUpdated: false,
       userFullData: false,
       unknownUser: false,
       indexOfAssociatedSolicitor: null,
@@ -74,7 +76,8 @@ function OnboardingApp({ Component, pageProps }) {
       addresses: []
     },
     users: [],
-    user: {}
+    user: {},
+    auth: {}
   };
   function ourReducer(draft, action) {
     switch (action.type) {
@@ -82,6 +85,18 @@ function OnboardingApp({ Component, pageProps }) {
         draft = initialState;
         return;
       // login and out cases
+      case "setUsersJWT":
+        console.log("setting users jwt")
+        draft.auth.jwt = action.jwt
+        draft.auth.jwtExpiry = action.expires
+        draft.auth.userType = action.userType
+        draft.auth.userId = action.userId
+        draft.user.token = true
+        draft.app.loggedIn = true
+        draft.app.authData = "success"
+        draft.app.authUpdated = true
+        draft.app.userUpdated = true
+        return
       case "login":
         draft.app.loggedIn = true;
         return;
@@ -267,6 +282,9 @@ function OnboardingApp({ Component, pageProps }) {
         return;
       case "usersFinished":
         draft.app.usersUpdated = false;
+        return;
+      case "authFinished":
+        draft.app.authUpdated = false;
         return;
       // Permissions page dispatches
       case "agreements":
@@ -713,12 +731,17 @@ function OnboardingApp({ Component, pageProps }) {
       localStorage.setItem("users", JSON.stringify(state.users));
       dispatch({ type: "usersFinished" });
     }
+    if (state.app.authUpdated) {
+      localStorage.setItem("auth", JSON.stringify(state.auth));
+      dispatch({ type: "authFinished" });
+    }
   }, [
     state.app.appUpdated,
     state.app.firmUpdated,
     state.app.quoteUpdated,
     state.app.userUpdated,
-    state.app.usersUpdated
+    state.app.usersUpdated,
+    state.app.authUpdated
   ]);
   // start useEffect to handle when firmData has successfully loaded
   useEffect(() => {
@@ -777,6 +800,7 @@ function OnboardingApp({ Component, pageProps }) {
   }, [state.app.firmData]);
   // start useEffect to handle the redirection
   useEffect(() => {
+    console.log("data changed")
     if (state.app.unknownUser) {
       router.push("/login");
     }
@@ -790,18 +814,23 @@ function OnboardingApp({ Component, pageProps }) {
         state.app.firmData === "success" &&
         state.app.userData === "success"
       ) {
+        console.log("800 true")
         // all the data has been loaded successfully work out the current state of the user
         // has the user not been validated
         if (!state.user.validated) {
+          console.log("804 true")
           router.push("/welcome");
         } else if (!state.user.token) {
+          console.log("807 true")
           router.push("/login");
         } else {
           // check if current user has accepted all terms
           if (state.user.agreed.all) {
+            console.log("812 true")
             // if yes redirect to router.push('/users/state.user.id')
             router.push(`/users/${state.user.id}`);
           } else {
+            console.log("816 true")
             // if no redirect to router.push('/permissions')
             router.push("/permissions");
           }
@@ -825,7 +854,8 @@ function OnboardingApp({ Component, pageProps }) {
     state.app.firmData,
     state.app.quoteData,
     state.user.validated,
-    state.user.agreed
+    state.user.agreed,
+    state.app.loggedIn
   ]);
   // end useEffect to handle the redirection
   // start when user is logged in
@@ -855,6 +885,7 @@ function OnboardingApp({ Component, pageProps }) {
         let currentUser = state.user || []; // assign the array of local users in state to a shorted variable name
         let newUsers = []; // create an empty array to store the associated users in
         for (let i = 0; i < associatedUsers.length; i++) {
+          // debugger
           // create an loop for the number of associated users in the quote
           // check to see if the current associated user is in the current logged in user and update it
           if (currentUser.id === associatedUsers[i].id) {
